@@ -20,7 +20,13 @@ import Reveal from "./Reveal";
 
 const MENU_WIDTH = 168;
 
-function CopyRuleButton({ options }: { options: { label: string; snippet: string }[] }) {
+type CopyOption = {
+  label: string;
+  detail?: string;
+  snippet: string;
+};
+
+function CopyRuleButton({ options }: { options: CopyOption[] }) {
   const [open, setOpen] = useState(false);
   const [anchor, setAnchor] = useState<{ top: number; left: number } | null>(null);
   const [copied, setCopied] = useState("");
@@ -33,7 +39,7 @@ function CopyRuleButton({ options }: { options: { label: string; snippet: string
     setAnchor(null);
   };
 
-  const copy = async (option: { label: string; snippet: string }) => {
+  const copy = async (option: CopyOption) => {
     await navigator.clipboard.writeText(option.snippet);
     setCopied(option.label);
     // Keep the menu open briefly so the picked option visibly confirms
@@ -118,7 +124,18 @@ function CopyRuleButton({ options }: { options: { label: string; snippet: string
                         isPicked ? "bg-white" : "bg-line group-hover/item:bg-accent"
                       }`}
                     />
-                    {isPicked ? "已复制 ✓" : option.label}
+                    <span className="max-w-[104px] truncate">
+                      {isPicked ? "已复制 ✓" : option.label}
+                    </span>
+                    {option.detail && (
+                      <span
+                        className={`ml-auto shrink-0 truncate text-[10px] ${
+                          isPicked ? "text-white/70" : "text-mute group-hover/item:text-accent/70"
+                        }`}
+                      >
+                        {option.detail}
+                      </span>
+                    )}
                   </button>
                 );
               })}
@@ -160,10 +177,11 @@ function AppCard({
 }) {
   const stat = app.clients[client];
   const viewNames = VIEW_ORDER.filter((view) => view in (app.views?.[client] ?? {}));
-  const copyOptions =
+  const copyOptions: CopyOption[] =
     viewNames.length > 0
       ? viewNames.map((view) => ({
           label: `${VIEW_LABELS[view]}段规则`,
+          detail: `${(app.views[client][view].file.split("/").pop() ?? "").replace(/\.conf$/, "")} · ${app.views[client][view].rules} 条`,
           snippet: clientViewSnippet(rawBase, app, client, view),
         }))
       : [{ label: "规则", snippet: clientSnippet(rawBase, app, client) }];
