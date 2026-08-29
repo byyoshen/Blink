@@ -9,9 +9,10 @@
 
 ## 项目身份
 
-- 名称：**Blink**；GitHub：<https://github.com/Bluetrae/Blink>；Pages：<https://bluetrae.github.io/Blink/>。
-- 沿革：曾用名 `WProxyRules`、`Rulink`，2026-08-15 改名为 Blink；旧 `Bluetrae/Rulink` 路径（含 raw）
-  由 GitHub 301 重定向，不再新增旧名称引用。
+- 名称：**Blink**；GitHub：<https://github.com/wendy1a1a/Blink>；Pages：<https://wendy1a1a.github.io/Blink/>。
+- 沿革：仓库曾用名 `WProxyRules`、`Rulink`，2026-08-15 改为 Blink；账户曾用名 `Bluetrae`，
+  现已迁移为 `wendy1a1a`——GitHub 对旧账户路径（含 raw / Pages）提供 301 重定向，
+  仓库内不再引用旧名称。
 
 ## 当前状态（2026-08-26 更新）
 

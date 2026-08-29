@@ -6,7 +6,7 @@ interface HeroProps {
 }
 
 const EXAMPLE_LINE =
-  "RULE-SET,https://raw.githubusercontent.com/Bluetrae/Blink/main/Surge/YouTube.list,Proxy";
+  "RULE-SET,https://raw.githubusercontent.com/wendy1a1a/Blink/main/Surge/YouTube.list,Proxy";
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
@@ -67,7 +67,7 @@ export default function Hero({ appsCount, totalRules }: HeroProps) {
         <CodeBlock file="Surge 主配置 · [Rule]" copyText={EXAMPLE_LINE}>
           <span className="text-white/40"># 一行接入，策略名由你自己决定{"\n"}</span>
           <span className="text-[#8ab4ff]">RULE-SET</span>
-          ,https://raw.githubusercontent.com/Bluetrae/Blink/main/Surge/YouTube.list,
+          ,https://raw.githubusercontent.com/wendy1a1a/Blink/main/Surge/YouTube.list,
           <span className="text-[#7ee2a8]">Proxy</span>
         </CodeBlock>
       </div>

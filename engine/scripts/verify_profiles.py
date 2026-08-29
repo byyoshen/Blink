@@ -12,7 +12,7 @@ from pathlib import Path
 import build_profile
 
 BLINK_RAW = re.compile(
-    r"https://raw\.githubusercontent\.com/Bluetrae/Blink/main/"
+    r"https://raw\.githubusercontent\.com/wendy1a1a/Blink/main/"
     r"(Surge|Loon|Shadowrocket|Stash|Clash|Egern|QuantumultX)/"
     r"([A-Za-z0-9._-]+\.(?:list|yaml|conf))"
 )

@@ -86,55 +86,55 @@ rule-providers:
     type: http
     behavior: domain
     format: text
-    url: https://raw.githubusercontent.com/Bluetrae/Blink/main/Stash/Telegram-domainset.conf
+    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Stash/Telegram-domainset.conf
     interval: 86400
   Telegram_ip:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/Bluetrae/Blink/main/Stash/Telegram-ip.conf
+    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Stash/Telegram-ip.conf
     interval: 86400
   X_domainset:
     type: http
     behavior: domain
     format: text
-    url: https://raw.githubusercontent.com/Bluetrae/Blink/main/Stash/X-domainset.conf
+    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Stash/X-domainset.conf
     interval: 86400
   X_ip:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/Bluetrae/Blink/main/Stash/X-ip.conf
+    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Stash/X-ip.conf
     interval: 86400
   YouTube_nonip:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/Bluetrae/Blink/main/Stash/YouTube-nonip.conf
+    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Stash/YouTube-nonip.conf
     interval: 86400
   Instagram_domainset:
     type: http
     behavior: domain
     format: text
-    url: https://raw.githubusercontent.com/Bluetrae/Blink/main/Stash/Instagram-domainset.conf
+    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Stash/Instagram-domainset.conf
     interval: 86400
   Google_nonip:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/Bluetrae/Blink/main/Stash/Google-nonip.conf
+    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Stash/Google-nonip.conf
     interval: 86400
   Google_ip:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/Bluetrae/Blink/main/Stash/Google-ip.conf
+    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Stash/Google-ip.conf
     interval: 86400
   GitHub_domainset:
     type: http
     behavior: domain
     format: text
-    url: https://raw.githubusercontent.com/Bluetrae/Blink/main/Stash/GitHub-domainset.conf
+    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Stash/GitHub-domainset.conf
     interval: 86400
   china_ip:
     type: http

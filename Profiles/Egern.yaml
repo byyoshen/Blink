@@ -149,31 +149,31 @@ rules:
 # UNSUPPORTED: reject-domainset（Surge DOMAIN-SET 专属）本文件省略
 # UNSUPPORTED: ntp-123（当前客户端不支持）本文件省略
 - rule_set:
-    match: https://raw.githubusercontent.com/Bluetrae/Blink/main/Egern/Telegram-domainset.conf
+    match: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Egern/Telegram-domainset.conf
     policy: Telegram
 - rule_set:
-    match: https://raw.githubusercontent.com/Bluetrae/Blink/main/Egern/Telegram-ip.conf
+    match: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Egern/Telegram-ip.conf
     policy: Telegram
 - rule_set:
-    match: https://raw.githubusercontent.com/Bluetrae/Blink/main/Egern/X-domainset.conf
+    match: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Egern/X-domainset.conf
     policy: X
 - rule_set:
-    match: https://raw.githubusercontent.com/Bluetrae/Blink/main/Egern/X-ip.conf
+    match: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Egern/X-ip.conf
     policy: X
 - rule_set:
-    match: https://raw.githubusercontent.com/Bluetrae/Blink/main/Egern/YouTube-nonip.conf
+    match: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Egern/YouTube-nonip.conf
     policy: Youtube
 - rule_set:
-    match: https://raw.githubusercontent.com/Bluetrae/Blink/main/Egern/Instagram-domainset.conf
+    match: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Egern/Instagram-domainset.conf
     policy: Instagram
 - rule_set:
-    match: https://raw.githubusercontent.com/Bluetrae/Blink/main/Egern/Google-nonip.conf
+    match: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Egern/Google-nonip.conf
     policy: Google
 - rule_set:
-    match: https://raw.githubusercontent.com/Bluetrae/Blink/main/Egern/Google-ip.conf
+    match: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Egern/Google-ip.conf
     policy: Google
 - rule_set:
-    match: https://raw.githubusercontent.com/Bluetrae/Blink/main/Egern/GitHub-domainset.conf
+    match: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Egern/GitHub-domainset.conf
     policy: Github
 - rule_set:
     match: https://ruleset.skk.moe/List/ip/domestic.conf
