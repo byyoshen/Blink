@@ -14,7 +14,7 @@
   现已迁移为 `wendy1a1a`——GitHub 对旧账户路径（含 raw / Pages）提供 301 重定向，
   仓库内不再引用旧名称。
 
-## 当前状态（2026-08-26 更新）
+## 当前状态（2026-09-01 更新）
 
 - **数据面**：30 个 App、27 个实际读取的上游输入、210 个七端主产物；`manifest.json` 确定性记录
   每 App 的 source definition、上游输入指纹、supplement、canonical 规则与七端产物 SHA256，并额外记录

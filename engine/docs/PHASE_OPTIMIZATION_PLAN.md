@@ -108,7 +108,7 @@ Final:    FINAL → Final, dns-failed
 - `renderers.py`：新增 `render_surge_domainset`、`render_mihomo_domainset`、统一 `render_view`；
   各端 view 文件（`.conf` 后缀，避开 parity 的 `.list`/`.yaml` glob）：Surge/Shadowrocket 域名清单、
   Stash/Clash `behavior:domain`、Loon/Egern classical、QX `HOST*` filter；均 policy-free。
-- 全部 29 App 开启 `views:true`，产出七端 domainset/nonip/ip view 文件（主输出 `.list`/`.yaml` 零改动）。
+- 全部 30 App 开启 `views:true`，产出七端 domainset/nonip/ip view 文件（主输出 `.list`/`.yaml` 零改动）。
 - `verify_manifest.py`：`views` 字段校验（per-client + 各端目录路径约定）。
 
 **② Profile 层分文件引用**

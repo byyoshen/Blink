@@ -23,7 +23,7 @@
 | Profile 完整性 | `python engine/scripts/verify_profiles.py --root .` | 七端配置可由 intent/templates 逐字节重建；Blink raw 引用存在且非空；语义源与每份产物均保留订阅占位符，App 内订阅适配项显式标注 ADAPTED |
 | 跨 App overlap | `python engine/scripts/overlap_check.py --root .` | 相对人工复核基线不得出现新重叠 |
 | 敏感模式 | `python engine/scripts/secret_scan.py --root .` | PAT、AWS Key、私钥、代理 URI、URL token/凭据、不透明订阅 URL、正/反斜杠的本地绝对路径 |
-| 实时重建 drift | `python engine/scripts/build.py --verify-only --strict-diff` | 重新抓取全部上游并逐字节比对 203 个产物及 provenance |
+| 实时重建 drift | `python engine/scripts/build.py --verify-only --strict-diff` | 重新抓取全部上游并逐字节比对 210 个产物及 provenance |
 
 除最后一项需要实时网络外，其余门禁都能仅凭仓库内容执行。普通 push/PR 运行全部离线门禁；实时 drift 适合发布前、上游审计或人工排障使用，避免把第三方瞬时网络状态变成所有 PR 的随机失败因素。
 

@@ -1,5 +1,8 @@
 # Blink 项目规范
 
+> 本文定义本仓库的工程规范与自动化边界：构建管线的约束、选源政策与安全红线。
+> 供维护者、自动化工具（AI 编码助手等）与想了解构建机制的读者阅读。
+
 ## 项目目标
 
 自动生成个人使用的多客户端 App Rule-Sets：一份 source definition 与 canonical 规则，渲染为 Surge / Shadowrocket / Loon / Stash / Clash / Egern / Quantumult X 七个客户端的输出（格式事实与架构决策见 `engine/docs/MULTI_CLIENT_AUDIT.md`）。
