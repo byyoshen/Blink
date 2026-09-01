@@ -1,5 +1,5 @@
 # Primary source is selected per application.
-# Source preference is Repcz > SukkaW > proven maintainers > v2fly/MetaCubeX,
+# Source preference is SukkaW > Repcz > proven maintainers > v2fly/MetaCubeX,
 # but evidence overrides preference.
 # supplement is optional and only contains verified upstream gaps.
 # Generated Surge files must never be manually edited.
@@ -760,3 +760,36 @@ apps:
       404, no dedicated upstream, so this app is supplement-only: the root
       domain starryblu.com covers the official site and app API subdomains.
       It stays supplement-only unless usage reveals missing hosts.
+
+  AWSConsole:
+    enabled: true
+    output: Surge/AWSConsole.list
+    views: true
+    sources:
+      - name: v2fly-domain-list-community
+        author: v2fly
+        role: primary
+        format: v2fly-domain-list
+        url: https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/aws
+    include_policy:
+      mode: explicit
+      allow: []
+      deny: ["aws-cn"]
+    attributes:
+      mode: explicit
+      include: []
+    supplement: engine/sources/supplement/AWSConsole.list
+    exclude:
+      - regexp:*
+      - domain-suffix:cloudfront.com
+      - domain-suffix:cloudfront.net
+    note: >-
+      Source audit (2026-09-01): SukkaW, Repcz, and blackmatrix7 publish no
+      dedicated AWS Rule-Set, so v2fly data/aws is the only dedicated upstream
+      whose AWS domain set covers the AWS Console app (aws.amazon.com,
+      console.aws.amazon.com, signin/auth hosts, awsapps.com, awsstatic.com).
+      The single awsdns regexp entry is dropped via an explicit type-level
+      exclude (v1 does not emit regexp rules), and the aws-cn include is
+      denied explicitly (AWS China resolves domestically). The shared CDN
+      namespaces cloudfront.com / cloudfront.net are excluded as concrete
+      domain-suffix entries to avoid swallowing generic AWS CDN hosts.

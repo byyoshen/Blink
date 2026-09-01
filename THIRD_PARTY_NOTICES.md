@@ -53,6 +53,7 @@ references — no rule content is copied into `Profiles/`.
 | `Surge/GitHub.list` | v2fly/domain-list-community | https://github.com/v2fly/domain-list-community | MIT License |
 | `Surge/SafePal.list` | v2fly/domain-list-community | https://github.com/v2fly/domain-list-community | MIT License |
 | `Surge/Threads.list` | v2fly/domain-list-community | https://github.com/v2fly/domain-list-community | MIT License |
+| `Surge/AWSConsole.list` | v2fly/domain-list-community (`data/aws`; `aws-cn` include denied) | https://github.com/v2fly/domain-list-community | MIT License |
 | `Surge/PayPal.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
 | `Surge/YouTube.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
 | `Surge/X.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
@@ -93,7 +94,7 @@ this notice must be reviewed whenever a source is added or replaced.
 | `engine/docs/images/avatar.png` | 仓库所有者原创 IP mascot（白猫，与 portal `blink-logo.png` 相同图源） | Circular-cropped variant (transparent corners) used as the README title mark. Owned by the repository owner; not covered by any third-party license. |
 | `engine/portal/public/icons/*.jpg` | Apple App Store artwork (iTunes Search API) | Official app icons of Surge, Shadowrocket, Loon, Stash, Egern, and Quantumult X, downloaded from the App Store and used only to identify each supported client in the portal. Trademarks and icons belong to their respective owners; not covered by this repository's terms. |
 | `engine/portal/public/icons/clash.jpg` | https://github.com/MetaCubeX/ClashMetaForAndroid (`app/src/main/res/mipmap-xxxhdpi/ic_launcher.png`) | Clash Meta for Android app icon (GPL-3.0), re-encoded to JPEG and used only to identify the Clash client in the portal. Icon and trademark belong to the Clash Meta project; not covered by this repository's terms. |
-| `engine/portal/public/app-icons/*.jpg` | Apple App Store artwork (iTunes Search API) | Official app icons of each covered App (OKX, PayPal, SafePal, ZA Bank, LINE, Telegram, WhatsApp, GitHub, Steam, Instagram, Threads, X, YouTube, Netflix, TikTok, Spotify, APTV, Starryblu, and ChatGPT for the aggregated AI Rule-Set), downloaded from the App Store and used only to identify each Rule-Set in the portal. Trademarks and icons belong to their respective owners; not covered by this repository's terms. |
+| `engine/portal/public/app-icons/*.jpg` | Apple App Store artwork (iTunes Search API) | Official app icons of each covered App (OKX, PayPal, SafePal, ZA Bank, LINE, Telegram, WhatsApp, GitHub, Steam, Instagram, Threads, X, YouTube, Netflix, TikTok, Spotify, APTV, Starryblu, AWS Console, and ChatGPT for the aggregated AI Rule-Set), downloaded from the App Store and used only to identify each Rule-Set in the portal. Trademarks and icons belong to their respective owners; not covered by this repository's terms. |
 
 ## License handling principles
 

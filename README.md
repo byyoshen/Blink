@@ -196,7 +196,7 @@ https://raw.githubusercontent.com/wendy1a1a/Blink/main/QuantumultX/<App>.list, t
 
 ## 完整性校验
 
-根目录 [`manifest.json`](manifest.json) 为 29 个 App、七客户端共 203 个生成产物记录 SHA256、上游内容指纹、canonical 规则指纹和显式降级统计。push / PR 与每日更新会自动执行七端等价性、重复/空集/排序、语义视图一致性、跨 App overlap、Profile 引用及敏感模式门禁；完整命令与设计边界见 [`engine/docs/MACHINE_GATES.md`](engine/docs/MACHINE_GATES.md)。
+根目录 [`manifest.json`](manifest.json) 为 30 个 App、七客户端共 210 个生成产物记录 SHA256、上游内容指纹、canonical 规则指纹和显式降级统计。push / PR 与每日更新会自动执行七端等价性、重复/空集/排序、语义视图一致性、跨 App overlap、Profile 引用及敏感模式门禁；完整命令与设计边界见 [`engine/docs/MACHINE_GATES.md`](engine/docs/MACHINE_GATES.md)。
 
 ---
 

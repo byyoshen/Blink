@@ -77,6 +77,12 @@ PORTAL_META = {
         "policy": "GitHub",
         "icon": "app-icons/GitHub.jpg",
     },
+    "AWSConsole": {
+        "category": "Development",
+        "emoji": "☁️",
+        "policy": "Development",
+        "icon": "app-icons/AWSConsole.jpg",
+    },
     "Steam": {
         "category": "Gaming",
         "emoji": "🎮",

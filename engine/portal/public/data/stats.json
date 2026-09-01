@@ -3049,6 +3049,102 @@
         "format": ""
       },
       "note": "Starryblu is a global payment app (starryblu.com, Singapore FinTech exhibitor, App Store id 6736854716). The 2026-08-26 audit probed Repcz (Surge/Rules/Starryblu.list), SukkaW (Source/non_ip/starryblu.conf), v2fly (data/starryblu), and blackmatrix7 (rule/Surge/Starryblu) — all 404, no dedicated upstream, so this app is supplement-only: the root domain starryblu.com covers the official site and app API subdomains. It stays supplement-only unless usage reveals missing hosts."
+    },
+    {
+      "name": "AWSConsole",
+      "category": "Development",
+      "emoji": "☁️",
+      "icon": "app-icons/AWSConsole.jpg",
+      "self_use": false,
+      "policy": "Development",
+      "file": "Surge/AWSConsole.list",
+      "rules": 49,
+      "types": {
+        "DOMAIN-SUFFIX": 49
+      },
+      "clients": {
+        "surge": {
+          "file": "Surge/AWSConsole.list",
+          "rules": 49
+        },
+        "loon": {
+          "file": "Loon/AWSConsole.list",
+          "rules": 49
+        },
+        "shadowrocket": {
+          "file": "Shadowrocket/AWSConsole.list",
+          "rules": 49
+        },
+        "stash": {
+          "file": "Stash/AWSConsole.list",
+          "rules": 49
+        },
+        "clash": {
+          "file": "Clash/AWSConsole.list",
+          "rules": 49,
+          "dropped": 0
+        },
+        "egern": {
+          "file": "Egern/AWSConsole.yaml",
+          "rules": 49,
+          "dropped": 0
+        },
+        "quantumultx": {
+          "file": "QuantumultX/AWSConsole.list",
+          "rules": 49,
+          "dropped": 0
+        }
+      },
+      "views": {
+        "surge": {
+          "domainset": {
+            "file": "Surge/AWSConsole-domainset.conf",
+            "rules": 49
+          }
+        },
+        "loon": {
+          "domainset": {
+            "file": "Loon/AWSConsole-domainset.conf",
+            "rules": 49
+          }
+        },
+        "shadowrocket": {
+          "domainset": {
+            "file": "Shadowrocket/AWSConsole-domainset.conf",
+            "rules": 49
+          }
+        },
+        "stash": {
+          "domainset": {
+            "file": "Stash/AWSConsole-domainset.conf",
+            "rules": 49
+          }
+        },
+        "clash": {
+          "domainset": {
+            "file": "Clash/AWSConsole-domainset.conf",
+            "rules": 49
+          }
+        },
+        "egern": {
+          "domainset": {
+            "file": "Egern/AWSConsole-domainset.conf",
+            "rules": 49
+          }
+        },
+        "quantumultx": {
+          "domainset": {
+            "file": "QuantumultX/AWSConsole-domainset.conf",
+            "rules": 49
+          }
+        }
+      },
+      "source": {
+        "author": "v2fly",
+        "name": "v2fly-domain-list-community",
+        "format": "v2fly-domain-list"
+      },
+      "note": "Source audit (2026-09-01): SukkaW, Repcz, and blackmatrix7 publish no dedicated AWS Rule-Set, so v2fly data/aws is the only dedicated upstream whose AWS domain set covers the AWS Console app (aws.amazon.com, console.aws.amazon.com, signin/auth hosts, awsapps.com, awsstatic.com). The single awsdns regexp entry is dropped via an explicit type-level exclude (v1 does not emit regexp rules), and the aws-cn include is denied explicitly (AWS China resolves domestically). The shared CDN namespaces cloudfront.com / cloudfront.net are excluded as concrete domain-suffix entries to avoid swallowing generic AWS CDN hosts."
     }
   ]
 }

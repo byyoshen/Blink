@@ -117,6 +117,7 @@ class BuildTests(unittest.TestCase):
                 "NBA",
                 "Suno",
                 "Starryblu",
+                "AWSConsole",
             },
         )
         for app_name, app in manifest["apps"].items():
@@ -399,6 +400,37 @@ class BuildTests(unittest.TestCase):
         self.assertEqual(
             result.skipped_excluded, ["IP-ASN,11983", "URL-REGEX,^https://example\\.com"]
         )
+
+    def test_v2fly_regexp_type_level_exclude(self) -> None:
+        source_url = "https://example.invalid/data/aws"
+        config = app_config(source_format="v2fly-domain-list", url=source_url, deny=["aws-cn"])
+        config["exclude"] = ["regexp:*"]
+        result = self.compile(
+            config,
+            {
+                source_url: (
+                    "include:aws-cn\n"
+                    "aws.amazon.com\n"
+                    "regexp:.+\\.awsdns-[0-9][0-9]\\.(co\\.uk|com|net|org)$\n"
+                ),
+            },
+        )
+        self.assertEqual(
+            build.render_classical_body(result.rules), ["DOMAIN-SUFFIX,aws.amazon.com"]
+        )
+        self.assertEqual(
+            result.skipped_excluded, [".+\\.awsdns-[0-9][0-9]\\.(co\\.uk|com|net|org)$"]
+        )
+        self.assertEqual(result.denied_includes, [("aws-cn", result.denied_includes[0][1])])
+
+    def test_v2fly_regexp_without_exclude_fails(self) -> None:
+        source_url = "https://example.invalid/data/aws"
+        config = app_config(source_format="v2fly-domain-list", url=source_url, deny=["aws-cn"])
+        with self.assertRaisesRegex(build.BuildError, "unsupported v2fly regexp"):
+            self.compile(
+                config,
+                {source_url: "aws.amazon.com\nregexp:.+\\.awsdns-[0-9][0-9]\\.com$\n"},
+            )
 
     def test_type_level_exclude_requires_wildcard_value(self) -> None:
         config = app_config(

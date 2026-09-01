@@ -16,7 +16,7 @@
 
 ## 当前状态（2026-08-26 更新）
 
-- **数据面**：29 个 App、26 个实际读取的上游输入、203 个七端主产物；`manifest.json` 确定性记录
+- **数据面**：30 个 App、27 个实际读取的上游输入、210 个七端主产物；`manifest.json` 确定性记录
   每 App 的 source definition、上游输入指纹、supplement、canonical 规则与七端产物 SHA256，并额外记录
   per-client 语义视图（domainset / nonip / ip）。
 - **规则层 multi-view**：`build.py` 的 `semantic_views()` 从 canonical 派生 `-domainset.conf`（纯域名）、
@@ -94,7 +94,7 @@ engine/
 
 | App | Primary / 方案 | 一句话理由 |
 | --- | --- | --- |
-| OKX / WhatsApp / LINE / GitHub / SafePal / Threads | v2fly `domain-list-community` | 覆盖比旧源更现代、范围精准；GitHub 显式 allow `github-copilot`、deny `npmjs` |
+| OKX / WhatsApp / LINE / GitHub / SafePal / Threads / AWSConsole | v2fly `domain-list-community` | 覆盖比旧源更现代、范围精准；GitHub 显式 allow `github-copilot`、deny `npmjs`；AWSConsole 来自 `data/aws`（`aws-cn` 显式拒绝、awsdns regexp 与共享 CDN 显式排除） |
 | PayPal / YouTube / X / Instagram / TikTok / Spotify / AI / Steam / Disney / PrimeVideo / HBO / Facebook / Google | Repcz `Surge/Rules/` | Surge 原生、每日更新、范围精准；个别类型经 manifest 显式 exclude |
 | Telegram | SukkaW `Source/non_ip/telegram.conf` + SukkaW ruleset service `ruleset.skk.moe/List/ip/telegram.conf`（补充 IP 段） | 核心域名 + 官方 Telegram CIDR，domain / IP 两段 |
 | Netflix / ParamountPlus / Hulu / Twitch | blackmatrix7 `rule/Surge/` | 保留 IP 覆盖与 no-resolve 语义；部分为全网唯一专项源（需定期复核新鲜度） |

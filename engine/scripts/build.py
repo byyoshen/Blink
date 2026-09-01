@@ -476,6 +476,7 @@ def parse_excludes(
     Domain entries use ``type:value`` syntax.  ``ip-asn:*`` and ``url-regex:*``
     are type-level exclusions: those kinds are dropped from native Surge sources
     because v1 does not emit them, and the manifest decision stays explicit.
+    ``regexp:*`` is the corresponding exclusion for v2fly ``regexp:`` entries.
     """
     excludes: list[tuple[str, str]] = []
     skipped_kinds: set[str] = set()
@@ -484,7 +485,7 @@ def parse_excludes(
         "domain-suffix": "DOMAIN-SUFFIX",
         "domain-keyword": "DOMAIN-KEYWORD",
     }
-    type_only = {"ip-asn": "IP-ASN", "url-regex": "URL-REGEX"}
+    type_only = {"ip-asn": "IP-ASN", "url-regex": "URL-REGEX", "regexp": "REGEX"}
     for item in items:
         if not isinstance(item, str) or ":" not in item:
             raise BuildError(f"{app_name}: exclude entries must use type:value syntax")
@@ -575,6 +576,9 @@ def compile_app(
                 continue
             if entry.attributes and not (set(entry.attributes) & selected_attributes):
                 skipped_attributes.append(entry)
+                continue
+            if entry.kind == "regexp" and "REGEX" in skip_kinds:
+                skipped_excluded.append(entry.value)
                 continue
             rules.append(convert_entry(entry))
         stack.pop()

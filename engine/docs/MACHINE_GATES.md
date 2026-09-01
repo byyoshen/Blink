@@ -19,7 +19,7 @@
 | 七端等价性 | `python engine/scripts/parity_check.py --root . --strict` | 四端 classical 逐字节相同；Clash 仅移除 USER-AGENT；Egern/QX 仅移除 PROCESS-NAME；QX 统一省略 no-resolve |
 | 产物健康度 | `python engine/scripts/health_check.py --root .` | 非空、合法、无重复、确定性排序、文件头统计正确 |
 | 语义多视图一致性 | `python engine/scripts/validate_views.py --root .` | 每个视图（domainset/nonip/ip）种类合法：IP 不进 nonip、domain 不进 ip、纯域名 App 无多余空 ip 视图；Surge 视图内容与 canonical 拆分一致；七端视图文件齐全、头统计（含显式丢弃）正确 |
-| 产物溯源 | `python engine/scripts/verify_manifest.py --root .` | 29 App、七端文件、supplement、构建器和 source definition 的 SHA256 完整且一致 |
+| 产物溯源 | `python engine/scripts/verify_manifest.py --root .` | 30 App、七端文件、supplement、构建器和 source definition 的 SHA256 完整且一致 |
 | Profile 完整性 | `python engine/scripts/verify_profiles.py --root .` | 七端配置可由 intent/templates 逐字节重建；Blink raw 引用存在且非空；语义源与每份产物均保留订阅占位符，App 内订阅适配项显式标注 ADAPTED |
 | 跨 App overlap | `python engine/scripts/overlap_check.py --root .` | 相对人工复核基线不得出现新重叠 |
 | 敏感模式 | `python engine/scripts/secret_scan.py --root .` | PAT、AWS Key、私钥、代理 URI、URL token/凭据、不透明订阅 URL、正/反斜杠的本地绝对路径 |

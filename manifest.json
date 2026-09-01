@@ -283,6 +283,134 @@
         }
       }
     },
+    "AWSConsole": {
+      "canonical": {
+        "denied_includes": [
+          "aws-cn"
+        ],
+        "input_rules": 51,
+        "rules": 49,
+        "sha256": "2db97fb25b52a0baa8a45444d767214f5c99f802d559caea2b55802ac484e2b5",
+        "skipped_attributes": 0,
+        "skipped_excluded": [
+          ".+\\.awsdns-[0-9][0-9]\\.(co\\.uk|com|net|org)$"
+        ],
+        "views": [
+          {
+            "name": "domainset",
+            "rules": 49
+          }
+        ]
+      },
+      "outputs": {
+        "clash": {
+          "dropped": [],
+          "path": "Clash/AWSConsole.list",
+          "rules": 49,
+          "sha256": "65bb24359eed88529e67377b34baa652d26eddd63314c52f7a251265b9809670"
+        },
+        "egern": {
+          "dropped": [],
+          "path": "Egern/AWSConsole.yaml",
+          "rules": 49,
+          "sha256": "c72c2a842ad1597be8d0772e0387aa7cb4125c261331ae88741de88abfd47f74"
+        },
+        "loon": {
+          "dropped": [],
+          "path": "Loon/AWSConsole.list",
+          "rules": 49,
+          "sha256": "65bb24359eed88529e67377b34baa652d26eddd63314c52f7a251265b9809670"
+        },
+        "quantumultx": {
+          "dropped": [],
+          "path": "QuantumultX/AWSConsole.list",
+          "rules": 49,
+          "sha256": "6e60050e42caebb08a8ebfb74ff93e45a235d9d25016ca777c663b439912fc34"
+        },
+        "shadowrocket": {
+          "dropped": [],
+          "path": "Shadowrocket/AWSConsole.list",
+          "rules": 49,
+          "sha256": "65bb24359eed88529e67377b34baa652d26eddd63314c52f7a251265b9809670"
+        },
+        "stash": {
+          "dropped": [],
+          "path": "Stash/AWSConsole.list",
+          "rules": 49,
+          "sha256": "65bb24359eed88529e67377b34baa652d26eddd63314c52f7a251265b9809670"
+        },
+        "surge": {
+          "dropped": [],
+          "path": "Surge/AWSConsole.list",
+          "rules": 49,
+          "sha256": "65bb24359eed88529e67377b34baa652d26eddd63314c52f7a251265b9809670"
+        }
+      },
+      "sources": [
+        {
+          "author": "v2fly",
+          "bytes": 976,
+          "format": "v2fly-domain-list",
+          "lines": 61,
+          "name": "v2fly-domain-list-community",
+          "role": "primary",
+          "text_sha256": "cdb3797a5ba28abc72a82bb6334a6ec777100469994e6a50d3840fb8e1ced802",
+          "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/aws"
+        }
+      ],
+      "supplement": null,
+      "views": {
+        "clash": {
+          "domainset": {
+            "path": "Clash/AWSConsole-domainset.conf",
+            "rules": 49,
+            "sha256": "4c3c66aea8d34b9f5455e144dfc49d4915f01264cbbeb2e4daf5c40fe5b760b5"
+          }
+        },
+        "egern": {
+          "domainset": {
+            "path": "Egern/AWSConsole-domainset.conf",
+            "rules": 49,
+            "sha256": "65bb24359eed88529e67377b34baa652d26eddd63314c52f7a251265b9809670"
+          }
+        },
+        "loon": {
+          "domainset": {
+            "path": "Loon/AWSConsole-domainset.conf",
+            "rules": 49,
+            "sha256": "65bb24359eed88529e67377b34baa652d26eddd63314c52f7a251265b9809670"
+          }
+        },
+        "quantumultx": {
+          "domainset": {
+            "path": "QuantumultX/AWSConsole-domainset.conf",
+            "rules": 49,
+            "sha256": "6e60050e42caebb08a8ebfb74ff93e45a235d9d25016ca777c663b439912fc34"
+          }
+        },
+        "shadowrocket": {
+          "domainset": {
+            "path": "Shadowrocket/AWSConsole-domainset.conf",
+            "rules": 49,
+            "sha256": "3ef448a121a2f31caabeb817f3c6d108baab0b80af64e1f2fc6e3ceaa4e83d2f"
+          }
+        },
+        "stash": {
+          "domainset": {
+            "path": "Stash/AWSConsole-domainset.conf",
+            "rules": 49,
+            "sha256": "4c3c66aea8d34b9f5455e144dfc49d4915f01264cbbeb2e4daf5c40fe5b760b5"
+          }
+        },
+        "surge": {
+          "domainset": {
+            "path": "Surge/AWSConsole-domainset.conf",
+            "rules": 49,
+            "sha256": "3ef448a121a2f31caabeb817f3c6d108baab0b80af64e1f2fc6e3ceaa4e83d2f"
+          }
+        }
+      }
+    },
     "Disney": {
       "canonical": {
         "denied_includes": [],
@@ -3940,7 +4068,7 @@
   },
   "builder": {
     "files": {
-      "engine/scripts/build.py": "b703469d4d2eba3b078de3fcf9899394ea4d263837c1f2d0a2afb9a738b972a6",
+      "engine/scripts/build.py": "9d3174c8f9caae94fc3a92fbc2cb4a111823dba20f62c943743b1494336670d1",
       "engine/scripts/renderers.py": "2d46b1a4991bada108c0fa2e0cd6b483253d1fac8e8b4c793e7313fdd87a9c83"
     },
     "version": "2.0.0"
@@ -3948,6 +4076,6 @@
   "schema_version": 1,
   "source_definition": {
     "path": "engine/sources/apps.yaml",
-    "sha256": "92fc10a37dcbd3b299ae5102c3229652c0c05959284d24f91ea618fdfcf4e2db"
+    "sha256": "8e503c4eefc0797e1301ce4d371cc103eb89fc6838c988982d751a0e89c223e9"
   }
 }

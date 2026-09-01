@@ -287,3 +287,24 @@ Starryblu 是全球支付 App（官网 starryblu.com，新加坡 FinTech 2025 �
 - 构建报告：Disney 174 / ParamountPlus 10 / Hulu 59 / PrimeVideo 16 / HBO 46（排除 2 条）/ Twitch 22 / Facebook 580 / Google 25 / NBA 2 / Suno 2；PROCESS-NAME 丢弃仅发生在 Egern/QX（Disney 2、Hulu 1、Twitch 1、HBO 1、Netflix 1、Spotify 1）。
 - Portal：新增“网页(Web)”类别承载 Google；图标取 iTunes App Store 官方 artwork（HBO 取现行 Max 应用图标）。
 - NBA/Suno 为无上游的 supplement-only App，维持两条核心根域（2026-08-16 定稿：无需专门等待真机反馈）；如日后使用暴露缺失域名，按 supplement 政策追加。
+
+### AWSConsole（v2fly，2026-09-01）
+
+AWS Console App（App Store `com.amazonaws.mobileConsole`，AMZN Mobile LLC）。审计探测：
+SukkaW `Source/non_ip/aws.conf` 404、Repcz `Surge/Rules/AWS.list` 与 `Amazon.list` 404、
+blackmatrix7 `rule/Surge/AWS/AWS.list` 404 —— 均无 AWS 专项规则；
+**v2fly `data/aws` 200（唯一专项源）**，覆盖 `aws.amazon.com`、`console.aws.amazon.com` 系、
+`awsapps.com`、`awsstatic.com`、`aws.com` 等完整 AWS 域名集。
+
+数据特点与处置：
+
+- `include:aws-cn`：China 专属子集，既正确性（国内直连默认）与范围（不吞 China 区域）考量，manifest
+  `deny: ["aws-cn"]` 显式拒绝（计入 `denied_includes`）；
+- `regexp:.+\.awsdns-[0-9][0-9]\.(co\.uk|com|net|org)$`：Route 53 DNS 主机模式，v1 白名单外——
+  构建器新增 `regexp:*` 类型级显式排除（与 `ip-asn:*` / `url-regex:*` 同哲学），
+  单测覆盖"排除成功 + 不排除报错"两条路径；
+- `cloudfront.com` / `cloudfront.net`：通用共享 CDN 命名空间，按"不吞共享 CDN"政策以具体
+  `domain-suffix` exclude 剔除（与 HBO 剔除 AWS API Gateway 后缀同先例）；
+- 预检产出 49 条（`--app AWSConsole`），全量写入 `--accept-large-change`（新 App，审计已完成）。
+
+决议：primary = v2fly `data/aws`；无 supplemental。manifest note 已记录完整取舍。
