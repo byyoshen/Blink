@@ -1777,42 +1777,42 @@
       "self_use": true,
       "policy": "Media",
       "file": "Surge/APTV.list",
-      "rules": 26,
+      "rules": 31,
       "types": {
-        "DOMAIN": 17,
+        "DOMAIN": 20,
         "DOMAIN-SUFFIX": 4,
-        "IP-CIDR": 5
+        "IP-CIDR": 7
       },
       "clients": {
         "surge": {
           "file": "Surge/APTV.list",
-          "rules": 26
+          "rules": 31
         },
         "loon": {
           "file": "Loon/APTV.list",
-          "rules": 26
+          "rules": 31
         },
         "shadowrocket": {
           "file": "Shadowrocket/APTV.list",
-          "rules": 26
+          "rules": 31
         },
         "stash": {
           "file": "Stash/APTV.list",
-          "rules": 26
+          "rules": 31
         },
         "clash": {
           "file": "Clash/APTV.list",
-          "rules": 26,
+          "rules": 31,
           "dropped": 0
         },
         "egern": {
           "file": "Egern/APTV.yaml",
-          "rules": 26,
+          "rules": 31,
           "dropped": 0
         },
         "quantumultx": {
           "file": "QuantumultX/APTV.list",
-          "rules": 26,
+          "rules": 31,
           "dropped": 0
         }
       },
@@ -1820,71 +1820,71 @@
         "surge": {
           "domainset": {
             "file": "Surge/APTV-domainset.conf",
-            "rules": 21
+            "rules": 24
           },
           "ip": {
             "file": "Surge/APTV-ip.conf",
-            "rules": 5
+            "rules": 7
           }
         },
         "loon": {
           "domainset": {
             "file": "Loon/APTV-domainset.conf",
-            "rules": 21
+            "rules": 24
           },
           "ip": {
             "file": "Loon/APTV-ip.conf",
-            "rules": 5
+            "rules": 7
           }
         },
         "shadowrocket": {
           "domainset": {
             "file": "Shadowrocket/APTV-domainset.conf",
-            "rules": 21
+            "rules": 24
           },
           "ip": {
             "file": "Shadowrocket/APTV-ip.conf",
-            "rules": 5
+            "rules": 7
           }
         },
         "stash": {
           "domainset": {
             "file": "Stash/APTV-domainset.conf",
-            "rules": 21
+            "rules": 24
           },
           "ip": {
             "file": "Stash/APTV-ip.conf",
-            "rules": 5
+            "rules": 7
           }
         },
         "clash": {
           "domainset": {
             "file": "Clash/APTV-domainset.conf",
-            "rules": 21
+            "rules": 24
           },
           "ip": {
             "file": "Clash/APTV-ip.conf",
-            "rules": 5
+            "rules": 7
           }
         },
         "egern": {
           "domainset": {
             "file": "Egern/APTV-domainset.conf",
-            "rules": 21
+            "rules": 24
           },
           "ip": {
             "file": "Egern/APTV-ip.conf",
-            "rules": 5
+            "rules": 7
           }
         },
         "quantumultx": {
           "domainset": {
             "file": "QuantumultX/APTV-domainset.conf",
-            "rules": 21
+            "rules": 24
           },
           "ip": {
             "file": "QuantumultX/APTV-ip.conf",
-            "rules": 5
+            "rules": 7
           }
         }
       },

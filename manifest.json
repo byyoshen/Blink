@@ -129,19 +129,19 @@
     "APTV": {
       "canonical": {
         "denied_includes": [],
-        "input_rules": 26,
-        "rules": 26,
-        "sha256": "2b12d91100295455c31721c6ee9d3d679c319e2ca0374ee411c9c5cdbc9962e4",
+        "input_rules": 31,
+        "rules": 31,
+        "sha256": "19021444cbd7dea6dc066cf6807b0194545c3dd4def2095d597c4d3d08db1c26",
         "skipped_attributes": 0,
         "skipped_excluded": [],
         "views": [
           {
             "name": "domainset",
-            "rules": 21
+            "rules": 24
           },
           {
             "name": "ip",
-            "rules": 5
+            "rules": 7
           }
         ]
       },
@@ -149,136 +149,136 @@
         "clash": {
           "dropped": [],
           "path": "Clash/APTV.list",
-          "rules": 26,
-          "sha256": "8a56a48d10e801e53457b7583db238dcedc14d6f407f5aff49596ef1a104177d"
+          "rules": 31,
+          "sha256": "53f66413f7030075d36e4548526dad4e1d09f05d38936c4ebd79b4f6332177d1"
         },
         "egern": {
           "dropped": [],
           "path": "Egern/APTV.yaml",
-          "rules": 26,
-          "sha256": "616ce98b6f2956cc60ed354eabd169620d86a84ba3d64973d9175fce84baf49f"
+          "rules": 31,
+          "sha256": "8d521ea36b69531104a14c3cffcf3997326d414962465de2a62173edbc528977"
         },
         "loon": {
           "dropped": [],
           "path": "Loon/APTV.list",
-          "rules": 26,
-          "sha256": "8a56a48d10e801e53457b7583db238dcedc14d6f407f5aff49596ef1a104177d"
+          "rules": 31,
+          "sha256": "53f66413f7030075d36e4548526dad4e1d09f05d38936c4ebd79b4f6332177d1"
         },
         "quantumultx": {
           "dropped": [],
           "path": "QuantumultX/APTV.list",
-          "rules": 26,
-          "sha256": "4cb308329caaf9f0024b8d319fc0a1761e8184924209da49f4f3bef42f727d44"
+          "rules": 31,
+          "sha256": "1ca793b556614823ffdf9f11b4ecb3876b6c6aef9f00ef5e90826843bab9324f"
         },
         "shadowrocket": {
           "dropped": [],
           "path": "Shadowrocket/APTV.list",
-          "rules": 26,
-          "sha256": "8a56a48d10e801e53457b7583db238dcedc14d6f407f5aff49596ef1a104177d"
+          "rules": 31,
+          "sha256": "53f66413f7030075d36e4548526dad4e1d09f05d38936c4ebd79b4f6332177d1"
         },
         "stash": {
           "dropped": [],
           "path": "Stash/APTV.list",
-          "rules": 26,
-          "sha256": "8a56a48d10e801e53457b7583db238dcedc14d6f407f5aff49596ef1a104177d"
+          "rules": 31,
+          "sha256": "53f66413f7030075d36e4548526dad4e1d09f05d38936c4ebd79b4f6332177d1"
         },
         "surge": {
           "dropped": [],
           "path": "Surge/APTV.list",
-          "rules": 26,
-          "sha256": "8a56a48d10e801e53457b7583db238dcedc14d6f407f5aff49596ef1a104177d"
+          "rules": 31,
+          "sha256": "53f66413f7030075d36e4548526dad4e1d09f05d38936c4ebd79b4f6332177d1"
         }
       },
       "sources": [],
       "supplement": {
-        "bytes": 1410,
-        "lines": 41,
+        "bytes": 1563,
+        "lines": 46,
         "path": "engine/sources/supplement/APTV.list",
-        "sha256": "32d9ae0651493407cc5897f1492c5096311ca7beca7c13cafc71461c440073b2"
+        "sha256": "5caea5da94a0bde6bf0ce2aa613d58996b8233efe56c01fb7966cade12173548"
       },
       "views": {
         "clash": {
           "domainset": {
             "path": "Clash/APTV-domainset.conf",
-            "rules": 21,
-            "sha256": "11ad07bc6a9ca9a3b833bb0079ec63053fb43142c9f495e7378b3fbef29b5b37"
+            "rules": 24,
+            "sha256": "626b7608b11da8dc72801a43cfc1677d2082cb1688077baefb15a7dc159263fd"
           },
           "ip": {
             "path": "Clash/APTV-ip.conf",
-            "rules": 5,
-            "sha256": "fbd47246071b14f0d57e28a89c90ac2856499f9251269e8426ae4c3821913868"
+            "rules": 7,
+            "sha256": "fa630f100fb51bab2901ff3d9bb9fc47e52971a7c81ab9c0b3ea818d0d97e304"
           }
         },
         "egern": {
           "domainset": {
             "path": "Egern/APTV-domainset.conf",
-            "rules": 21,
-            "sha256": "a079e0aa84cbf8a00f7c39c84bb94a7c0b821b3bdd7cfb6d19be15de1a214656"
+            "rules": 24,
+            "sha256": "8d3bdbad6cb9866223794956b14529b005e60882a484780bd55c41ffb9b7e529"
           },
           "ip": {
             "path": "Egern/APTV-ip.conf",
-            "rules": 5,
-            "sha256": "fbd47246071b14f0d57e28a89c90ac2856499f9251269e8426ae4c3821913868"
+            "rules": 7,
+            "sha256": "fa630f100fb51bab2901ff3d9bb9fc47e52971a7c81ab9c0b3ea818d0d97e304"
           }
         },
         "loon": {
           "domainset": {
             "path": "Loon/APTV-domainset.conf",
-            "rules": 21,
-            "sha256": "a079e0aa84cbf8a00f7c39c84bb94a7c0b821b3bdd7cfb6d19be15de1a214656"
+            "rules": 24,
+            "sha256": "8d3bdbad6cb9866223794956b14529b005e60882a484780bd55c41ffb9b7e529"
           },
           "ip": {
             "path": "Loon/APTV-ip.conf",
-            "rules": 5,
-            "sha256": "fbd47246071b14f0d57e28a89c90ac2856499f9251269e8426ae4c3821913868"
+            "rules": 7,
+            "sha256": "fa630f100fb51bab2901ff3d9bb9fc47e52971a7c81ab9c0b3ea818d0d97e304"
           }
         },
         "quantumultx": {
           "domainset": {
             "path": "QuantumultX/APTV-domainset.conf",
-            "rules": 21,
-            "sha256": "138f17c9533a17481384590b697d2a44c1da9b6b3d833e41439a7e44245d7bdc"
+            "rules": 24,
+            "sha256": "b21c35619e48a211b31d372d68c210ad57791977664857486452dc9d7f831d15"
           },
           "ip": {
             "path": "QuantumultX/APTV-ip.conf",
-            "rules": 5,
-            "sha256": "584beb30f7ce29521ed264dfba99027cffc0e383c6e1deb14aabac5c739f8497"
+            "rules": 7,
+            "sha256": "a9b45bf703abc62675676c5195aa206afec7052464044a5af2f43c0270d42c22"
           }
         },
         "shadowrocket": {
           "domainset": {
             "path": "Shadowrocket/APTV-domainset.conf",
-            "rules": 21,
-            "sha256": "bbd7a96884d51a6a41528906361cd573e890fdeb5adf185a132529f91314dab2"
+            "rules": 24,
+            "sha256": "5abe0003580239c77ef0304fc89dd365ef4f4d07a27238da9de200cc9aeb8e9e"
           },
           "ip": {
             "path": "Shadowrocket/APTV-ip.conf",
-            "rules": 5,
-            "sha256": "fbd47246071b14f0d57e28a89c90ac2856499f9251269e8426ae4c3821913868"
+            "rules": 7,
+            "sha256": "fa630f100fb51bab2901ff3d9bb9fc47e52971a7c81ab9c0b3ea818d0d97e304"
           }
         },
         "stash": {
           "domainset": {
             "path": "Stash/APTV-domainset.conf",
-            "rules": 21,
-            "sha256": "11ad07bc6a9ca9a3b833bb0079ec63053fb43142c9f495e7378b3fbef29b5b37"
+            "rules": 24,
+            "sha256": "626b7608b11da8dc72801a43cfc1677d2082cb1688077baefb15a7dc159263fd"
           },
           "ip": {
             "path": "Stash/APTV-ip.conf",
-            "rules": 5,
-            "sha256": "fbd47246071b14f0d57e28a89c90ac2856499f9251269e8426ae4c3821913868"
+            "rules": 7,
+            "sha256": "fa630f100fb51bab2901ff3d9bb9fc47e52971a7c81ab9c0b3ea818d0d97e304"
           }
         },
         "surge": {
           "domainset": {
             "path": "Surge/APTV-domainset.conf",
-            "rules": 21,
-            "sha256": "bbd7a96884d51a6a41528906361cd573e890fdeb5adf185a132529f91314dab2"
+            "rules": 24,
+            "sha256": "5abe0003580239c77ef0304fc89dd365ef4f4d07a27238da9de200cc9aeb8e9e"
           },
           "ip": {
             "path": "Surge/APTV-ip.conf",
-            "rules": 5,
-            "sha256": "fbd47246071b14f0d57e28a89c90ac2856499f9251269e8426ae4c3821913868"
+            "rules": 7,
+            "sha256": "fa630f100fb51bab2901ff3d9bb9fc47e52971a7c81ab9c0b3ea818d0d97e304"
           }
         }
       }

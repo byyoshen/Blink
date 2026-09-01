@@ -9,6 +9,7 @@ DOMAIN,tg-sub-bot.sharewithyou.dpdns.org
 
 # ==== APTV: stream hosts =====
 DOMAIN,a1xs.vip
+DOMAIN,e.erw.cc
 DOMAIN,lb59.xxip9.top
 DOMAIN,tst-01.worldcast.tv
 DOMAIN-SUFFIX,edemist.com
@@ -21,18 +22,22 @@ DOMAIN,2a7ce3b9.wurl.com
 DOMAIN,amg00276-amg00276c27-xumo-us-9597.playouts.now.amagi.tv
 DOMAIN,czstream.com
 DOMAIN,provider-static.plex.tv
+DOMAIN,tvpnlogopeu.samsungcloud.tv
 DOMAIN,wurlfifa.global.transmit.live
 
 # ==== APTV: CDN / delivery =====
 DOMAIN,aka-live1050.delivery.roku.com
+DOMAIN,sk.delivery.roku.com
 DOMAIN,d198ro05q94rc4.cloudfront.net
 DOMAIN,dbrb49pjoymg4.cloudfront.net
 DOMAIN,dmr1h4skdal9h.cloudfront.net
 DOMAIN,siloh-ns1.plutotv.net
 
 # ==== APTV: stream IPs (CIDR) =====
+IP-CIDR,23.237.104.106/32,no-resolve
 IP-CIDR,77.72.19.0/24,no-resolve
 IP-CIDR,77.72.23.0/24,no-resolve
+IP-CIDR,89.187.179.148/32,no-resolve
 IP-CIDR,92.118.251.84/32,no-resolve
 IP-CIDR,194.59.155.227/32,no-resolve
 IP-CIDR,213.183.47.82/32,no-resolve
