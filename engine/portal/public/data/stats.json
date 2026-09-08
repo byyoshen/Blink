@@ -1487,42 +1487,42 @@
       "self_use": false,
       "policy": "Proxy",
       "file": "Surge/AI.list",
-      "rules": 50,
+      "rules": 51,
       "types": {
         "DOMAIN": 14,
-        "DOMAIN-SUFFIX": 34,
+        "DOMAIN-SUFFIX": 35,
         "DOMAIN-KEYWORD": 2
       },
       "clients": {
         "surge": {
           "file": "Surge/AI.list",
-          "rules": 50
+          "rules": 51
         },
         "loon": {
           "file": "Loon/AI.list",
-          "rules": 50
+          "rules": 51
         },
         "shadowrocket": {
           "file": "Shadowrocket/AI.list",
-          "rules": 50
+          "rules": 51
         },
         "stash": {
           "file": "Stash/AI.list",
-          "rules": 50
+          "rules": 51
         },
         "clash": {
           "file": "Clash/AI.list",
-          "rules": 50,
+          "rules": 51,
           "dropped": 0
         },
         "egern": {
           "file": "Egern/AI.yaml",
-          "rules": 50,
+          "rules": 51,
           "dropped": 0
         },
         "quantumultx": {
           "file": "QuantumultX/AI.list",
-          "rules": 50,
+          "rules": 51,
           "dropped": 0
         }
       },
@@ -1530,43 +1530,43 @@
         "surge": {
           "nonip": {
             "file": "Surge/AI-nonip.conf",
-            "rules": 50
+            "rules": 51
           }
         },
         "loon": {
           "nonip": {
             "file": "Loon/AI-nonip.conf",
-            "rules": 50
+            "rules": 51
           }
         },
         "shadowrocket": {
           "nonip": {
             "file": "Shadowrocket/AI-nonip.conf",
-            "rules": 50
+            "rules": 51
           }
         },
         "stash": {
           "nonip": {
             "file": "Stash/AI-nonip.conf",
-            "rules": 50
+            "rules": 51
           }
         },
         "clash": {
           "nonip": {
             "file": "Clash/AI-nonip.conf",
-            "rules": 50
+            "rules": 51
           }
         },
         "egern": {
           "nonip": {
             "file": "Egern/AI-nonip.conf",
-            "rules": 50
+            "rules": 51
           }
         },
         "quantumultx": {
           "nonip": {
             "file": "QuantumultX/AI-nonip.conf",
-            "rules": 50
+            "rules": 51
           }
         }
       },
