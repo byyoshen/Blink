@@ -4,11 +4,11 @@
 
 **多客户端规则与配置 · 自动构建 · 稳定分发**
 
-[![Update Rule-Sets](https://github.com/wendy1a1a/Blink/actions/workflows/update.yml/badge.svg?branch=main)](https://github.com/wendy1a1a/Blink/actions/workflows/update.yml)
-[![Stars](https://img.shields.io/github/stars/wendy1a1a/Blink?style=flat-square&label=Stars&color=ffcb2e)](https://github.com/wendy1a1a/Blink/stargazers)
-[![Updated](https://img.shields.io/github/last-commit/wendy1a1a/Blink/main?style=flat-square&label=Updated&color=3178c6)](https://github.com/wendy1a1a/Blink/commits/main)
-[![Portal](https://img.shields.io/badge/Portal-网页入口-4d6bfe?style=flat-square)](https://wendy1a1a.github.io/Blink/)
-[![License: MIT](https://img.shields.io/github/license/wendy1a1a/Blink?style=flat-square)](LICENSE)
+[![Update Rule-Sets](https://github.com/byyoshen/Blink/actions/workflows/update.yml/badge.svg?branch=main)](https://github.com/byyoshen/Blink/actions/workflows/update.yml)
+[![Stars](https://img.shields.io/github/stars/byyoshen/Blink?style=flat-square&label=Stars&color=ffcb2e)](https://github.com/byyoshen/Blink/stargazers)
+[![Updated](https://img.shields.io/github/last-commit/byyoshen/Blink/main?style=flat-square&label=Updated&color=3178c6)](https://github.com/byyoshen/Blink/commits/main)
+[![Portal](https://img.shields.io/badge/Portal-网页入口-4d6bfe?style=flat-square)](https://byyoshen.github.io/Blink/)
+[![License: MIT](https://img.shields.io/github/license/byyoshen/Blink?style=flat-square)](LICENSE)
 
 </div>
 
@@ -91,7 +91,7 @@
 在 `[Rule]` 段、`FINAL` 之前加一行：
 
 ```ini
-RULE-SET,https://raw.githubusercontent.com/wendy1a1a/Blink/main/Surge/<App>.list,<你的策略>
+RULE-SET,https://raw.githubusercontent.com/byyoshen/Blink/main/Surge/<App>.list,<你的策略>
 ```
 
 Shadowrocket 语法与 Surge 相同，也可直接用 `Shadowrocket/` 目录 URL。
@@ -101,7 +101,7 @@ Shadowrocket 语法与 Surge 相同，也可直接用 `Shadowrocket/` 目录 URL
 在 `[Remote Rule]` 段添加一行：
 
 ```ini
-https://raw.githubusercontent.com/wendy1a1a/Blink/main/Loon/<App>.list, policy=<你的策略>, tag=<App>, enabled=true
+https://raw.githubusercontent.com/byyoshen/Blink/main/Loon/<App>.list, policy=<你的策略>, tag=<App>, enabled=true
 ```
 
 ### Stash
@@ -114,7 +114,7 @@ rule-providers:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Stash/<App>.list
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/<App>.list
     interval: 86400
 rules:
   - RULE-SET,<App>,<你的策略>
@@ -130,7 +130,7 @@ rule-providers:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Clash/<App>.list
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/<App>.list
     interval: 86400
 rules:
   - RULE-SET,<App>,<你的策略>
@@ -141,7 +141,7 @@ rules:
 ```yaml
 rules:
   - rule_set:
-      match: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Egern/<App>.yaml
+      match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/<App>.yaml
       policy: <你的策略>
 ```
 
@@ -152,10 +152,10 @@ rules:
 在 `[filter_remote]` 段添加一行；行尾的 `policy` 是占位符，实际策略由 `force-policy` 指定：
 
 ```ini
-https://raw.githubusercontent.com/wendy1a1a/Blink/main/QuantumultX/<App>.list, tag=<App>, force-policy=<你的策略>, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/byyoshen/Blink/main/QuantumultX/<App>.list, tag=<App>, force-policy=<你的策略>, update-interval=172800, opt-parser=false, enabled=true
 ```
 
-<sub>raw 直连不稳时，可改用 jsDelivr 加速地址（缓存最长 12 小时，规则更新会相应延迟）：`https://cdn.jsdelivr.net/gh/wendy1a1a/Blink@main/Surge/<App>.list`（其余客户端同理替换目录，如 `Clash/`、`QuantumultX/`）。</sub>
+<sub>raw 直连不稳时，可改用 jsDelivr 加速地址（缓存最长 12 小时，规则更新会相应延迟）：`https://cdn.jsdelivr.net/gh/byyoshen/Blink@main/Surge/<App>.list`（其余客户端同理替换目录，如 `Clash/`、`QuantumultX/`）。</sub>
 
 ---
 
@@ -165,7 +165,7 @@ https://raw.githubusercontent.com/wendy1a1a/Blink/main/QuantumultX/<App>.list, t
 
 七客户端**完整配置文件**位于 [`Profiles/`](Profiles/)：`Surge.conf`、`Shadowrocket.conf`、`Loon.conf`、`Stash.yaml`、`Clash.yaml`（Android）、`Egern.yaml`、`QuantumultX.conf`。
 
-1. 下载对应客户端的配置文件（或在[门户](https://wendy1a1a.github.io/Blink/)「配置文件」板块用 **iOS 一键导入**）。
+1. 下载对应客户端的配置文件（或在[门户](https://byyoshen.github.io/Blink/)「配置文件」板块用 **iOS 一键导入**）。
 2. 用文本编辑器把 `https://YOUR-SUBSCRIPTION-URL` 替换成你的订阅链接。
 3. 导入客户端，真机验证策略组与分流效果。
 
@@ -177,7 +177,7 @@ https://raw.githubusercontent.com/wendy1a1a/Blink/main/QuantumultX/<App>.list, t
 
 ## 网页入口
 
-无需域名即可访问：[`https://wendy1a1a.github.io/Blink/`](https://wendy1a1a.github.io/Blink/)，页面板块：
+无需域名即可访问：[`https://byyoshen.github.io/Blink/`](https://byyoshen.github.io/Blink/)，页面板块：
 
 - **规则集**：切换七客户端标签查看每个 App 的规则数与接入方式，一键复制；
 - **接入你的客户端**：七客户端全量接入片段，一键复制；
@@ -185,7 +185,7 @@ https://raw.githubusercontent.com/wendy1a1a/Blink/main/QuantumultX/<App>.list, t
 - **构建与来源**：构建管线与选源原则。
 
 <div align="center">
-  <a href="https://wendy1a1a.github.io/Blink/">
+  <a href="https://byyoshen.github.io/Blink/">
     <img src="engine/docs/images/portal-preview.png" alt="Blink 门户预览" width="720" />
   </a>
 </div>

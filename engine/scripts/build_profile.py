@@ -36,12 +36,12 @@ CLIENTS = {
 }
 
 BUILTIN_POLICIES = {"DIRECT", "REJECT", "REJECT-DROP", "Sub"}
-BLINK_RAW = "https://raw.githubusercontent.com/wendy1a1a/Blink/main/Surge"
-BLINK_RAW_CLASH = "https://raw.githubusercontent.com/wendy1a1a/Blink/main/Clash"
+BLINK_RAW = "https://raw.githubusercontent.com/byyoshen/Blink/main/Surge"
+BLINK_RAW_CLASH = "https://raw.githubusercontent.com/byyoshen/Blink/main/Clash"
 
 # Per-client view file directory for the multi-view pilot (view payloads are
 # policy-free rule-set content, referenced at use site).
-BLINK_RAW_VIEW = "https://raw.githubusercontent.com/wendy1a1a/Blink/main"
+BLINK_RAW_VIEW = "https://raw.githubusercontent.com/byyoshen/Blink/main"
 VIEW_DIR = {
     "surge": "Surge",
     "shadowrocket": "Shadowrocket",
@@ -793,7 +793,7 @@ def _render_quantumultx(intent: dict) -> dict[str, str]:
             continue
         source = (
             app.get("qx_source")
-            or f"https://raw.githubusercontent.com/wendy1a1a/Blink/main/QuantumultX/{app_name}.list"
+            or f"https://raw.githubusercontent.com/byyoshen/Blink/main/QuantumultX/{app_name}.list"
         )
         remote_rules.append(
             f"{source}, tag={app_name}, force-policy={qx_policy(app['policy'])},"

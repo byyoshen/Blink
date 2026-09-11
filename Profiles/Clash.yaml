@@ -90,55 +90,55 @@ rule-providers:
     type: http
     behavior: domain
     format: text
-    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Clash/Telegram-domainset.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/Telegram-domainset.conf
     interval: 86400
   Telegram_ip:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Clash/Telegram-ip.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/Telegram-ip.conf
     interval: 86400
   X_domainset:
     type: http
     behavior: domain
     format: text
-    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Clash/X-domainset.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/X-domainset.conf
     interval: 86400
   X_ip:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Clash/X-ip.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/X-ip.conf
     interval: 86400
   YouTube_nonip:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Clash/YouTube-nonip.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/YouTube-nonip.conf
     interval: 86400
   Instagram_domainset:
     type: http
     behavior: domain
     format: text
-    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Clash/Instagram-domainset.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/Instagram-domainset.conf
     interval: 86400
   Google_nonip:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Clash/Google-nonip.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/Google-nonip.conf
     interval: 86400
   Google_ip:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Clash/Google-ip.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/Google-ip.conf
     interval: 86400
   GitHub_domainset:
     type: http
     behavior: domain
     format: text
-    url: https://raw.githubusercontent.com/wendy1a1a/Blink/main/Clash/GitHub-domainset.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/GitHub-domainset.conf
     interval: 86400
   china_ip:
     type: http

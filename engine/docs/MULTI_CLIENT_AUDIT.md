@@ -196,7 +196,7 @@ QuantumultX/<App>.list   # QX filter 行（行尾占位符 policy，force-policy
 
 ## 9. Surge Backward Compatibility Plan
 
-1. `Surge/<App>.list` 路径与字节**保持完全不变**：`RULE-SET,https://raw.githubusercontent.com/wendy1a1a/Blink/main/Surge/<App>.list,<策略>` 持续有效；jsDelivr 镜像说明不变。
+1. `Surge/<App>.list` 路径与字节**保持完全不变**：`RULE-SET,https://raw.githubusercontent.com/byyoshen/Blink/main/Surge/<App>.list,<策略>` 持续有效；jsDelivr 镜像说明不变。
 2. 重构验收门禁：重构建后 `git diff Surge/` 必须为空（golden-byte 检查）。
 3. Surge 路径从不移动 → 无需 alias / 重复发布路径 / staged migration。
 
