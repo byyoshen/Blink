@@ -21,8 +21,8 @@
 | `engine/portal/public/blink-logo-dark.webp` | `badge-dark.png` | 裁到徽章边界并向内缩 10px（避开徽章自身的抗锯齿白边），用徽章底色补成正方形，缩到 512²，WebP q90 |
 | `engine/portal/public/blink-logo-light.webp` | `badge-light.png` | 同上 |
 | `engine/portal/public/og-image.png` | `badge-dark.png` | 同上，但保持 PNG（见下方约束） |
-| `engine/portal/public/favicon-dark.png` | 深色方图 | 512²，烘焙圆形 alpha（4× 掩膜降采样抗锯齿） |
-| `engine/portal/public/favicon-light.png` | 浅色方图 | 同上 |
+| `engine/portal/public/favicon-dark.png` | `badge-dark.png` | 256²，烘焙圆形 alpha（4× 掩膜降采样抗锯齿）。256 足够：页面只用 `rel="icon"`，没有 apple-touch-icon / PWA 图标 |
+| `engine/portal/public/favicon-light.png` | `badge-light.png` | 同上 |
 | `engine/docs/images/banner-on-dark.webp` | `wordmark-dark.png` | 缩到 1280 宽，WebP q90 |
 | `engine/docs/images/banner-on-light.webp` | `wordmark-light.png` | 同上 |
 
