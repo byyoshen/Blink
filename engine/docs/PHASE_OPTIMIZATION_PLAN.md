@@ -76,10 +76,17 @@ Final:    FINAL → Final, dns-failed
 |---|---|---|---|---|---|---|---|
 | `extended-matching` | FULL | UNSUPPORTED | UNSUPPORTED | UNSUPPORTED | UNSUPPORTED | UNSUPPORTED | UNSUPPORTED |
 | `pre-matching` | FULL | UNSUPPORTED | UNSUPPORTED | UNSUPPORTED | UNSUPPORTED | UNSUPPORTED | UNSUPPORTED |
-| `no-resolve` | FULL | FULL | FULL | FULL | FULL | set 级 | UNSUPPORTED |
+| `no-resolve` | FULL | FULL | ADAPTED（仅行内） | FULL | FULL | set 级 | UNSUPPORTED |
 | `REJECT-DROP` | FULL | FULL | FULL | FULL | FULL | ADAPTED→REJECT | ADAPTED→reject |
 
 > 以 `engine/docs/MULTI_CLIENT_AUDIT.md` 为最终格式事实；冲突先改本文再改代码。各端字段无生产实证一律 UNSUPPORTED。
+
+> `no-resolve` 的落点分两层，必须同时看：规则集**行内**选项，和**引用行**选项。
+> Surge / Shadowrocket / Stash / Clash 的引用行都有槽位（`build_profile.IP_NO_RESOLVE_CLIENTS`
+> 是这份判断的唯一代码实现）；Loon 的 `[Remote Rule]` 引用行没有槽位，只能依赖规则集行内选项，
+> 所以对行内不带 `no-resolve` 的外部 IP 规则集（如 `skk List/ip/china_ip.conf`，3900 行全不带）
+> 是 ADAPTED 而非 FULL，已在 `templates/loon.conf` 头部显式标注。Blink 自产的 `-ip.conf`
+> 行内全部带 `no-resolve`，因此 App 的 IP 段在七端都受保护。
 
 ## 七、分阶段实施细则（横向切片：一次一功能 × 七端，逐切评审）
 

@@ -9,6 +9,7 @@ Stash/*.tmp
 Clash/*.tmp
 Egern/*.tmp
 QuantumultX/*.tmp
+Profiles/*.tmp
 manifest.json.tmp
 engine/reports/build_report.json
 .tmp-tests/

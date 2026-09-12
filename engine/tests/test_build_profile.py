@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -60,6 +61,23 @@ def sample_intent() -> dict:
             },
         ],
     }
+
+
+def ip_sample_intent() -> dict:
+    """Sample intent with an IP-phase infrastructure rule and an app IP view."""
+    intent = sample_intent()
+    intent["apps"]["YouTube"] = {"policy": "Proxy", "views": ["domainset", "ip"]}
+    intent["infrastructure"].append(
+        {
+            "name": "china-ip",
+            "url": "https://example.invalid/china-ip.conf",
+            "policy": "DIRECT",
+            "phase": "ip",
+            "options": {client: "no-resolve" for client in build_profile.IP_NO_RESOLVE_CLIENTS},
+            "qx_url": "https://example.invalid/qx-china-ip.list",
+        }
+    )
+    return intent
 
 
 class ProfileEngineTests(unittest.TestCase):
@@ -152,6 +170,83 @@ class ProfileEngineTests(unittest.TestCase):
         outputs = self.render(intent)
         self.assertIn("reject.conf", outputs["surge"])
         self.assertNotIn("reject.conf", outputs["shadowrocket"])
+
+    def test_inline_domain_infrastructure_renders_on_every_client(self) -> None:
+        # ``kind: domain`` carries no URL, so it must not trip the QX qx_url
+        # requirement that only applies to remote rule sets.
+        intent = sample_intent()
+        intent["infrastructure"].insert(
+            0, {"name": "probe", "kind": "domain", "value": "example.com", "policy": "DIRECT"}
+        )
+        build_profile.validate_intent(intent)
+        outputs = self.render(intent)
+        self.assertIn("host, example.com, direct", outputs["quantumultx"])
+        self.assertIn("DOMAIN,example.com,DIRECT", outputs["surge"])
+        self.assertIn("  - DOMAIN,example.com,DIRECT", outputs["stash"])
+
+    def test_ip_phase_reference_keeps_no_resolve_where_supported(self) -> None:
+        intent = ip_sample_intent()
+        outputs = self.render(intent)
+        self.assertIn(
+            "RULE-SET,https://example.invalid/china-ip.conf,DIRECT,no-resolve", outputs["surge"]
+        )
+        self.assertIn(
+            "RULE-SET,https://example.invalid/china-ip.conf,DIRECT,no-resolve",
+            outputs["shadowrocket"],
+        )
+        self.assertIn("  - RULE-SET,china_ip,DIRECT,no-resolve", outputs["stash"])
+        self.assertIn("  - RULE-SET,china_ip,DIRECT,no-resolve", outputs["clash"])
+
+    def test_ip_view_reference_keeps_no_resolve_where_supported(self) -> None:
+        intent = ip_sample_intent()
+        outputs = self.render(intent)
+        self.assertIn("YouTube-ip.conf,Proxy,no-resolve", outputs["surge"])
+        self.assertIn("YouTube-ip.conf,Proxy,no-resolve", outputs["shadowrocket"])
+        self.assertIn("  - RULE-SET,YouTube_ip,Proxy,no-resolve", outputs["stash"])
+        self.assertIn("  - RULE-SET,YouTube_ip,Proxy,no-resolve", outputs["clash"])
+        # Clients without a reference-level slot must not invent one.
+        for client in set(build_profile.CLIENTS) - set(build_profile.IP_NO_RESOLVE_CLIENTS):
+            self.assertNotIn("-ip.conf, policy = Proxy, no-resolve", outputs[client])
+
+    def test_real_intent_ip_references_all_carry_no_resolve(self) -> None:
+        """Every IP-phase reference must carry no-resolve on clients that support it.
+
+        The upstream china_ip list has no per-line no-resolve, so the reference
+        line is the only place the domain-first / IP-last guarantee can live.
+        """
+        intent = build_profile.load_intent(build_profile.INTENT_PATH)
+        build_profile.validate_intent(intent)
+        ip_urls = {
+            rule["url"]
+            for rule in intent.get("infrastructure", [])
+            if build_profile._phase(rule) == "ip" and rule.get("url")
+        }
+        self.assertTrue(ip_urls, "the real intent must declare IP-phase infrastructure")
+        mihomo_keys = {
+            re.sub(r"[^A-Za-z0-9]", "_", rule["name"])
+            for rule in intent["infrastructure"]
+            if build_profile._phase(rule) == "ip"
+        }
+        mihomo_keys |= {
+            f"{app}_ip"
+            for app, entry in intent["apps"].items()
+            if "ip" in (entry.get("views") or [])
+        }
+        checked = 0
+        for client in sorted(build_profile.IP_NO_RESOLVE_CLIENTS):
+            for line in build_profile.render_client(client, intent).splitlines():
+                stripped = line.strip()
+                if stripped.startswith("#") or "RULE-SET," not in stripped:
+                    continue
+                if client in {"stash", "clash"}:
+                    key = stripped.split("RULE-SET,", 1)[1].split(",")[0]
+                    if key not in mihomo_keys:
+                        continue
+                elif not (any(url in stripped for url in ip_urls) or "-ip.conf" in stripped):
+                    continue
+                checked += 1
+                self.assertIn("no-resolve", stripped, f"{client}: {stripped}")
+        self.assertGreaterEqual(checked, 4 * len(ip_urls))
 
     def test_write_outputs_generates_profiles_dir(self) -> None:
         intent = sample_intent()

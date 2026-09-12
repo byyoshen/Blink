@@ -39,6 +39,11 @@ jobs:
         run: python engine/scripts/overlap_check.py --root .
       - name: Verify provenance and artifact checksums
         run: python engine/scripts/verify_manifest.py --root .
+      - name: Verify portal data matches the generated outputs
+        # update.yml regenerates stats.json on every daily build, but a local
+        # `build.py --app <App> --write` can change rule counts without it.
+        # Without this gate the portal silently serves stale counts.
+        run: python engine/scripts/gen_portal_stats.py --check
       - name: Verify generated Profiles and local references
         run: python engine/scripts/verify_profiles.py --root .
       - name: Scan sensitive patterns

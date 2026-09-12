@@ -7,6 +7,14 @@ on:
     paths:
       - "engine/portal/**"
       - ".github/workflows/pages.yml"
+  # The daily update commits engine/portal/public/data/stats.json with the
+  # default GITHUB_TOKEN, and a push made with that token does not trigger
+  # other workflows. Without this trigger the portal keeps serving the rule
+  # counts from the last human portal commit.
+  workflow_run:
+    workflows: ["Update Rule-Sets"]
+    types:
+      - completed
   workflow_dispatch:
 
 permissions:
@@ -18,6 +26,10 @@ concurrency:
 
 jobs:
   build:
+    # workflow_run fires on every completion, including failures; only a
+    # successful daily update produces data worth deploying. Other triggers
+    # carry no workflow_run context, so they always pass this guard.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
 
     steps:
