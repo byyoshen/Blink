@@ -1,6 +1,9 @@
 <div align="center">
 
-# <img src="engine/docs/images/avatar.png" width="36" height="36" alt="" style="vertical-align:middle;border-radius:50%" /> Blink
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="engine/docs/images/banner-on-dark.webp">
+  <img src="engine/docs/images/banner-on-light.webp" width="560" alt="Blink" />
+</picture>
 
 **多客户端规则与配置 · 自动构建 · 稳定分发**
 
@@ -82,7 +85,8 @@
 >
 > 引用方式写反后 Surge **不会报错**，只是该规则集不生效、流量悄悄落到 `FINAL`——如果发现分流没有按预期走，请先检查这一项。
 > 一句话口诀：**`-domainset.conf` 配 `DOMAIN-SET`，`-nonip.conf` / `-ip.conf` 配 `RULE-SET`，IP 段记得加 `no-resolve`**。
-> 最省事的方式是直接复制门户给出的接入片段，不要自行改写类型。
+> 门户的规则集卡片复制出来的是 raw 地址（Stash / Clash 例外，给的是完整 `rule-providers` 片段）；
+> **引用类型由文件后缀决定，按上表套用即可**，不要自行改写。
 
 规则文件**不带策略名**，policy 由引用处指定。各客户端引用写法如下。
 
@@ -186,8 +190,17 @@ https://raw.githubusercontent.com/byyoshen/Blink/main/QuantumultX/<App>.list, ta
 
 <div align="center">
   <a href="https://byyoshen.github.io/Blink/">
-    <img src="engine/docs/images/portal-preview.png" alt="Blink 门户预览" width="720" />
+    <img src="engine/docs/images/portal-preview-1.png" alt="Blink 门户首页" width="720" />
   </a>
+  <br />
+  <sub>首页 —— 一次审计，多端适用</sub>
+  <br />
+  <br />
+  <a href="https://byyoshen.github.io/Blink/#rulesets">
+    <img src="engine/docs/images/portal-preview-2.png" alt="Blink 门户规则集板块" width="720" />
+  </a>
+  <br />
+  <sub>规则集 —— 每个 App 的规则数、来源与一键复制</sub>
 </div>
 
 ---
@@ -196,7 +209,7 @@ https://raw.githubusercontent.com/byyoshen/Blink/main/QuantumultX/<App>.list, ta
 
 ## 完整性校验
 
-根目录 [`manifest.json`](manifest.json) 为 30 个 App、七客户端共 210 个生成产物记录 SHA256、上游内容指纹、canonical 规则指纹和显式降级统计。push / PR 与每日更新会自动执行七端等价性、重复/空集/排序、语义视图一致性、跨 App overlap、Profile 引用及敏感模式门禁；完整命令与设计边界见 [`engine/docs/MACHINE_GATES.md`](engine/docs/MACHINE_GATES.md)。
+根目录 [`manifest.json`](manifest.json) 为 30 个 App 的 **210 个主产物与 266 个语义视图**记录 SHA256、上游内容指纹、canonical 规则指纹，以及显式降级与 exclude 命中统计。push / PR 与每日更新会自动执行七端等价性、重复/空集/排序、语义视图一致性、跨 App overlap、Profile 引用、门户数据同步、仓库身份一致性及敏感模式门禁；完整命令与设计边界见 [`engine/docs/MACHINE_GATES.md`](engine/docs/MACHINE_GATES.md)。
 
 ---
 

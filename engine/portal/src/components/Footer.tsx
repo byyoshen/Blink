@@ -19,7 +19,7 @@ export default function Footer({ repo, theme }: FooterProps) {
         <p className="flex items-center justify-center gap-2 text-sm font-semibold">
           <span className="relative h-6 w-6 shrink-0 overflow-hidden rounded-full border border-line bg-card">
             <img
-              src="blink-logo.png"
+              src="blink-logo-dark.png"
               alt=""
               width={24}
               height={24}
@@ -28,7 +28,7 @@ export default function Footer({ repo, theme }: FooterProps) {
               }`}
             />
             <img
-              src="blink-logo-2.png"
+              src="blink-logo-light.png"
               alt=""
               width={24}
               height={24}

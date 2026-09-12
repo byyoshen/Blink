@@ -40,7 +40,7 @@ export default function Nav({ repo, theme, toggleTheme }: NavProps) {
         >
           <span className="relative h-6 w-6 shrink-0 overflow-hidden rounded-full border border-line bg-card">
             <img
-              src="blink-logo.png"
+              src="blink-logo-dark.png"
               alt=""
               width={24}
               height={24}
@@ -49,7 +49,7 @@ export default function Nav({ repo, theme, toggleTheme }: NavProps) {
               }`}
             />
             <img
-              src="blink-logo-2.png"
+              src="blink-logo-light.png"
               alt=""
               width={24}
               height={24}
@@ -86,9 +86,9 @@ export default function Nav({ repo, theme, toggleTheme }: NavProps) {
           title={themeLabel}
           className="relative ml-auto flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line bg-card transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-line-strong hover:bg-paper hover:shadow-md active:scale-90 sm:ml-0"
         >
-          {/* dark = white cat on black; light = white dog on blue */}
+          {/* dark = white bear on near-black; light = black bear on off-white */}
           <img
-            src="blink-logo.png"
+            src="blink-logo-dark.png"
             alt=""
             width={20}
             height={20}
@@ -97,7 +97,7 @@ export default function Nav({ repo, theme, toggleTheme }: NavProps) {
             }`}
           />
           <img
-            src="blink-logo-2.png"
+            src="blink-logo-light.png"
             alt=""
             width={20}
             height={20}

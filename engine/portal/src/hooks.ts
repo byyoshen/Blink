@@ -68,10 +68,10 @@ export function useTheme(): { theme: Theme; toggle: () => void } {
 
   useEffect(() => {
     applyTheme(theme);
-    // Sync the browser-tab favicon: dark = circular white cat, light = circular blue dog.
+    // Sync the browser-tab favicon: one circular mascot badge per theme.
     const icon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
     if (icon) {
-      icon.href = theme === "dark" ? "favicon-cat.png" : "favicon-dog.png";
+      icon.href = theme === "dark" ? "favicon-dark.png" : "favicon-light.png";
     }
     try {
       localStorage.setItem("blink-theme", theme);
