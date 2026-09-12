@@ -73,14 +73,18 @@ def prepare_repository(root: Path) -> tuple[dict, build.Compilation, dict]:
     manifest_path.write_text(
         yaml.safe_dump(source_manifest, sort_keys=False), encoding="utf-8", newline="\n"
     )
+    rules = [rule()]
     compilation = build.Compilation(
         "Demo",
-        [rule()],
+        rules,
         [],
         [],
         {},
         source_inputs={"https://example.invalid/data/demo": "example.com\n"},
         input_rules=1,
+        # compile_app always derives the semantic split; a fixture that skipped it
+        # would not describe any real build.
+        views=build.semantic_views(rules),
     )
     rendered = build.rendered_outputs(compilation, source_manifest, root)
     build.write_outputs([compilation], source_manifest, root, [rendered])
@@ -167,6 +171,107 @@ class QualityGateTests(unittest.TestCase):
             )
             self.assertEqual(report[0]["added"], 30)
             self.assertTrue(violations)
+
+    def test_refresh_provenance_only_changes_builder_fingerprints(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            source_manifest, _compilation, _rendered = prepare_repository(root)
+            manifest_path = root / build.PROVENANCE_FILENAME
+            before = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+            # An edit that does not change any output still invalidates the
+            # recorded builder checksum, which is what fails verify_manifest.
+            builder = root / "engine" / "scripts" / "build.py"
+            builder.write_bytes(builder.read_bytes() + b"\n# provenance-only edit\n")
+            with self.assertRaisesRegex(verify_manifest.ManifestError, "builder checksum"):
+                verify_manifest.check(root)
+
+            document = build.refresh_provenance(source_manifest, root)
+            build.write_provenance(document, root)
+            after = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+            # Everything derived from upstream or from the committed artifacts is
+            # reproduced offline; only the builder fingerprint moves.
+            self.assertNotEqual(
+                before["builder"]["files"]["engine/scripts/build.py"],
+                after["builder"]["files"]["engine/scripts/build.py"],
+            )
+            before["builder"]["files"]["engine/scripts/build.py"] = after["builder"]["files"][
+                "engine/scripts/build.py"
+            ]
+            self.assertEqual(before, after)
+            self.assertEqual(verify_manifest.check(root)["outputs"], 7)
+
+    def test_refresh_provenance_refuses_when_an_output_drifted(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            source_manifest, _compilation, _rendered = prepare_repository(root)
+            qx = root / "QuantumultX" / "Demo.list"
+            qx.write_text(
+                qx.read_text(encoding="utf-8") + "HOST-SUFFIX,extra.example,policy\n",
+                encoding="utf-8",
+            )
+            # A refresh must never paper over a real rendering change: the
+            # committed output no longer matches what the renderers produce.
+            with self.assertRaisesRegex(build.BuildError, "run a full --write"):
+                build.refresh_provenance(source_manifest, root)
+
+    def test_refresh_provenance_refuses_an_undeclared_upstream(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            source_manifest, _compilation, _rendered = prepare_repository(root)
+            # A new upstream means the content changed, so its fingerprint cannot
+            # be carried over from the previous manifest.
+            source_manifest["apps"]["Demo"]["sources"][0]["url"] = (
+                "https://example.invalid/data/new"
+            )
+            with self.assertRaisesRegex(build.BuildError, "no recorded fingerprint"):
+                build.refresh_provenance(source_manifest, root)
+
+    def test_refresh_provenance_carries_upstream_only_counters(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            source_manifest, _compilation, _rendered = prepare_repository(root)
+            manifest_path = root / build.PROVENANCE_FILENAME
+            document = json.loads(manifest_path.read_text(encoding="utf-8"))
+            canonical = document["apps"]["Demo"]["canonical"]
+            canonical["input_rules"] = 9
+            canonical["skipped_excluded"] = ["IP-ASN,64500"]
+            canonical["denied_includes"] = ["npmjs"]
+            canonical["excluded_domains"] = {"domain-suffix:cdn.example": 3}
+            # The recorded exclude set has to match apps.yaml, otherwise the
+            # dedicated guard (tested separately) rejects the refresh.
+            source_manifest["apps"]["Demo"]["exclude"] = ["domain-suffix:cdn.example"]
+            manifest_path.write_text(
+                json.dumps(document, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+                newline="\n",
+            )
+            refreshed = build.refresh_provenance(source_manifest, root)["apps"]["Demo"]["canonical"]
+            # Counters only a live fetch can establish must survive the refresh
+            # rather than being silently reset to zero.
+            self.assertEqual(refreshed["input_rules"], 9)
+            self.assertEqual(refreshed["skipped_excluded"], ["IP-ASN,64500"])
+            self.assertEqual(refreshed["denied_includes"], ["npmjs"])
+            self.assertEqual(refreshed["excluded_domains"], {"domain-suffix:cdn.example": 3})
+
+    def test_refresh_provenance_refuses_a_changed_exclude_declaration(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            source_manifest, _compilation, _rendered = prepare_repository(root)
+            manifest_path = root / build.PROVENANCE_FILENAME
+            document = json.loads(manifest_path.read_text(encoding="utf-8"))
+            document["apps"]["Demo"]["canonical"]["excluded_domains"] = {
+                "domain-suffix:cdn.example": 1
+            }
+            manifest_path.write_text(
+                json.dumps(document, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+                newline="\n",
+            )
+            source_manifest["apps"]["Demo"]["exclude"] = ["domain-suffix:other.example"]
+            with self.assertRaisesRegex(build.BuildError, "different domain excludes"):
+                build.refresh_provenance(source_manifest, root)
 
     def test_secret_scan_reports_location_without_echoing_secret(self) -> None:
         with TemporaryDirectory() as directory:

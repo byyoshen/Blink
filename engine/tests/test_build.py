@@ -487,6 +487,114 @@ class BuildTests(unittest.TestCase):
         self.assertEqual(build.render_classical_body(result.rules), ["DOMAIN-SUFFIX,example.com"])
         self.assertEqual(result.skipped_excluded, ["IP-ASN,11983"])
 
+    def test_domain_excludes_are_counted_per_declared_spec(self) -> None:
+        source_url = "https://example.invalid/Surge/Test.list"
+        config = app_config(source_format="surge-rule-set", url=source_url)
+        config["exclude"] = [
+            "domain-suffix:cdn.example",
+            "domain-keyword:tracker",
+            "domain-suffix:never.example",
+        ]
+        result = self.compile(
+            config,
+            {
+                source_url: (
+                    "DOMAIN-SUFFIX,keep.example\n"
+                    "DOMAIN-SUFFIX,cdn.example\n"
+                    "DOMAIN,asset.cdn.example\n"
+                    "DOMAIN-KEYWORD,tracker\n"
+                )
+            },
+        )
+        self.assertEqual(build.render_classical_body(result.rules), ["DOMAIN-SUFFIX,keep.example"])
+        # A declared exclude that matches nothing stays in the record as a zero,
+        # so an upstream that stopped carrying the rule becomes a visible diff.
+        self.assertEqual(
+            result.excluded_domains,
+            {
+                "domain-suffix:cdn.example": 2,
+                "domain-keyword:tracker": 1,
+                "domain-suffix:never.example": 0,
+            },
+        )
+
+    def test_excluded_domains_recorded_in_provenance_only_when_declared(self) -> None:
+        source_url = "https://example.invalid/Surge/Test.list"
+        with TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            config = app_config(source_format="surge-rule-set", url=source_url)
+            config["exclude"] = ["domain-suffix:cdn.example"]
+            manifest = {"version": 1, "apps": {"Test": config}}
+            texts = {source_url: "DOMAIN-SUFFIX,keep.example\nDOMAIN-SUFFIX,cdn.example\n"}
+            compilation = build.compile_app("Test", config, root, texts.__getitem__)
+            rendered = build.rendered_outputs(compilation, manifest, root)
+            record = build.app_provenance_record(compilation, config, rendered, root)
+            self.assertEqual(
+                record["canonical"]["excluded_domains"], {"domain-suffix:cdn.example": 1}
+            )
+
+            plain = app_config(source_format="surge-rule-set", url=source_url)
+            compilation = build.compile_app("Test", plain, root, texts.__getitem__)
+            rendered = build.rendered_outputs(compilation, {"apps": {"Test": plain}}, root)
+            record = build.app_provenance_record(compilation, plain, rendered, root)
+            self.assertNotIn("excluded_domains", record["canonical"])
+
+    def test_prune_stale_views_removes_a_view_the_split_no_longer_produces(self) -> None:
+        source_url = "https://example.invalid/Surge/Test.list"
+        with TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            config = app_config(source_format="surge-rule-set", url=source_url)
+            config["views"] = True
+            manifest = {"version": 1, "apps": {"Test": config}}
+
+            # First build carries an IP rule, so every client gets an ip view.
+            compilation = build.compile_app(
+                "Test",
+                config,
+                root,
+                {source_url: "DOMAIN-SUFFIX,example.com\nIP-CIDR,198.51.100.0/24,no-resolve\n"}.get,
+            )
+            build.write_outputs([compilation], manifest, root)
+            build.write_client_views([compilation], manifest, root)
+            ip_views = [
+                root / client.directory / "Test-ip.conf" for client in build.CLIENTS.values()
+            ]
+            self.assertTrue(all(path.is_file() for path in ip_views))
+
+            # Upstream drops the IP rule: semantic_views stops producing the ip
+            # view, and the orphan file would fail validate_views as spurious.
+            compilation = build.compile_app(
+                "Test", config, root, {source_url: "DOMAIN-SUFFIX,example.com\n"}.get
+            )
+            build.write_outputs([compilation], manifest, root)
+            build.write_client_views([compilation], manifest, root)
+            removed = build.prune_stale_views([compilation], manifest, root)
+            self.assertEqual(len(removed), len(build.CLIENTS))
+            self.assertFalse(any(path.is_file() for path in ip_views))
+            # The surviving domainset view is untouched.
+            self.assertTrue(
+                all(
+                    (root / client.directory / "Test-domainset.conf").is_file()
+                    for client in build.CLIENTS.values()
+                )
+            )
+            self.assertEqual(build.prune_stale_views([compilation], manifest, root), [])
+
+    def test_prune_stale_views_removes_every_view_when_views_disabled(self) -> None:
+        source_url = "https://example.invalid/Surge/Test.list"
+        with TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            config = app_config(source_format="surge-rule-set", url=source_url)
+            config["views"] = True
+            manifest = {"version": 1, "apps": {"Test": config}}
+            compilation = build.compile_app(
+                "Test", config, root, {source_url: "DOMAIN-SUFFIX,example.com\n"}.get
+            )
+            build.write_client_views([compilation], manifest, root)
+            config["views"] = False
+            removed = build.prune_stale_views([compilation], manifest, root)
+            self.assertEqual(len(removed), len(build.CLIENTS))
+
     def test_supplement_stays_strict_despite_type_excludes(self) -> None:
         source_url = "https://example.invalid/Surge/Test.list"
         config = app_config(source_format="surge-rule-set", url=source_url)
@@ -543,6 +651,14 @@ class BuildTests(unittest.TestCase):
     def test_cli_supplement_only_app_end_to_end(self) -> None:
         with TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)
+            # The provenance manifest fingerprints the builder of the repository
+            # being built (what verify_manifest.py resolves), so a fixture repo
+            # has to carry it like a real checkout does.
+            scripts = Path(__file__).resolve().parents[1] / "scripts"
+            builder_dir = root / "engine" / "scripts"
+            builder_dir.mkdir(parents=True)
+            for name in ("build.py", "renderers.py"):
+                (builder_dir / name).write_bytes((scripts / name).read_bytes())
             supplement_dir = root / "engine" / "sources" / "supplement"
             supplement_dir.mkdir(parents=True)
             (supplement_dir / "Demo.list").write_text(

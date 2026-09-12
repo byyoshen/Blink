@@ -288,6 +288,10 @@
         "denied_includes": [
           "aws-cn"
         ],
+        "excluded_domains": {
+          "domain-suffix:cloudfront.com": 1,
+          "domain-suffix:cloudfront.net": 1
+        },
         "input_rules": 51,
         "rules": 49,
         "sha256": "2db97fb25b52a0baa8a45444d767214f5c99f802d559caea2b55802ac484e2b5",
@@ -1004,6 +1008,10 @@
     "HBO": {
       "canonical": {
         "denied_includes": [],
+        "excluded_domains": {
+          "domain-suffix:execute-api.ap-southeast-1.amazonaws.com": 1,
+          "domain-suffix:execute-api.us-east-1.amazonaws.com": 1
+        },
         "input_rules": 48,
         "rules": 46,
         "sha256": "fec182738b845432e878d12a884034298df289652fa2577ca149404fc4732d29",
@@ -1260,6 +1268,9 @@
     "Instagram": {
       "canonical": {
         "denied_includes": [],
+        "excluded_domains": {
+          "domain-keyword:instagram": 1
+        },
         "input_rules": 4,
         "rules": 3,
         "sha256": "5bdd2425ca70acc235c877e9e066951167d6356bf1a52184ee9f2e5ea5df7ad1",
@@ -4068,7 +4079,7 @@
   },
   "builder": {
     "files": {
-      "engine/scripts/build.py": "9d3174c8f9caae94fc3a92fbc2cb4a111823dba20f62c943743b1494336670d1",
+      "engine/scripts/build.py": "0cf81189776869b563fbfbd19e096a0a2470b616894589abc872dfca5da8f5ca",
       "engine/scripts/renderers.py": "2d46b1a4991bada108c0fa2e0cd6b483253d1fac8e8b4c793e7313fdd87a9c83"
     },
     "version": "2.0.0"
