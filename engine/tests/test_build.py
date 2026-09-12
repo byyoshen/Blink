@@ -595,6 +595,56 @@ class BuildTests(unittest.TestCase):
             removed = build.prune_stale_views([compilation], manifest, root)
             self.assertEqual(len(removed), len(build.CLIENTS))
 
+    def test_canonicalized_ip_rules_are_reported_not_silent(self) -> None:
+        source_url = "https://example.invalid/Surge/Test.list"
+        config = app_config(source_format="surge-rule-set", url=source_url)
+        result = self.compile(
+            config,
+            {
+                source_url: (
+                    # Host bits set: the canonical form widens what upstream wrote.
+                    "IP-CIDR,198.51.100.7/24,no-resolve\n"
+                    # Bare address and upper-case IPv6: same range, different text.
+                    "IP-CIDR,203.0.113.9\n"
+                    "IP-CIDR6,2001:DB8::/64,no-resolve\n"
+                    # Already canonical: must not be reported.
+                    "IP-CIDR,192.0.2.0/24,no-resolve\n"
+                )
+            },
+        )
+        self.assertEqual(
+            result.rewritten_ip_rules,
+            [
+                "IP-CIDR,198.51.100.7/24 -> 198.51.100.0/24",
+                "IP-CIDR,203.0.113.9 -> 203.0.113.9/32",
+                "IP-CIDR6,2001:DB8::/64 -> 2001:db8::/64",
+            ],
+        )
+
+    def test_canonical_ip_rules_report_nothing(self) -> None:
+        source_url = "https://example.invalid/Surge/Test.list"
+        config = app_config(source_format="surge-rule-set", url=source_url)
+        result = self.compile(
+            config,
+            {source_url: "IP-CIDR,192.0.2.0/24,no-resolve\nDOMAIN-SUFFIX,example.com\n"},
+        )
+        self.assertEqual(result.rewritten_ip_rules, [])
+
+    def test_supplement_ip_rewrites_are_reported_too(self) -> None:
+        source_url = "https://example.invalid/Surge/Test.list"
+        config = app_config(source_format="surge-rule-set", url=source_url)
+        with TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            supplement_dir = root / "engine" / "sources" / "supplement"
+            supplement_dir.mkdir(parents=True)
+            (supplement_dir / "Test.list").write_text(
+                "IP-CIDR,198.51.100.7/24,no-resolve\n", encoding="utf-8"
+            )
+            result = build.compile_app(
+                "Test", config, root, {source_url: "DOMAIN-SUFFIX,example.com\n"}.__getitem__
+            )
+        self.assertEqual(result.rewritten_ip_rules, ["IP-CIDR,198.51.100.7/24 -> 198.51.100.0/24"])
+
     def test_supplement_stays_strict_despite_type_excludes(self) -> None:
         source_url = "https://example.invalid/Surge/Test.list"
         config = app_config(source_format="surge-rule-set", url=source_url)

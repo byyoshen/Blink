@@ -11,6 +11,12 @@ on:
 permissions:
   contents: read
 
+# A later push to the same branch supersedes the earlier run: every job here is
+# read-only, so cancelling an in-flight one cannot leave anything half-done.
+concurrency:
+  group: checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   quality-gates:
     runs-on: ubuntu-latest

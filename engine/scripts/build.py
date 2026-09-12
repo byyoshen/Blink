@@ -171,6 +171,9 @@ class Compilation:
     # from committed output instead of compiled, because only a live fetch can
     # establish it.
     excluded_domains: dict[str, int] = dataclasses.field(default_factory=dict)
+    # IP rules whose text the canonical form changed, as ``before -> after``.
+    # Reported, never silent: a host-bits-set CIDR widens what upstream wrote.
+    rewritten_ip_rules: list[str] = dataclasses.field(default_factory=list)
 
 
 FetchText = Callable[[str], str]
@@ -444,6 +447,7 @@ def parse_surge_rule_set_text(
     chain: tuple[str, ...],
     skip_kinds: set[str] | None = None,
     skipped: list[str] | None = None,
+    rewritten: list[str] | None = None,
 ) -> list[Rule]:
     """Parse a deliberately small, policy-free subset of native Surge syntax.
 
@@ -455,6 +459,12 @@ def parse_surge_rule_set_text(
     the type level (for example ``IP-ASN`` or ``URL-REGEX``) instead of failing
     the build.  Dropped lines are recorded in ``skipped`` so the decision stays
     auditable in the build report.
+
+    ``rewritten`` collects IP rules whose text the canonicalization changed, as
+    ``before -> after``.  ``ipaddress.ip_network(strict=False)`` turns
+    ``IP-CIDR,1.2.3.4/24`` into ``1.2.3.0/24`` and a bare address into ``/32``;
+    both are standard CIDR readings, but the first widens what the upstream
+    author actually wrote, so the repository must not transform it silently.
     """
     rules: list[Rule] = []
     for line_number, original in enumerate(text.splitlines(), start=1):
@@ -470,7 +480,10 @@ def parse_surge_rule_set_text(
             if skipped is not None:
                 skipped.append(f"{kind},{value}")
             continue
-        rules.append(normalize_surge_rule(kind, value, tuple(option_parts), location))
+        rule = normalize_surge_rule(kind, value, tuple(option_parts), location)
+        if rewritten is not None and rule.kind in {"IP-CIDR", "IP-CIDR6"} and rule.value != value:
+            rewritten.append(f"{kind},{value} -> {rule.value}")
+        rules.append(rule)
     return rules
 
 
@@ -539,12 +552,15 @@ def matching_exclude(rule: Rule, excludes: Iterable[tuple[str, str, str]]) -> st
     return None
 
 
-def parse_supplement(path: Path, app_name: str) -> list[Rule]:
+def parse_supplement(path: Path, app_name: str, rewritten: list[str] | None = None) -> list[Rule]:
     if not path.exists():
         return []
     try:
         return parse_surge_rule_set_text(
-            path.read_text(encoding="utf-8-sig"), str(path), (app_name, "supplement")
+            path.read_text(encoding="utf-8-sig"),
+            str(path),
+            (app_name, "supplement"),
+            rewritten=rewritten,
         )
     except BuildError as error:
         raise BuildError(f"invalid supplement rule in {path}: {error}") from error
@@ -563,6 +579,7 @@ def compile_app(
     skipped_attributes: list[ParsedEntry] = []
     denied_includes: list[tuple[str, SourceLocation]] = []
     skipped_excluded: list[str] = []
+    rewritten_ip_rules: list[str] = []
     source_inputs: dict[str, str] = {}
     excludes, skip_kinds = parse_excludes(app["exclude"], app_name)
 
@@ -614,10 +631,11 @@ def compile_app(
                     (source_name,),
                     skip_kinds,
                     skipped_excluded,
+                    rewritten_ip_rules,
                 )
             rules.extend(cached_surge_rules[source_url])
 
-    rules.extend(parse_supplement(root / app["supplement"], app_name))
+    rules.extend(parse_supplement(root / app["supplement"], app_name, rewritten_ip_rules))
     input_rules = len(rules)
     provenance: dict[tuple[str, str, tuple[str, ...]], list[SourceLocation]] = defaultdict(list)
     unique: dict[tuple[str, str, tuple[str, ...]], Rule] = {}
@@ -643,6 +661,7 @@ def compile_app(
         input_rules,
         semantic_views(ordered),
         excluded_domains,
+        rewritten_ip_rules,
     )
 
 
@@ -1322,6 +1341,12 @@ def main(argv: list[str] | None = None) -> int:
             assert provenance is not None
             write_provenance(provenance, root)
         for item in compilations:
+            for rewrite in item.rewritten_ip_rules:
+                print(
+                    f"warning: {item.app_name}: IP rule canonicalized ({rewrite}); "
+                    "confirm the upstream range is what you intend",
+                    file=sys.stderr,
+                )
             for spec, hits in sorted(item.excluded_domains.items()):
                 if hits == 0:
                     print(
@@ -1346,6 +1371,7 @@ def main(argv: list[str] | None = None) -> int:
                     "skipped_attributes": len(item.skipped_attributes),
                     "skipped_excluded": len(item.skipped_excluded),
                     "excluded_domains": dict(sorted(item.excluded_domains.items())),
+                    "rewritten_ip_rules": item.rewritten_ip_rules,
                     "denied_includes": [name for name, _ in item.denied_includes],
                     "views": {name: len(rules) for name, rules in item.views},
                     "clients": {
