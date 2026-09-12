@@ -22,6 +22,7 @@
 | 产物溯源 | `python engine/scripts/verify_manifest.py --root .` | 30 App、七端文件、supplement、构建器和 source definition 的 SHA256 完整且一致 |
 | Profile 完整性 | `python engine/scripts/verify_profiles.py --root .` | 七端配置可由 intent/templates 逐字节重建；Blink raw 引用存在且非空；语义源与每份产物均保留订阅占位符，App 内订阅适配项显式标注 ADAPTED |
 | 跨 App overlap | `python engine/scripts/overlap_check.py --root .` | 相对人工复核基线不得出现新重叠 |
+| Portal 数据同步 | `python engine/scripts/gen_portal_stats.py --check` | `engine/portal/public/data/stats.json` 与当前七端产物逐字节一致（定向 `--app` 写入后忘记重算会被拦住） |
 | 敏感模式 | `python engine/scripts/secret_scan.py --root .` | PAT、AWS Key、私钥、代理 URI、URL token/凭据、不透明订阅 URL、正/反斜杠的本地绝对路径 |
 | 实时重建 drift | `python engine/scripts/build.py --verify-only --strict-diff` | 重新抓取全部上游并逐字节比对 210 个产物及 provenance |
 
@@ -65,6 +66,14 @@ python engine/scripts/overlap_check.py --root . --write-baseline
 
 ## CI 执行位置
 
-- `checks.yml`：每次 push/PR 运行单测、parity、health、overlap、manifest、Profiles、敏感模式、Python lint、Portal prettier/typecheck 和既有 golden-byte 断言。
+- `checks.yml`：每次 push/PR 运行单测、parity、health、validate_views、overlap、manifest、Portal 数据同步、Profiles、敏感模式、Python lint、Portal prettier/typecheck 和既有 golden-byte 断言。
 - `update.yml`：每日实时抓取、单测、变化阈值、全量写入、全部产物门禁、Portal 数据更新；只有全部成功且产物有变化时才提交。
+- `pages.yml`：portal 源码 push 时部署，并在 `Update Rule-Sets` 成功完成后通过 `workflow_run` 再部署一次 —— 每日提交由默认 `GITHUB_TOKEN` 产生，这类 push 不会触发其他 workflow，少了这个触发器门户上的规则数会停留在上一次人工 portal 提交。
 - 每日构建 JSON 报告以 Actions artifact `build-report` 保存 14 天，不提交运行时报告。
+
+## 行尾与字节级门禁
+
+`manifest.json` 记录的是**字节** SHA256，`verify_manifest.py` 与 `build.py --verify-only` 按字节比较。仓库根的 `.gitattributes` 把全部文本文件固定为 `eol=lf`：
+
+- Windows 上 `core.autocrlf=true` 的 checkout 不会再产出 CRLF 工作区，维护者本地可以直接跑 provenance 门禁；
+- CRLF 永远进不了提交。否则 CI 只有 `verify_manifest` 会红，而按文本读取的 `parity_check` 与 golden-byte 仍然是绿的，排查方向会被误导。

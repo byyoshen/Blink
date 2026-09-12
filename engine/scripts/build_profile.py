@@ -57,6 +57,22 @@ def _view_url(client: str, app_name: str, view_name: str) -> str:
     return f"{BLINK_RAW_VIEW}/{VIEW_DIR[client]}/{app_name}-{view_name}.conf"
 
 
+# Clients whose rule-set *reference line* can carry ``no-resolve`` (capability
+# matrix: engine/docs/PHASE_OPTIMIZATION_PLAN.md, engine/docs/MULTI_CLIENT_AUDIT.md).
+# Excluded on purpose, each annotated in its own template header instead of being
+# dropped silently:
+#   - loon:        [Remote Rule] reference lines have no no-resolve field; only the
+#                  rule lines inside the referenced set can carry it.
+#   - egern:       no_resolve is set-level, declared inside the rule set itself.
+#   - quantumultx: no production-proven slot on a filter_remote line.
+IP_NO_RESOLVE_CLIENTS = frozenset({"surge", "shadowrocket", "stash", "clash"})
+
+
+def _no_resolve_suffix(client: str) -> str:
+    """``,no-resolve`` for an IP-phase reference, or '' when the client has no slot."""
+    return ",no-resolve" if client in IP_NO_RESOLVE_CLIENTS else ""
+
+
 # Placeholders the templates may carry.  Each renderer fills the ones that
 # make sense for its client; leftover markers fail the build loudly.
 MARKERS = ("__SUBSCRIPTION__", "__POLICY_GROUPS__", "__FILTERS__", "__RULES__", "__REMOTE_RULES__")
@@ -303,7 +319,7 @@ def _render_surge(intent: dict) -> dict[str, str]:
                 if view_name == "domainset":
                     rules.append(f"DOMAIN-SET,{url},{app['policy']},extended-matching")
                 elif view_name == "ip":
-                    rules.append(f"RULE-SET,{url},{app['policy']},no-resolve")
+                    rules.append(f"RULE-SET,{url},{app['policy']}{_no_resolve_suffix('surge')}")
                 else:  # nonip
                     rules.append(f"RULE-SET,{url},{app['policy']}")
             continue
@@ -345,14 +361,23 @@ def _render_shadowrocket(intent: dict) -> dict[str, str]:
         else:
             lines.append(f"{group['name']} = select, {members}")
     rules: list[str] = []
-    for entry in _infra_for_phase(intent, "shadowrocket", "domain"):
+
+    def add_rule_entry(entry: dict) -> None:
         policy = _policy_for(entry, "shadowrocket")
         if entry.get("kind") == "dest-port":
             rules.append(f"DEST-PORT,{entry['value']},{policy}")
-        elif entry.get("kind") == "domain":
+            return
+        if entry.get("kind") == "domain":
             rules.append(f"DOMAIN,{entry['value']},{policy}")
-        else:
-            rules.append(f"RULE-SET,{entry['url']},{policy}")
+            return
+        # Shadowrocket shares Surge's rule syntax and supports no-resolve, so an
+        # IP-phase rule set must keep the option declared in the intent.
+        options = (entry.get("options") or {}).get("shadowrocket")
+        suffix = f",{options}" if options else ""
+        rules.append(f"RULE-SET,{entry['url']},{policy}{suffix}")
+
+    for entry in _infra_for_phase(intent, "shadowrocket", "domain"):
+        add_rule_entry(entry)
     rules.extend(_infra_unsupported_lines(intent, "shadowrocket", "domain", ""))
     for app_name, app in intent["apps"].items():
         if app.get("views"):
@@ -360,19 +385,17 @@ def _render_shadowrocket(intent: dict) -> dict[str, str]:
                 url = _view_url("shadowrocket", app_name, view_name)
                 if view_name == "domainset":
                     rules.append(f"DOMAIN-SET,{url},{app['policy']}")
+                elif view_name == "ip":
+                    rules.append(
+                        f"RULE-SET,{url},{app['policy']}{_no_resolve_suffix('shadowrocket')}"
+                    )
                 else:
                     rules.append(f"RULE-SET,{url},{app['policy']}")
             continue
         source = app.get("source") or f"{BLINK_RAW}/{app_name}.list"
         rules.append(f"RULE-SET,{source},{app['policy']}")
     for entry in _infra_for_phase(intent, "shadowrocket", "ip"):
-        policy = _policy_for(entry, "shadowrocket")
-        if entry.get("kind") == "dest-port":
-            rules.append(f"DEST-PORT,{entry['value']},{policy}")
-        elif entry.get("kind") == "domain":
-            rules.append(f"DOMAIN,{entry['value']},{policy}")
-        else:
-            rules.append(f"RULE-SET,{entry['url']},{policy}")
+        add_rule_entry(entry)
     rules.extend(_infra_unsupported_lines(intent, "shadowrocket", "ip", ""))
     rules.append("FINAL,Final")
     subscription = [
@@ -507,6 +530,10 @@ def _render_stash(intent: dict) -> dict[str, str]:
         if entry.get("kind") == "domain":
             local_rules.append(f"  - DOMAIN,{entry['value']},{policy}")
             return
+        # Stash supports no-resolve on a RULE-SET reference; an IP-phase rule set
+        # must keep the option declared in the intent (mirrors the Clash renderer).
+        options = (entry.get("options") or {}).get("stash")
+        suffix = f",{options}" if options else ""
         key = provider_name(entry["name"])
         provider_lines.append(f"  {key}:")
         provider_lines.append("    type: http")
@@ -514,7 +541,7 @@ def _render_stash(intent: dict) -> dict[str, str]:
         provider_lines.append("    format: text")
         provider_lines.append(f"    url: {entry['url']}")
         provider_lines.append("    interval: 86400")
-        rules.append(f"  - RULE-SET,{key},{policy}")
+        rules.append(f"  - RULE-SET,{key},{policy}{suffix}")
 
     for entry in _infra_for_phase(intent, "stash", "domain"):
         add_rule_entry(entry)
@@ -530,7 +557,8 @@ def _render_stash(intent: dict) -> dict[str, str]:
                 provider_lines.append("    format: text")
                 provider_lines.append(f"    url: {_view_url('stash', app_name, view_name)}")
                 provider_lines.append("    interval: 86400")
-                rules.append(f"  - RULE-SET,{key},{app['policy']}")
+                suffix = _no_resolve_suffix("stash") if view_name == "ip" else ""
+                rules.append(f"  - RULE-SET,{key},{app['policy']}{suffix}")
             continue
         source = app.get("source") or f"{BLINK_RAW}/{app_name}.list"
         key = provider_name(app_name)
@@ -641,7 +669,8 @@ def _render_clash(intent: dict) -> dict[str, str]:
                 provider_lines.append("    format: text")
                 provider_lines.append(f"    url: {_view_url('clash', app_name, view_name)}")
                 provider_lines.append("    interval: 86400")
-                rules.append(f"  - RULE-SET,{key},{app['policy']}")
+                suffix = _no_resolve_suffix("clash") if view_name == "ip" else ""
+                rules.append(f"  - RULE-SET,{key},{app['policy']}{suffix}")
             continue
         # Blink 的 App 规则经 Clash/ 目录分发（classical 已去除 USER-AGENT）；
         # 显式指定外部 source 的 App（如 AppleMusic）按上游原样引用。
@@ -767,8 +796,11 @@ def _render_quantumultx(intent: dict) -> dict[str, str]:
     def add_rule_entry(entry: dict) -> None:
         policy = qx_policy(_policy_for(entry, "quantumultx"))
         if entry.get("kind") == "domain":
+            # An inline host rule carries no URL: returning here keeps the
+            # qx_url requirement scoped to remote rule sets.
             local_rules.append(f"host, {entry['value']}, {policy}")
-        elif entry.get("kind") == "dest-port":
+            return
+        if entry.get("kind") == "dest-port":
             return
         url = entry.get("qx_url")
         if url is None:

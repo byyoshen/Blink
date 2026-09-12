@@ -162,13 +162,13 @@ rules:
   # UNSUPPORTED: reject-drop（Surge pre-matching 专属）本文件省略
   # UNSUPPORTED: reject-domainset（Surge DOMAIN-SET 专属）本文件省略
   - RULE-SET,Telegram_domainset,Telegram
-  - RULE-SET,Telegram_ip,Telegram
+  - RULE-SET,Telegram_ip,Telegram,no-resolve
   - RULE-SET,X_domainset,X
-  - RULE-SET,X_ip,X
+  - RULE-SET,X_ip,X,no-resolve
   - RULE-SET,YouTube_nonip,Youtube
   - RULE-SET,Instagram_domainset,Instagram
   - RULE-SET,Google_nonip,Google
-  - RULE-SET,Google_ip,Google
+  - RULE-SET,Google_ip,Google,no-resolve
   - RULE-SET,GitHub_domainset,Github
   - RULE-SET,china_ip,DIRECT,no-resolve
   - RULE-SET,china_ip2,DIRECT,no-resolve

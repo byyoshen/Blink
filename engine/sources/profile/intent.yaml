@@ -150,11 +150,14 @@ infrastructure:
     qx_url: https://raw.githubusercontent.com/Repcz/Tool/X/QuantumultX/Rules/CDN.list
 
   # ---- IP（no-resolve；置于所有域名规则之后）----
+  # 这两个上游 IP 规则集的行内不带 no-resolve（skk 的约定是在引用处指定），
+  # 所以引用行上的 no-resolve 是这里唯一的 DNS 防护点：缺失即意味着走到 IP
+  # 段的域名会被本地提前解析。凡引用行有 no-resolve 槽位的客户端都必须声明。
   - name: china-ip
     url: https://ruleset.skk.moe/List/ip/domestic.conf
     policy: DIRECT
     phase: ip
-    options: {surge: no-resolve, clash: no-resolve}
+    options: {surge: no-resolve, shadowrocket: no-resolve, stash: no-resolve, clash: no-resolve}
     qx_url: https://raw.githubusercontent.com/Repcz/Tool/X/QuantumultX/Rules/ChinaIP.list
 
   - name: china-ip2
@@ -162,4 +165,4 @@ infrastructure:
     policy: DIRECT
     phase: ip
     clients: [surge, shadowrocket, loon, stash, egern, clash]
-    options: {surge: no-resolve, clash: no-resolve}
+    options: {surge: no-resolve, shadowrocket: no-resolve, stash: no-resolve, clash: no-resolve}

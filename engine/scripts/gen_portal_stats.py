@@ -317,16 +317,37 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, default=Path("engine/sources/apps.yaml"))
     parser.add_argument("--output", type=Path, default=Path("engine/portal/public/data/stats.json"))
-    parser.add_argument(
-        "--stdout", action="store_true", help="print the JSON instead of writing it"
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--stdout", action="store_true", help="print the JSON instead of writing it")
+    mode.add_argument(
+        "--check",
+        action="store_true",
+        help="fail if the committed portal data differs from the generated outputs",
     )
     arguments = parser.parse_args(argv)
     root = arguments.manifest.resolve().parent.parent.parent
+    # The document carries emoji and Chinese notes; a non-UTF-8 console (GBK on a
+    # Chinese Windows shell) would otherwise raise UnicodeEncodeError on --stdout.
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8")
+        except (AttributeError, OSError):  # pragma: no cover - unusual stream
+            pass
     try:
         document = build(root)
         text = json.dumps(document, ensure_ascii=False, indent=2) + "\n"
         if arguments.stdout:
             print(text, end="")
+        elif arguments.check:
+            output = arguments.output
+            if not output.is_file():
+                raise PortalError(f"missing portal data {output}")
+            if output.read_text(encoding="utf-8") != text:
+                raise PortalError(
+                    f"{output} is stale: regenerate it with "
+                    "`python engine/scripts/gen_portal_stats.py` and commit the result"
+                )
+            print(json.dumps({"checked": str(output), "apps": len(document["apps"])}, indent=2))
         else:
             output = arguments.output
             output.parent.mkdir(parents=True, exist_ok=True)
