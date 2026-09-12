@@ -9,7 +9,10 @@ import re
 import sys
 from pathlib import Path
 
+# Local tooling directories: never part of the repository, so scanning them
+# only produces false positives against the maintainer's own machine.
 SKIP_PARTS = {
+    ".claude",
     ".git",
     ".npm-cache",
     ".pytest_cache",
