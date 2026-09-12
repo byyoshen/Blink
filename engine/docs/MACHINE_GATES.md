@@ -26,6 +26,8 @@
 | 敏感模式 | `python engine/scripts/secret_scan.py --root .` | PAT、AWS Key、私钥、代理 URI、URL token/凭据、不透明订阅 URL、正/反斜杠的本地绝对路径 |
 | 实时重建 drift | `python engine/scripts/build.py --verify-only --strict-diff` | 重新抓取全部上游并逐字节比对 210 个产物及 provenance |
 
+> 改动 `build.py` / `renderers.py` 后，若确认输出未变，用离线的 `build.py --refresh-provenance` 重建 `manifest.json`（见下文），不要为此跑实时 `--write`。
+
 除最后一项需要实时网络外，其余门禁都能仅凭仓库内容执行。普通 push/PR 运行全部离线门禁；实时 drift 适合发布前、上游审计或人工排障使用，避免把第三方瞬时网络状态变成所有 PR 的随机失败因素。
 
 ## `manifest.json`
@@ -36,7 +38,25 @@
 - 本次实际读取的 primary、supplemental 和 v2fly include 文本指纹、字节数、行数；
 - 本地 supplement 文件指纹；
 - canonical 规则指纹、输入/输出统计、显式 exclude 和 denied include；
+- `canonical.excluded_domains`：每条已声明 domain exclude 的命中数（仅声明了 domain exclude 的 App 才有该字段）。type-level exclude 一直记在 `skipped_excluded`，domain 级此前完全无痕，无法从 `input_rules → rules` 的差值区分"被 exclude"与"被去重"。记命中数后，某条 exclude 因上游改写而**静默失效**会变成每日提交里可见的 `1 → 0` diff；`build.py` 同时在 stderr 打印一条 warning，但不中断构建（上游合法移除该规则时不应自锁每日管线）。
 - 七个客户端的路径、SHA256、规则数和逐条 dropped 记录。
+
+## 纯 provenance 刷新（`--refresh-provenance`）
+
+`manifest.json` 记录 `build.py` / `renderers.py` 的 SHA256，所以**改动构建器本身**（哪怕只加一行注释）就会让 `verify_manifest.py` 失败。用实时 `--write` 重建会把当天的上游内容变化一起拖进一个本该只含代码的提交里，于是提供离线模式：
+
+```text
+python engine/scripts/build.py --refresh-provenance
+```
+
+- 重算一切可从**已提交产物**派生的指纹：builder / source definition 指纹、canonical 指纹与规则数、七端产物 SHA256 与 dropped、语义视图记录。
+- 只有实时抓取才能确立的事实从现有 manifest **原样继承**：上游文本指纹与字节/行数、`input_rules`、`skipped_attributes`、`skipped_excluded`、`denied_includes`、`excluded_domains`。
+- 它只对"不改变任何输出"的改动有效，并且会自己证明这一点：已提交的七端产物与视图必须仍能从已提交的 canonical 规则逐字节重新渲染出来，且 `apps.yaml` 声明的上游集合与 exclude 声明必须仍与 manifest 记录的一致。任一条不成立就拒绝执行并要求跑真正的 `--write`（新增 App、换源、renderer 行为变化都属于这一类）。
+- 它**不能**替代 `--write`：上游内容变化只能由实时构建记录。
+
+## 过期产物清理
+
+`build.py --write` 会在写入后删除当前语义拆分不再产出的 view 文件（`semantic_views()` 会省略空视图，所以某 App 上游失去最后一条 IP 规则、或 `nonip` 因 keyword 消失而变成 `domainset` 时会留下孤儿文件，`validate_views.py` 判为 spurious，此后每日构建都会失败直到有人手工删除）。只处理七个客户端目录下 `<App>-<view>.conf` 这一确定命名、且只针对本次构建的 App；删除项记入构建报告的 `pruned_views`，绝不静默。已禁用 App 留下的主产物仍由 `parity_check` 的 file-set 断言报出（错误信息已足够可操作），不在自动清理范围内。
 
 不在 manifest 中写抓取时间或 commit，是为了保证同一输入得到逐字节相同的 manifest。上游身份由 HTTPS URL 和内容指纹共同确定。
 

@@ -132,6 +132,23 @@ def check(root: Path) -> dict:
         if not isinstance(canonical_count, int) or canonical_count <= 0:
             raise ManifestError(f"{app_name}: canonical rules must be positive")
 
+        # Optional: hits per declared domain exclude.  Absent on records written
+        # before the accounting existed, and on apps that declare no domain
+        # exclude; present records must cover exactly the declared specs.
+        excluded_domains = canonical.get("excluded_domains")
+        if excluded_domains is not None:
+            if not isinstance(excluded_domains, dict) or not all(
+                isinstance(hits, int) and hits >= 0 for hits in excluded_domains.values()
+            ):
+                raise ManifestError(
+                    f"{app_name}.canonical.excluded_domains: expected spec -> non-negative count"
+                )
+            declared_domain_excludes = {
+                item for item in app["exclude"] if isinstance(item, str) and not item.endswith(":*")
+            }
+            if set(excluded_domains) != declared_domain_excludes:
+                raise ManifestError(f"{app_name}: recorded domain excludes do not match apps.yaml")
+
         surge_path = root / app["output"]
         if not surge_path.is_file():
             raise ManifestError(f"{app_name}: missing canonical Surge output {surge_path}")

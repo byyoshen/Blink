@@ -19,6 +19,7 @@
 - 不追求规则数量最大化，避免无意义吞入共享 CDN。
 - Reject / Domestic / China IP / CDN / LAN 等基础设施规则不纳入本仓库，继续直接引用成熟上游。
 - 输出规则不带策略名：Surge / Shadowrocket 由主配置 `RULE-SET`、Loon 由 `[Remote Rule]`、Stash 由 `rule-providers` + `RULE-SET`、Clash 由 `rule-providers`（`behavior: classical, format: text`）+ `RULE-SET`、Egern 由 `rule_set.match` 在引用处指定策略。Quantumult X 例外：filter 行尾必有策略字段，本仓库用字面占位符 `policy`，实际策略由 `[filter_remote]` 引用行的 `force-policy` 指定（QX 的 no-resolve 槽位无生产实证，渲染时统一省略并已记入 `engine/docs/MULTI_CLIENT_AUDIT.md`）。
+- `exclude` 的丢弃同样必须可审计：type-level exclude 记入 `skipped_excluded`，domain 级 exclude 记入 `manifest.json` 的 `canonical.excluded_domains`（每条声明的命中数）。某条 exclude 命中数归零意味着它可能已因上游改写而失效，需要复核上游是否仍携带该规则，或删掉这条 exclude。
 - 每个客户端渲染器只允许序列化该客户端可无损表达的规则；无法表达时必须显式丢弃并在构建报告计数（降级项：PROCESS-NAME 对 Egern / Quantumult X 显式丢弃并计数，USER-AGENT 对 Clash 显式丢弃并计数；classical 输出保持 Surge / Loon / Shadowrocket / Stash 四端逐字节相同、保留 PROCESS-NAME 行——Loon / Shadowrocket 无此类型，客户端直接忽略），禁止静默转换。
 
 ## Upstream Source Selection Policy

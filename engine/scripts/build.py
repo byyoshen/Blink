@@ -165,6 +165,12 @@ class Compilation:
     source_inputs: dict[str, str] = dataclasses.field(default_factory=dict)
     input_rules: int = 0
     views: list[tuple[str, list[Rule]]] = dataclasses.field(default_factory=list)
+    # Hits per declared domain exclude, keyed by its ``type:value`` spec.  Every
+    # declared exclude is present, so a zero means the exclude no longer matches
+    # anything upstream.  Left empty when the canonical rules were reconstructed
+    # from committed output instead of compiled, because only a live fetch can
+    # establish it.
+    excluded_domains: dict[str, int] = dataclasses.field(default_factory=dict)
 
 
 FetchText = Callable[[str], str]
@@ -470,15 +476,19 @@ def parse_surge_rule_set_text(
 
 def parse_excludes(
     items: Iterable[object], app_name: str
-) -> tuple[list[tuple[str, str]], set[str]]:
+) -> tuple[list[tuple[str, str, str]], set[str]]:
     """Return concrete domain excludes plus rule kinds to skip at parse time.
 
     Domain entries use ``type:value`` syntax.  ``ip-asn:*`` and ``url-regex:*``
     are type-level exclusions: those kinds are dropped from native Surge sources
     because v1 does not emit them, and the manifest decision stays explicit.
     ``regexp:*`` is the corresponding exclusion for v2fly ``regexp:`` entries.
+
+    Each domain exclude keeps its original ``type:value`` spec as the third
+    element so a drop can be attributed back to the manifest entry that caused
+    it; type-level exclusions are already reported through ``skipped_excluded``.
     """
-    excludes: list[tuple[str, str]] = []
+    excludes: list[tuple[str, str, str]] = []
     skipped_kinds: set[str] = set()
     mappings = {
         "domain": "DOMAIN",
@@ -503,22 +513,30 @@ def parse_excludes(
         normalized = (
             value.lower() if kind == "domain-keyword" else normalize_domain(value, location)
         )
-        excludes.append((mappings[kind], normalized))
+        excludes.append((mappings[kind], normalized, item))
     return excludes, skipped_kinds
 
 
-def is_excluded(rule: Rule, excludes: Iterable[tuple[str, str]]) -> bool:
-    for kind, value in excludes:
+def matching_exclude(rule: Rule, excludes: Iterable[tuple[str, str, str]]) -> str | None:
+    """Return the ``type:value`` spec that drops this rule, or None.
+
+    Matching is deliberately narrow: a ``domain-suffix`` exclude covers the
+    suffix rule itself and any ``DOMAIN`` below it, but not a narrower
+    ``DOMAIN-SUFFIX`` beneath it.  Returning the spec instead of a boolean lets
+    the caller count hits per exclude, so an exclude that silently stopped
+    matching upstream becomes visible in the provenance manifest.
+    """
+    for kind, value, spec in excludes:
         if kind == "DOMAIN" and rule.kind == "DOMAIN" and rule.value == value:
-            return True
+            return spec
         if kind == "DOMAIN-KEYWORD" and rule.kind == "DOMAIN-KEYWORD" and rule.value == value:
-            return True
+            return spec
         if kind == "DOMAIN-SUFFIX":
             if rule.kind == "DOMAIN-SUFFIX" and rule.value == value:
-                return True
+                return spec
             if rule.kind == "DOMAIN" and (rule.value == value or rule.value.endswith(f".{value}")):
-                return True
-    return False
+                return spec
+    return None
 
 
 def parse_supplement(path: Path, app_name: str) -> list[Rule]:
@@ -603,8 +621,11 @@ def compile_app(
     input_rules = len(rules)
     provenance: dict[tuple[str, str, tuple[str, ...]], list[SourceLocation]] = defaultdict(list)
     unique: dict[tuple[str, str, tuple[str, ...]], Rule] = {}
+    excluded_domains = {spec: 0 for _kind, _value, spec in excludes}
     for rule in rules:
-        if is_excluded(rule, excludes):
+        spec = matching_exclude(rule, excludes)
+        if spec is not None:
+            excluded_domains[spec] += 1
             continue
         provenance[rule.key].append(rule.location)
         unique.setdefault(rule.key, rule)
@@ -621,6 +642,7 @@ def compile_app(
         source_inputs,
         input_rules,
         semantic_views(ordered),
+        excluded_domains,
     )
 
 
@@ -747,18 +769,28 @@ def app_provenance_record(
                 "rules": count,
             }
 
+    canonical = {
+        "rules": len(compilation.rules),
+        "sha256": canonical_rules_sha256(compilation.rules),
+        "input_rules": compilation.input_rules,
+        "skipped_attributes": len(compilation.skipped_attributes),
+        "skipped_excluded": compilation.skipped_excluded,
+        "denied_includes": sorted(name for name, _location in compilation.denied_includes),
+        "views": [{"name": name, "rules": len(rules)} for name, rules in compilation.views],
+    }
+    # Domain-level excludes used to vanish without a trace, unlike the type-level
+    # ones recorded in ``skipped_excluded``.  Recording hits per declared spec
+    # makes the drop auditable and turns an exclude that stopped matching
+    # upstream into a visible manifest diff on the next daily commit.  Omitted
+    # for apps that declare no domain exclude, and when the record is being
+    # refreshed from committed output (no live fetch to count against).
+    if compilation.excluded_domains:
+        canonical["excluded_domains"] = dict(sorted(compilation.excluded_domains.items()))
+
     return {
         "sources": sources,
         "supplement": supplement,
-        "canonical": {
-            "rules": len(compilation.rules),
-            "sha256": canonical_rules_sha256(compilation.rules),
-            "input_rules": compilation.input_rules,
-            "skipped_attributes": len(compilation.skipped_attributes),
-            "skipped_excluded": compilation.skipped_excluded,
-            "denied_includes": sorted(name for name, _location in compilation.denied_includes),
-            "views": [{"name": name, "rules": len(rules)} for name, rules in compilation.views],
-        },
+        "canonical": canonical,
         "outputs": output_records,
         "views": views,
     }
@@ -805,16 +837,20 @@ def build_provenance_manifest(
         )
 
     source_definition = root / "engine" / "sources" / "apps.yaml"
-    builder_path = Path(__file__).resolve()
-    renderer_path = builder_path.with_name("renderers.py")
+    # Fingerprint the builder *in the repository being built*, which is exactly
+    # what verify_manifest.py resolves and checks.  Using ``__file__`` would
+    # instead describe whichever copy happens to be executing.
+    builder_files = {}
+    for relative in ("engine/scripts/build.py", "engine/scripts/renderers.py"):
+        path = root.joinpath(*relative.split("/"))
+        if not path.is_file():
+            raise BuildError(f"cannot fingerprint the builder: missing {relative}")
+        builder_files[relative] = sha256_bytes(path.read_bytes())
     return {
         "schema_version": PROVENANCE_SCHEMA_VERSION,
         "builder": {
             "version": BUILDER_VERSION,
-            "files": {
-                "engine/scripts/build.py": sha256_bytes(builder_path.read_bytes()),
-                "engine/scripts/renderers.py": sha256_bytes(renderer_path.read_bytes()),
-            },
+            "files": builder_files,
         },
         "source_definition": {
             "path": _relative_path(source_definition, root),
@@ -880,10 +916,10 @@ def assess_changes(
     return report, violations
 
 
-def verify_rendered_outputs(
-    rendered: list[dict[str, tuple[Path, str, list[str]]]], expected_manifest: dict, root: Path
+def verify_rendered_files(
+    rendered: list[dict[str, tuple[Path, str, list[str]]]], root: Path
 ) -> list[str]:
-    """Return concise byte-drift diagnostics without mutating the repository."""
+    """Byte-compare every rendered client output against its committed file."""
     errors = []
     for client_outputs in rendered:
         for path, expected, _dropped in client_outputs.values():
@@ -904,6 +940,44 @@ def verify_rendered_outputs(
                     )[:20]
                 )
                 errors.append(f"drift: {_relative_path(path, root)}\n{diff}")
+    return errors
+
+
+def verify_rendered_views(
+    compilations: Iterable[Compilation], manifest: dict, root: Path
+) -> list[str]:
+    """Byte-compare the semantic-view files and report orphans.
+
+    An orphan is a view file the current split no longer produces (an app that
+    lost its last IP rule, or whose ``nonip`` view became a pure-domain
+    ``domainset``).  ``validate_views.py`` rejects those as spurious, so naming
+    them here keeps the diagnosis in the tool that can see why they appeared.
+    """
+    errors = []
+    for compilation in compilations:
+        app = manifest["apps"][compilation.app_name]
+        enabled = bool(app.get("views"))
+        produced: set[Path] = set()
+        for client_views in client_view_outputs(compilation, root, enabled=enabled).values():
+            for path, expected, _count in client_views.values():
+                produced.add(path)
+                if not path.exists():
+                    errors.append(f"missing generated view: {_relative_path(path, root)}")
+                elif path.read_text(encoding="utf-8") != expected:
+                    errors.append(f"drift: {_relative_path(path, root)}")
+        for client in CLIENTS.values():
+            for view_name in sorted(VIEW_TYPES):
+                path = root / client.directory / f"{compilation.app_name}-{view_name}.conf"
+                if path not in produced and path.is_file():
+                    errors.append(f"orphan view no longer produced: {_relative_path(path, root)}")
+    return errors
+
+
+def verify_rendered_outputs(
+    rendered: list[dict[str, tuple[Path, str, list[str]]]], expected_manifest: dict, root: Path
+) -> list[str]:
+    """Return concise byte-drift diagnostics without mutating the repository."""
+    errors = verify_rendered_files(rendered, root)
     manifest_path = root / PROVENANCE_FILENAME
     expected_text = provenance_text(expected_manifest)
     if not manifest_path.exists():
@@ -947,11 +1021,175 @@ def write_client_views(compilations: Iterable[Compilation], manifest: dict, root
                 temporary.replace(path)
 
 
+def prune_stale_views(compilations: Iterable[Compilation], manifest: dict, root: Path) -> list[str]:
+    """Delete view files the current semantic split no longer produces.
+
+    ``semantic_views`` omits empty views, so an app that loses its last IP rule
+    upstream, or whose ``nonip`` view becomes a pure-domain ``domainset``, leaves
+    the previous file on disk.  ``validate_views.py`` then rejects it as spurious
+    and every later daily run fails until someone deletes it by hand, even though
+    the build itself was correct.
+
+    Only the exact generated name ``<App>-<view>.conf`` inside the seven client
+    directories is considered, and only for the apps of this build, so nothing
+    outside the generated naming convention can be removed.  Removals are
+    returned for the build report; they are never silent.
+    """
+    removed: list[str] = []
+    for compilation in compilations:
+        app = manifest["apps"][compilation.app_name]
+        produced = {name for name, _rules in compilation.views} if app.get("views") else set()
+        for view_name in sorted(VIEW_TYPES - produced):
+            for client in CLIENTS.values():
+                path = root / client.directory / f"{compilation.app_name}-{view_name}.conf"
+                if path.is_file():
+                    path.unlink()
+                    removed.append(_relative_path(path, root))
+    return removed
+
+
 def write_provenance(document: dict, root: Path) -> None:
     output = root / PROVENANCE_FILENAME
     temporary = output.with_suffix(output.suffix + ".tmp")
     temporary.write_text(provenance_text(document), encoding="utf-8", newline="\n")
     temporary.replace(output)
+
+
+# Canonical facts only a live upstream fetch can establish.  A provenance
+# refresh carries them over from the existing manifest instead of inventing them.
+CARRIED_CANONICAL_FIELDS = (
+    "input_rules",
+    "skipped_attributes",
+    "skipped_excluded",
+    "denied_includes",
+    "excluded_domains",
+)
+
+
+def compilation_from_committed(app_name: str, app: dict, root: Path) -> Compilation:
+    """Reconstruct an app's canonical rules from its committed classical output.
+
+    The Surge file is the canonical serialization, so the rule set, every client
+    rendering and the semantic split are all derivable from it offline.  Counters
+    that depend on the upstream input stay empty on purpose (see
+    ``CARRIED_CANONICAL_FIELDS``).
+    """
+    output = root / app["output"]
+    if not output.is_file():
+        raise BuildError(f"{app_name}: missing committed output {app['output']}")
+    rules = parse_surge_rule_set_text(
+        output.read_text(encoding="utf-8"),
+        _relative_path(output, root),
+        (app_name, "committed"),
+    )
+    if not rules:
+        raise BuildError(f"{app_name}: committed output is empty")
+    return Compilation(app_name, rules, [], [], {}, views=semantic_views(rules))
+
+
+def _carried_sources(app_name: str, app: dict, record: dict) -> list[dict]:
+    """Re-attach apps.yaml metadata to the upstream fingerprints already recorded."""
+    recorded = record.get("sources")
+    if not isinstance(recorded, list):
+        raise BuildError(f"{app_name}: existing provenance sources must be a list")
+    declared = {source["url"]: source for source in app["sources"]}
+    fingerprinted = {item.get("url") for item in recorded if isinstance(item, dict)}
+    unknown = sorted(set(declared) - fingerprinted)
+    if unknown:
+        raise BuildError(
+            f"{app_name}: apps.yaml declares upstream(s) with no recorded fingerprint "
+            f"({', '.join(unknown)}); the content changed, so run a full --write instead"
+        )
+    sources = []
+    for item in recorded:
+        if not isinstance(item, dict) or not isinstance(item.get("url"), str):
+            raise BuildError(f"{app_name}: invalid recorded source entry")
+        entry = dict(item)
+        source = declared.get(entry["url"])
+        if source:
+            entry["role"] = source["role"]
+            entry["format"] = source["format"]
+            entry["name"] = source["name"]
+            entry["author"] = source.get("author", "")
+        sources.append(entry)
+    return sources
+
+
+def refresh_provenance(manifest: dict, root: Path) -> dict:
+    """Rebuild manifest.json from committed artifacts, without touching the network.
+
+    Editing ``build.py`` or ``renderers.py`` invalidates the builder fingerprints
+    the manifest records, which fails ``verify_manifest.py``.  Regenerating it with
+    a live ``--write`` would drag that day's upstream content changes into what is
+    meant to be a code-only commit, so this mode recomputes every fingerprint that
+    is derivable from the committed artifacts and carries the rest over.
+
+    It is only valid for changes that do not alter the pipeline's output, and it
+    proves that: the committed outputs and views must still re-render byte-for-byte
+    from the committed canonical rules, and the declared upstream set must still
+    match what the existing manifest fingerprinted.  Otherwise it refuses and asks
+    for a real ``--write``.
+    """
+    path = root / PROVENANCE_FILENAME
+    if not path.exists():
+        raise BuildError(f"--refresh-provenance requires an existing {PROVENANCE_FILENAME}")
+    try:
+        existing = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise BuildError(f"cannot read {PROVENANCE_FILENAME}: {error}") from error
+    if not isinstance(existing, dict) or not isinstance(existing.get("apps"), dict):
+        raise BuildError(f"{PROVENANCE_FILENAME} has an invalid apps mapping")
+    existing_apps = existing["apps"]
+
+    names = [name for name, app in manifest["apps"].items() if app["enabled"]]
+    missing = sorted(set(names) - set(existing_apps))
+    if missing:
+        raise BuildError(
+            "--refresh-provenance cannot invent upstream fingerprints for "
+            f"{', '.join(missing)}; run a full --write instead"
+        )
+
+    compilations = [
+        compilation_from_committed(name, manifest["apps"][name], root) for name in names
+    ]
+    rendered = [rendered_outputs(compilation, manifest, root) for compilation in compilations]
+    drift = verify_rendered_files(rendered, root) + verify_rendered_views(
+        compilations, manifest, root
+    )
+    if drift:
+        raise BuildError(
+            "--refresh-provenance only refreshes fingerprints, but the committed artifacts no "
+            "longer match what the current renderers produce from them; this is not a "
+            "provenance-only change, so run a full --write:\n" + "\n".join(drift)
+        )
+
+    document = build_provenance_manifest(
+        compilations, manifest, rendered, root, preserve_unselected=False
+    )
+    for name in names:
+        record = existing_apps[name]
+        if not isinstance(record, dict) or not isinstance(record.get("canonical"), dict):
+            raise BuildError(f"{name}: existing provenance record is malformed")
+        refreshed = document["apps"][name]
+        refreshed["sources"] = _carried_sources(name, manifest["apps"][name], record)
+        for field in CARRIED_CANONICAL_FIELDS:
+            if field in record["canonical"]:
+                refreshed["canonical"][field] = record["canonical"][field]
+        # Carrying a stale exclude record forward would produce a manifest that
+        # verify_manifest.py rejects.  A changed exclude also changes the rules,
+        # so this is a content change and belongs to a real --write.
+        carried_excludes = refreshed["canonical"].get("excluded_domains")
+        declared_excludes = {
+            item
+            for item in manifest["apps"][name]["exclude"]
+            if isinstance(item, str) and not item.endswith(":*")
+        }
+        if carried_excludes is not None and set(carried_excludes) != declared_excludes:
+            raise BuildError(
+                f"{name}: apps.yaml declares different domain excludes than the recorded "
+                "ones; the canonical rules changed, so run a full --write instead"
+            )
+    return document
 
 
 def select_apps(manifest: dict, requested: list[str]) -> list[str]:
@@ -979,6 +1217,14 @@ def main(argv: list[str] | None = None) -> int:
         "--verify-only",
         action="store_true",
         help="rebuild from live sources and fail if committed outputs or provenance drift",
+    )
+    mode.add_argument(
+        "--refresh-provenance",
+        action="store_true",
+        help=(
+            "offline: rewrite manifest.json from the committed artifacts after a "
+            "builder change that does not alter any output"
+        ),
     )
     parser.add_argument(
         "--strict-diff",
@@ -1014,6 +1260,26 @@ def main(argv: list[str] | None = None) -> int:
         if not 0 <= arguments.change_threshold_ratio <= 1:
             raise BuildError("--change-threshold-ratio must be between 0 and 1")
         manifest = load_manifest(arguments.manifest)
+        if arguments.refresh_provenance:
+            if arguments.app:
+                raise BuildError(
+                    "--refresh-provenance covers the whole repository and cannot be "
+                    "combined with --app"
+                )
+            document = refresh_provenance(manifest, root)
+            write_provenance(document, root)
+            print(
+                json.dumps(
+                    {
+                        "mode": "refresh-provenance",
+                        "apps": len(document["apps"]),
+                        "manifest": PROVENANCE_FILENAME,
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+            )
+            return 0
         names = select_apps(manifest, arguments.app)
         compilations = [compile_app(name, manifest["apps"][name], root) for name in names]
         # Render for every client even in check mode: an app that only fails
@@ -1027,6 +1293,7 @@ def main(argv: list[str] | None = None) -> int:
             threshold_ratio=arguments.change_threshold_ratio,
         )
         provenance = None
+        pruned: list[str] = []
         if arguments.write or arguments.verify_only:
             enabled_names = {
                 name for name, app in manifest["apps"].items() if app.get("enabled") is True
@@ -1051,10 +1318,20 @@ def main(argv: list[str] | None = None) -> int:
                 )
             write_outputs(compilations, manifest, root, rendered)
             write_client_views(compilations, manifest, root)
+            pruned = prune_stale_views(compilations, manifest, root)
             assert provenance is not None
             write_provenance(provenance, root)
+        for item in compilations:
+            for spec, hits in sorted(item.excluded_domains.items()):
+                if hits == 0:
+                    print(
+                        f"warning: {item.app_name}: exclude {spec!r} matched no upstream rule; "
+                        "confirm the upstream still carries it or drop the exclude",
+                        file=sys.stderr,
+                    )
         report = {
             "mode": "write" if arguments.write else "verify" if arguments.verify_only else "check",
+            "pruned_views": pruned,
             "change_gate": {
                 "threshold_lines": arguments.change_threshold_lines,
                 "threshold_ratio": arguments.change_threshold_ratio,
@@ -1068,6 +1345,7 @@ def main(argv: list[str] | None = None) -> int:
                     "rules": len(item.rules),
                     "skipped_attributes": len(item.skipped_attributes),
                     "skipped_excluded": len(item.skipped_excluded),
+                    "excluded_domains": dict(sorted(item.excluded_domains.items())),
                     "denied_includes": [name for name, _ in item.denied_includes],
                     "views": {name: len(rules) for name, rules in item.views},
                     "clients": {
