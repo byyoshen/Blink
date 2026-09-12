@@ -25,8 +25,10 @@ from pathlib import Path
 
 import yaml
 
-REPO = "https://github.com/byyoshen/Blink"
-RAW_BASE = "https://raw.githubusercontent.com/byyoshen/Blink/main"
+import repo_identity
+
+REPO = repo_identity.REPO_URL
+RAW_BASE = repo_identity.RAW_BASE
 
 # Display-only portal metadata.  Source logic lives in the manifest; this
 # mapping only groups apps for the portal and suggests a policy label for the

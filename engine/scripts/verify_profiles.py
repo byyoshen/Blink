@@ -10,9 +10,12 @@ import sys
 from pathlib import Path
 
 import build_profile
+import repo_identity
 
+# Derived from repo_identity so a rename cannot leave this gate matching the old
+# slug (and therefore silently verifying nothing).
 BLINK_RAW = re.compile(
-    r"https://raw\.githubusercontent\.com/byyoshen/Blink/main/"
+    re.escape(repo_identity.RAW_BASE) + r"/"
     r"(Surge|Loon|Shadowrocket|Stash|Clash|Egern|QuantumultX)/"
     r"([A-Za-z0-9._-]+\.(?:list|yaml|conf))"
 )

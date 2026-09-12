@@ -10,6 +10,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "engine" / "scripts"))
 import build_profile  # noqa: E402
+import repo_identity  # noqa: E402
 
 # Sandboxed Windows runners may deny chmod on directories; tempfile cleanup
 # calls it on every temporary directory it removes.  Redirect mkdtemp to
@@ -78,6 +79,35 @@ def ip_sample_intent() -> dict:
         }
     )
     return intent
+
+
+class RepoIdentityTests(unittest.TestCase):
+    """The owner/repo slug must live in exactly one module."""
+
+    def test_only_repo_identity_spells_out_the_slug(self) -> None:
+        scripts = Path(__file__).resolve().parents[1] / "scripts"
+        slug = f"{repo_identity.OWNER}/{repo_identity.REPOSITORY}"
+        offenders = []
+        for path in sorted(scripts.glob("*.py")):
+            if path.name == "repo_identity.py":
+                continue
+            if slug in path.read_text(encoding="utf-8"):
+                offenders.append(path.name)
+        self.assertEqual(
+            offenders,
+            [],
+            f"hardcoded {slug!r}; derive it from repo_identity instead",
+        )
+
+    def test_generated_references_derive_from_the_constants(self) -> None:
+        self.assertTrue(build_profile.BLINK_RAW.startswith(repo_identity.RAW_BASE))
+        self.assertTrue(build_profile.BLINK_RAW_CLASH.startswith(repo_identity.RAW_BASE))
+        self.assertTrue(build_profile.BLINK_RAW_QX.startswith(repo_identity.RAW_BASE))
+        self.assertEqual(build_profile.BLINK_RAW_VIEW, repo_identity.RAW_BASE)
+        self.assertEqual(
+            repo_identity.raw_url("Surge", "AI.list"),
+            f"{repo_identity.RAW_BASE}/Surge/AI.list",
+        )
 
 
 class ProfileEngineTests(unittest.TestCase):

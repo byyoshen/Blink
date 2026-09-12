@@ -20,6 +20,8 @@ from pathlib import Path
 
 import yaml
 
+import repo_identity
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 INTENT_PATH = REPO_ROOT / "engine" / "sources" / "profile" / "intent.yaml"
 TEMPLATE_DIR = REPO_ROOT / "engine" / "sources" / "profile" / "templates"
@@ -36,12 +38,15 @@ CLIENTS = {
 }
 
 BUILTIN_POLICIES = {"DIRECT", "REJECT", "REJECT-DROP", "Sub"}
-BLINK_RAW = "https://raw.githubusercontent.com/byyoshen/Blink/main/Surge"
-BLINK_RAW_CLASH = "https://raw.githubusercontent.com/byyoshen/Blink/main/Clash"
+# Every published reference derives from repo_identity, so renaming the account
+# is a one-line change instead of a find-and-replace across the generators.
+BLINK_RAW = repo_identity.raw_url("Surge")
+BLINK_RAW_CLASH = repo_identity.raw_url("Clash")
+BLINK_RAW_QX = repo_identity.raw_url("QuantumultX")
 
 # Per-client view file directory for the multi-view pilot (view payloads are
 # policy-free rule-set content, referenced at use site).
-BLINK_RAW_VIEW = "https://raw.githubusercontent.com/byyoshen/Blink/main"
+BLINK_RAW_VIEW = repo_identity.RAW_BASE
 VIEW_DIR = {
     "surge": "Surge",
     "shadowrocket": "Shadowrocket",
@@ -507,7 +512,6 @@ def _render_stash(intent: dict) -> dict[str, str]:
             group_lines.append(f"  - {{name: {group['name']}, type: select, proxies: [{members}]}}")
     providers: dict[str, str] = {}
     rules: list[str] = ["rules:"]
-    local_rules: list[str] = []
 
     def provider_name(name: str) -> str:
         base = re.sub(r"[^A-Za-z0-9]", "_", name)
@@ -524,11 +528,14 @@ def _render_stash(intent: dict) -> dict[str, str]:
 
     def add_rule_entry(entry: dict) -> None:
         policy = _policy_for(entry, "stash")
+        # Inline rules are emitted at their declared phase position, like the
+        # Surge renderer does.  Collecting them for the end would silently move
+        # a domain-phase rule behind the IP phase.
         if entry.get("kind") == "dest-port":
-            local_rules.append(f"  - DST-PORT,{entry['value']},{policy}")
+            rules.append(f"  - DST-PORT,{entry['value']},{policy}")
             return
         if entry.get("kind") == "domain":
-            local_rules.append(f"  - DOMAIN,{entry['value']},{policy}")
+            rules.append(f"  - DOMAIN,{entry['value']},{policy}")
             return
         # Stash supports no-resolve on a RULE-SET reference; an IP-phase rule set
         # must keep the option declared in the intent (mirrors the Clash renderer).
@@ -572,7 +579,6 @@ def _render_stash(intent: dict) -> dict[str, str]:
     for entry in _infra_for_phase(intent, "stash", "ip"):
         add_rule_entry(entry)
     rules.extend(_infra_unsupported_lines(intent, "stash", "ip", "  "))
-    rules.extend(local_rules)
     rules.append("  - MATCH,Final")
     return {
         "__SUBSCRIPTION__": "\n".join(subscription),
@@ -621,7 +627,6 @@ def _render_clash(intent: dict) -> dict[str, str]:
             )
     providers: dict[str, str] = {}
     rules: list[str] = ["rules:"]
-    local_rules: list[str] = []
 
     def provider_name(name: str) -> str:
         base = re.sub(r"[^A-Za-z0-9]", "_", name)
@@ -640,11 +645,12 @@ def _render_clash(intent: dict) -> dict[str, str]:
         policy = _policy_for(entry, "clash")
         options = (entry.get("options") or {}).get("clash")
         suffix = f",{options}" if options else ""
+        # Emitted at the declared phase position (see the Stash renderer).
         if entry.get("kind") == "dest-port":
-            local_rules.append(f"  - DST-PORT,{entry['value']},{policy}")
+            rules.append(f"  - DST-PORT,{entry['value']},{policy}")
             return
         if entry.get("kind") == "domain":
-            local_rules.append(f"  - DOMAIN,{entry['value']},{policy}")
+            rules.append(f"  - DOMAIN,{entry['value']},{policy}")
             return
         key = provider_name(entry["name"])
         provider_lines.append(f"  {key}:")
@@ -686,7 +692,6 @@ def _render_clash(intent: dict) -> dict[str, str]:
     for entry in _infra_for_phase(intent, "clash", "ip"):
         add_rule_entry(entry)
     rules.extend(_infra_unsupported_lines(intent, "clash", "ip", "  "))
-    rules.extend(local_rules)
     rules.append("  - MATCH,Final")
     return {
         "__SUBSCRIPTION__": "\n".join(subscription),
@@ -823,10 +828,7 @@ def _render_quantumultx(intent: dict) -> dict[str, str]:
                     " update-interval=172800, opt-parser=false, enabled=true"
                 )
             continue
-        source = (
-            app.get("qx_source")
-            or f"https://raw.githubusercontent.com/byyoshen/Blink/main/QuantumultX/{app_name}.list"
-        )
+        source = app.get("qx_source") or f"{BLINK_RAW_QX}/{app_name}.list"
         remote_rules.append(
             f"{source}, tag={app_name}, force-policy={qx_policy(app['policy'])},"
             " update-interval=172800, opt-parser=false, enabled=true"

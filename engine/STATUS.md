@@ -53,6 +53,7 @@ README.md · LICENSE · AGENTS.md · DISCLAIMER.md · THIRD_PARTY_NOTICES.md · 
 # 构建引擎与开发侧（全部收敛于此）
 engine/
 ├── scripts/                # build.py / renderers.py / build_profile.py / gen_portal_stats.py
+│                           # + repo_identity.py（owner/repo slug 的唯一来源）与各门禁脚本
 ├── sources/                # apps.yaml、supplement、profile intent 与 templates
 ├── tests/                  # 单元测试
 ├── portal/                 # 网页门户（Vite + React + TS + Tailwind CSS）

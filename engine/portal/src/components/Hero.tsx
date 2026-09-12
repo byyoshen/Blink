@@ -3,10 +3,9 @@ import CodeBlock from "./CodeBlock";
 interface HeroProps {
   appsCount: number;
   totalRules: number;
+  /** Raw base from stats.json, so the example line cannot drift from the real URLs. */
+  rawBase: string;
 }
-
-const EXAMPLE_LINE =
-  "RULE-SET,https://raw.githubusercontent.com/byyoshen/Blink/main/Surge/YouTube.list,Proxy";
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
@@ -17,7 +16,9 @@ function Stat({ value, label }: { value: string; label: string }) {
   );
 }
 
-export default function Hero({ appsCount, totalRules }: HeroProps) {
+export default function Hero({ appsCount, totalRules, rawBase }: HeroProps) {
+  const exampleUrl = `${rawBase}/Surge/YouTube.list`;
+  const exampleLine = `RULE-SET,${exampleUrl},Proxy`;
   return (
     <section id="top" className="hero-bg px-6 pb-16 pt-24 text-center sm:pt-28">
       <p
@@ -64,10 +65,10 @@ export default function Hero({ appsCount, totalRules }: HeroProps) {
         </a>
       </div>
       <div className="hero-enter mx-auto mt-11 max-w-2xl" style={{ animationDelay: "280ms" }}>
-        <CodeBlock file="Surge 主配置 · [Rule]" copyText={EXAMPLE_LINE}>
+        <CodeBlock file="Surge 主配置 · [Rule]" copyText={exampleLine}>
           <span className="text-white/40"># 一行接入，策略名由你自己决定{"\n"}</span>
           <span className="text-[#8ab4ff]">RULE-SET</span>
-          ,https://raw.githubusercontent.com/byyoshen/Blink/main/Surge/YouTube.list,
+          {`,${exampleUrl},`}
           <span className="text-[#7ee2a8]">Proxy</span>
         </CodeBlock>
       </div>
