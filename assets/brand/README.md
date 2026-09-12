@@ -18,10 +18,11 @@
 
 | 发布文件 | 来源 | 处理 |
 | --- | --- | --- |
-| `engine/portal/public/blink-logo-dark.png` | `badge-dark.png` | 裁到徽章边界并向内缩 10px（避开徽章自身的抗锯齿白边），用徽章底色补成正方形，缩到 512² |
-| `engine/portal/public/blink-logo-light.png` | `badge-light.png` | 同上 |
-| `engine/portal/public/favicon-dark.png` | 上面的深色方图 | 512²，烘焙圆形 alpha（4× 掩膜降采样抗锯齿） |
-| `engine/portal/public/favicon-light.png` | 上面的浅色方图 | 同上 |
+| `engine/portal/public/blink-logo-dark.webp` | `badge-dark.png` | 裁到徽章边界并向内缩 10px（避开徽章自身的抗锯齿白边），用徽章底色补成正方形，缩到 512²，WebP q90 |
+| `engine/portal/public/blink-logo-light.webp` | `badge-light.png` | 同上 |
+| `engine/portal/public/og-image.png` | `badge-dark.png` | 同上，但保持 PNG（见下方约束） |
+| `engine/portal/public/favicon-dark.png` | 深色方图 | 512²，烘焙圆形 alpha（4× 掩膜降采样抗锯齿） |
+| `engine/portal/public/favicon-light.png` | 浅色方图 | 同上 |
 | `engine/docs/images/banner-on-dark.webp` | `wordmark-dark.png` | 缩到 1280 宽，WebP q90 |
 | `engine/docs/images/banner-on-light.webp` | `wordmark-light.png` | 同上 |
 
@@ -29,6 +30,6 @@
 
 - **方形 logo 必须满幅**：portal 把它渲染成 24px 圆形（`rounded-full` + `object-cover`），带白画布会在圆里出现白环。母版本身是带画布的，所以派生时必须裁。
 - **圆形必须烘进 PNG**：GitHub 会剥掉 README HTML 里的 inline style，浏览器也不会自己把 favicon 切圆。
-- **favicon 保持 PNG**：浏览器对 WebP favicon 支持不一致。
+- **favicon 与 og:image 保持 PNG**：浏览器对 WebP favicon 支持不一致；链接预览抓取器对 WebP 的支持同样参差。portal 自己的 logo 走 WebP（8.8 KB vs PNG 187 KB），og:image 因此单独留一份 PNG。
 - **banner 用 WebP**：平涂 + 渐变的构图 PNG 压不动（351 KB），WebP q90 只要 11.5 KB，且字标边缘无伪影。含小字的 UI 截图则相反，应保持 PNG。
 - 浅色徽章与画布只差 2 级灰度，靠亮度阈值找边界会误判成熊；派生时用的是贴近底色的阈值，底色从徽章左边缘中点取（圆角处取不到）。

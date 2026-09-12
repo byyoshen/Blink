@@ -40,7 +40,7 @@ export default function Nav({ repo, theme, toggleTheme }: NavProps) {
         >
           <span className="relative h-6 w-6 shrink-0 overflow-hidden rounded-full border border-line bg-card">
             <img
-              src="blink-logo-dark.png"
+              src="blink-logo-dark.webp"
               alt=""
               width={24}
               height={24}
@@ -49,7 +49,7 @@ export default function Nav({ repo, theme, toggleTheme }: NavProps) {
               }`}
             />
             <img
-              src="blink-logo-light.png"
+              src="blink-logo-light.webp"
               alt=""
               width={24}
               height={24}
@@ -88,7 +88,7 @@ export default function Nav({ repo, theme, toggleTheme }: NavProps) {
         >
           {/* dark = white bear on near-black; light = black bear on off-white */}
           <img
-            src="blink-logo-dark.png"
+            src="blink-logo-dark.webp"
             alt=""
             width={20}
             height={20}
@@ -97,7 +97,7 @@ export default function Nav({ repo, theme, toggleTheme }: NavProps) {
             }`}
           />
           <img
-            src="blink-logo-light.png"
+            src="blink-logo-light.webp"
             alt=""
             width={20}
             height={20}
