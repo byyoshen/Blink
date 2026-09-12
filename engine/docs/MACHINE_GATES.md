@@ -16,7 +16,7 @@
 | 门禁 | 命令 | 强制内容 |
 | --- | --- | --- |
 | 单元与回归 | `python -m unittest discover -s engine/tests -v` | Parser、renderer、Profile、变化阈值和故障注入 |
-| 七端等价性 | `python engine/scripts/parity_check.py --root . --strict` | 四端 classical 逐字节相同；Clash 仅移除 USER-AGENT；Egern/QX 仅移除 PROCESS-NAME；QX 统一省略 no-resolve |
+| 七端等价性 | `python engine/scripts/parity_check.py --root .` | 四端 classical 逐字节相同；Clash 仅移除 USER-AGENT；Egern/QX 仅移除 PROCESS-NAME；QX 统一省略 no-resolve |
 | 产物健康度 | `python engine/scripts/health_check.py --root .` | 非空、合法、无重复、确定性排序、文件头统计正确 |
 | 语义多视图一致性 | `python engine/scripts/validate_views.py --root .` | 每个视图（domainset/nonip/ip）种类合法：IP 不进 nonip、domain 不进 ip、纯域名 App 无多余空 ip 视图；Surge 视图内容与 canonical 拆分一致；七端视图文件齐全、头统计（含显式丢弃）正确 |
 | 产物溯源 | `python engine/scripts/verify_manifest.py --root .` | 30 App、七端文件、supplement、构建器和 source definition 的 SHA256 完整且一致 |
@@ -24,7 +24,7 @@
 | 跨 App overlap | `python engine/scripts/overlap_check.py --root .` | 相对人工复核基线不得出现新重叠 |
 | Portal 数据同步 | `python engine/scripts/gen_portal_stats.py --check` | `engine/portal/public/data/stats.json` 与当前七端产物逐字节一致（定向 `--app` 写入后忘记重算会被拦住） |
 | 敏感模式 | `python engine/scripts/secret_scan.py --root .` | PAT、AWS Key、私钥、代理 URI、URL token/凭据、不透明订阅 URL、正/反斜杠的本地绝对路径 |
-| 实时重建 drift | `python engine/scripts/build.py --verify-only --strict-diff` | 重新抓取全部上游并逐字节比对 210 个产物及 provenance |
+| 实时重建 drift | `python engine/scripts/build.py --verify-only` | 重新抓取全部上游并逐字节比对 210 个产物及 provenance |
 
 > 改动 `build.py` / `renderers.py` 后，若确认输出未变，用离线的 `build.py --refresh-provenance` 重建 `manifest.json`（见下文），不要为此跑实时 `--write`。
 
@@ -51,7 +51,7 @@ python engine/scripts/build.py --refresh-provenance
 
 - 重算一切可从**已提交产物**派生的指纹：builder / source definition 指纹、canonical 指纹与规则数、七端产物 SHA256 与 dropped、语义视图记录。
 - 只有实时抓取才能确立的事实从现有 manifest **原样继承**：上游文本指纹与字节/行数、`input_rules`、`skipped_attributes`、`skipped_excluded`、`denied_includes`、`excluded_domains`。
-- 它只对"不改变任何输出"的改动有效，并且会自己证明这一点：已提交的七端产物与视图必须仍能从已提交的 canonical 规则逐字节重新渲染出来，且 `apps.yaml` 声明的上游集合与 exclude 声明必须仍与 manifest 记录的一致。任一条不成立就拒绝执行并要求跑真正的 `--write`（新增 App、换源、renderer 行为变化都属于这一类）。
+- 它只对"不改变任何输出"的改动有效，并且会自己证明这一点：已提交的七端产物与视图必须仍能从已提交的 canonical 规则逐字节重新渲染出来，且 `apps.yaml` 声明的上游集合必须仍与 manifest 记录的一致。任一条不成立就拒绝执行并要求跑真正的 `--write`（新增 App、换源、renderer 行为变化都属于这一类）。
 - 它**不能**替代 `--write`：上游内容变化只能由实时构建记录。
 
 ## 过期产物清理

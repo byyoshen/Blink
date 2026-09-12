@@ -156,6 +156,7 @@ rule-providers:
 rules:
   - RULE-SET,reject,REJECT
   - RULE-SET,tracking,REJECT
+  - DST-PORT,123,DIRECT
   - RULE-SET,lan,DIRECT
   - RULE-SET,domestic,DIRECT
   - RULE-SET,cdn,Proxy
@@ -172,5 +173,4 @@ rules:
   - RULE-SET,GitHub_domainset,Github
   - RULE-SET,china_ip,DIRECT,no-resolve
   - RULE-SET,china_ip2,DIRECT,no-resolve
-  - DST-PORT,123,DIRECT
   - MATCH,Final

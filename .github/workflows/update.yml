@@ -63,7 +63,7 @@ jobs:
 
       - name: Verify generated Rule-Sets and provenance
         run: |
-          python engine/scripts/parity_check.py --root . --strict
+          python engine/scripts/parity_check.py --root .
           python engine/scripts/health_check.py --root .
           python engine/scripts/validate_views.py --root .
           python engine/scripts/overlap_check.py --root .

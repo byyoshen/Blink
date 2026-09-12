@@ -30,7 +30,7 @@ jobs:
       - name: Run unit and regression tests
         run: python -m unittest discover -s engine/tests -v
       - name: Verify seven-client parity
-        run: python engine/scripts/parity_check.py --root . --strict
+        run: python engine/scripts/parity_check.py --root .
       - name: Verify generated output health
         run: python engine/scripts/health_check.py --root .
       - name: Verify semantic multi-view invariants

@@ -90,7 +90,8 @@
      user_agent_set: ['Argo*']     # USER-AGENT 映射
      url_regex_set: [...]
      ```
-- **no-resolve**：rule-set 级 `no_resolve: true`；配置内规则级 `no_resolve: true` 字段（CCR 实证）。
+- **no-resolve**：rule-set 级 `no_resolve: true`；配置内规则级 `no_resolve: true` 字段（CCR 实证）。全部 IP 规则带 no-resolve 时输出该字段、全不带时省略、混合时显式失败；Blink 的 renderer 三条分支齐备（`engine/tests/test_renderers.py` 有断言）。
+- **`url_regex_set`**：Egern schema 有这个 bucket，但 `URL-REGEX` 不在 Blink 的 canonical model（`ALLOWED_RULE_TYPES`）里，任何规则都到不了它，`parity_check` 也不认识该 key，因此 renderer 不保留这个 bucket。若将来把 URL-REGEX 纳入 canonical，renderer 与 parity 两侧必须同时加。
 - **PROCESS-NAME**：Repcz Egern 文件丢弃、无对应 key → 不可无损表达（官方文档级 Needs Verification）。
 - Egern YAML ≠ Clash YAML：`rules:` 是对象列表（`rule_set` / `domain` / `domain_suffix` / `domain_keyword` / `geoip` / `url_regex` / `default`），与 Clash 完全不同。另支持 `dns.forward` 的 `proxy_rule_set` 做域名级 DNS 分流。
 - 注释：`#`（生产实证）。更新间隔字段：Needs Verification。

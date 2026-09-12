@@ -58,6 +58,11 @@ CLIENTS: dict[str, ClientTarget] = {
     "quantumultx": ClientTarget("quantumultx", "QuantumultX", ".list", "quantumultx"),
 }
 
+# Egern emits one bucket per canonical kind it can express.  Egern's own schema
+# also has url_regex_set, but URL-REGEX is not in the canonical model
+# (ALLOWED_RULE_TYPES), so no rule can ever reach it; parity_check.EGERN_TYPES
+# does not know the key either and would reject the file as unknown.  Keep the
+# two in lockstep instead of carrying an unreachable bucket.
 EGERN_KEY_ORDER = (
     "no_resolve",
     "domain_set",
@@ -66,7 +71,6 @@ EGERN_KEY_ORDER = (
     "ip_cidr_set",
     "ip_cidr6_set",
     "user_agent_set",
-    "url_regex_set",
 )
 
 # Quantumult X filter types for each canonical kind.  The placeholder policy
@@ -246,8 +250,6 @@ def render_egern_yaml(rules: Iterable[object], app_name: str) -> tuple[str, list
             bucket = "ip_cidr6_set"
         elif rule.kind == "USER-AGENT":
             bucket = "user_agent_set"
-        elif rule.kind == "URL-REGEX":
-            bucket = "url_regex_set"
         elif rule.kind == "PROCESS-NAME":
             dropped.append(f"{rule.kind},{rule.value}")
             continue
@@ -256,14 +258,18 @@ def render_egern_yaml(rules: Iterable[object], app_name: str) -> tuple[str, list
         buckets.setdefault(bucket, []).append(rule.value)
         if bucket in {"ip_cidr_set", "ip_cidr6_set"}:
             ip_has_no_resolve.append("no-resolve" in rule.options)
-    if ip_has_no_resolve and not all(ip_has_no_resolve):
+    # Only a genuine mix is unexpressible.  ``ip_has_no_resolve`` is a list of
+    # booleans, so the guard has to test ``any`` against ``all``: a non-empty
+    # list of all-False means every IP rule lacks no-resolve, which is expressed
+    # by omitting the set-level flag, not by failing.
+    if any(ip_has_no_resolve) and not all(ip_has_no_resolve):
         raise RendererError(
             "egern no_resolve is set-level: mixing IP rules with and without "
             "no-resolve cannot be expressed losslessly"
         )
 
     document: dict[str, object] = {}
-    if ip_has_no_resolve:
+    if ip_has_no_resolve and all(ip_has_no_resolve):
         document["no_resolve"] = True
     for key in EGERN_KEY_ORDER:
         values = buckets.get(key)

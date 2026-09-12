@@ -9,6 +9,9 @@ import Usage from "./components/Usage";
 import About from "./components/About";
 import Footer from "./components/Footer";
 
+// The only hardcoded identity in the portal: when the data fetch fails there is
+// no stats.json to read repo / raw_base from. Everything else derives from the
+// loaded data, which engine/scripts/repo_identity.py generates.
 const FALLBACK_REPO = "https://github.com/byyoshen/Blink";
 
 export default function App() {
@@ -49,7 +52,7 @@ export default function App() {
               {error} · 请直接查看{" "}
               <a
                 className="text-accent underline underline-offset-2"
-                href="https://github.com/byyoshen/Blink"
+                href={FALLBACK_REPO}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -62,6 +65,7 @@ export default function App() {
             <Hero
               appsCount={data.apps.length}
               totalRules={data.apps.reduce((sum, app) => sum + app.rules, 0)}
+              rawBase={data.raw_base}
             />
             <Rulesets data={data} query={search} onQueryChange={setSearch} />
             <Usage data={data} query={search} />
