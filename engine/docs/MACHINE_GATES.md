@@ -41,6 +41,8 @@
 - `canonical.excluded_domains`：每条已声明 domain exclude 的命中数（仅声明了 domain exclude 的 App 才有该字段）。type-level exclude 一直记在 `skipped_excluded`，domain 级此前完全无痕，无法从 `input_rules → rules` 的差值区分"被 exclude"与"被去重"。记命中数后，某条 exclude 因上游改写而**静默失效**会变成每日提交里可见的 `1 → 0` diff；`build.py` 同时在 stderr 打印一条 warning，但不中断构建（上游合法移除该规则时不应自锁每日管线）。
 - 七个客户端的路径、SHA256、规则数和逐条 dropped 记录。
 
+构建报告（非提交产物）另记 `rewritten_ip_rules`：IP 规则被规范化时的 `before -> after`。`ipaddress.ip_network(strict=False)` 会把 `IP-CIDR,1.2.3.4/24` 读成 `1.2.3.0/24`、把裸地址补成 `/32` —— 两者都是标准 CIDR 解读，但前者**放宽了上游作者实际写下的范围**，属于"禁止静默转换"覆盖的情形，因此逐条记入报告并在 stderr 提示。不中断构建：上游写法不规范不应阻断每日更新，且规范化后的结果本来就会出现在产物 diff 里。
+
 ## 纯 provenance 刷新（`--refresh-provenance`）
 
 `manifest.json` 记录 `build.py` / `renderers.py` 的 SHA256，所以**改动构建器本身**（哪怕只加一行注释）就会让 `verify_manifest.py` 失败。用实时 `--write` 重建会把当天的上游内容变化一起拖进一个本该只含代码的提交里，于是提供离线模式：
@@ -90,6 +92,10 @@ python engine/scripts/overlap_check.py --root . --write-baseline
 - `update.yml`：每日实时抓取、单测、变化阈值、全量写入、全部产物门禁、Portal 数据更新；只有全部成功且产物有变化时才提交。
 - `pages.yml`：portal 源码 push 时部署，并在 `Update Rule-Sets` 成功完成后通过 `workflow_run` 再部署一次 —— 每日提交由默认 `GITHUB_TOKEN` 产生，这类 push 不会触发其他 workflow，少了这个触发器门户上的规则数会停留在上一次人工 portal 提交。
 - 每日构建 JSON 报告以 Actions artifact `build-report` 保存 14 天，不提交运行时报告。
+
+## 仓库身份一致性
+
+`engine/scripts/repo_identity.py` 是 owner/repo slug 的唯一来源，全部生成引用由它派生；`engine/tests/test_repo_identity.py` 另外扫描 README、门户外壳、设计文档与 `Profiles/`（当前 88 处自引用），任何指向本仓库却使用了旧 owner 的 URL 都会失败。改名只需改该模块 + 手写文档，漏改会被测试点名而不是变成一个看起来正常的 404。该扫描同时断言匹配数不得低于下限，避免正则失效后"什么都不校验"地通过 —— 与 `verify_profiles` 的 raw URL 正则同一个教训。
 
 ## 行尾与字节级门禁
 
