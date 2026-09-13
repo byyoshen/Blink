@@ -21,12 +21,21 @@ import { useMediaQuery } from "../hooks";
 
 const MENU_WIDTH = 168;
 
-/* How many cards survive the fold, by how many fit per row.
-   The card grid is auto-fill over a 175px minimum, so a phone gets one or two
-   columns and a desktop gets four or five. A single limit cannot serve both:
-   ten cards is two tidy rows on a desktop and roughly ten screens of scrolling
-   on a phone, which buries the next section entirely. */
+/* How many cards survive the fold.
+ *
+ * The target is the same *shape* at every width -- roughly three rows before
+ * the fold -- not the same count. A single count cannot do that, because the
+ * grid is auto-fill over a 175px minimum: a phone gets one column and a wide
+ * desktop gets five, so ten cards are two tidy rows there and ten screens of
+ * scrolling on a phone, burying the next section entirely.
+ *
+ * Given `px-6` padding and a `gap-3` gutter, the column count changes at about
+ * 410px (2 cols), 597px (3), 784px (4) and 971px (5). The tiers below are the
+ * Tailwind breakpoints nearest those, so the three constants are coupled to
+ * the grid template further down: change the 175px minimum or the gutter and
+ * these want re-deriving. */
 const COLLAPSED_NARROW = 3;
+const COLLAPSED_MEDIUM = 6;
 const COLLAPSED_WIDE = 10;
 
 type CopyOption = {
@@ -291,6 +300,7 @@ export default function Rulesets({
   const [filter, setFilter] = useState("all");
   const [expanded, setExpanded] = useState(false);
   const wide = useMediaQuery("(min-width: 640px)");
+  const medium = useMediaQuery("(min-width: 480px)");
   const gridRef = useRef<HTMLDivElement>(null);
   const apps = useMemo(() => sortedApps(data.apps), [data.apps]);
   const present = useMemo(() => new Set(apps.map((app) => app.category)), [apps]);
@@ -298,7 +308,7 @@ export default function Rulesets({
   const categoryApps = filter === "all" ? apps : apps.filter((app) => app.category === filter);
   const results = categoryApps.filter((app) => appMatchesQuery(app, query));
   const activeNote = CLIENT_TABS.find((tab) => tab.key === client)?.note ?? "";
-  const collapsedCount = wide ? COLLAPSED_WIDE : COLLAPSED_NARROW;
+  const collapsedCount = wide ? COLLAPSED_WIDE : medium ? COLLAPSED_MEDIUM : COLLAPSED_NARROW;
   const shown = expanded ? results : results.slice(0, collapsedCount);
   const collapsible = results.length > collapsedCount;
 
