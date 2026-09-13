@@ -3,10 +3,11 @@
  * Neither image shrinks to nothing on the way out -- a mark that collapses to a
  * point reads as vanishing rather than as one face turning into the other.
  *
- * Shared rather than inlined because the nav, the mobile menu, the theme button
- * and the footer all need it. They previously carried four hand-copied versions
- * of this markup, and the footer's had already drifted: it still animated from
- * scale-0 after the others were corrected.
+ * Shared rather than inlined because the nav mark and the footer both need it.
+ * They previously carried hand-copied versions of this markup, and the footer's
+ * had already drifted: it still animated from scale-0 after the others were
+ * corrected. The theme control is deliberately no longer one of its callers --
+ * two mascots in one bar read as duplication; see ThemeGlyph.
  */
 export default function MascotSwap({ dark }: { dark: boolean }) {
   const base =

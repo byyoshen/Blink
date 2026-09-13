@@ -7,4 +7,15 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   base: "./",
   plugins: [react(), tailwindcss()],
+  server: {
+    watch: {
+      // Editors and coding agents stage a write in a dot-prefixed temp dir
+      // beside the target file, then rename it into place. A watcher that
+      // descends into one of those hits EBUSY on the locked temp file, and
+      // Vite re-emits a watcher error as a fatal 'error' event: the dev server
+      // exits mid-edit instead of logging a warning. Nothing under src/ is ever
+      // named this way, so the pattern cannot hide a real file.
+      ignored: ["**/.*.tmpdir", "**/.*.tmpdir/**"],
+    },
+  },
 });

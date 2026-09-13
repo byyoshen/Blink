@@ -25,7 +25,7 @@ export default function Hero({ appsCount, totalRules, rawBase }: HeroProps) {
         className="hero-enter mx-auto mb-5 inline-block rounded-full border border-accent-soft bg-accent-soft px-3.5 py-1 text-[13px] font-semibold tracking-wide text-accent"
         style={{ animationDelay: "0ms" }}
       >
-        多客户端规则与配置 · 自动构建 · 稳定分发
+        可信上游 · 自动更新 · 真机验证
       </p>
       <h1
         className="hero-enter mx-auto max-w-3xl text-[clamp(2rem,5.2vw,3.25rem)] font-bold leading-[1.2] tracking-tight"
@@ -41,9 +41,8 @@ export default function Hero({ appsCount, totalRules, rawBase }: HeroProps) {
         className="hero-enter mx-auto mt-5 max-w-xl text-base text-mute"
         style={{ animationDelay: "140ms" }}
       >
-        每日从可信上游保守转换 App 专用规则，渲染为七种客户端格式；同一份配置意图另迁移为七客户端
-        配置文件，单订阅池、占位符内置，替换一条订阅即可复用。规则自动更新，配置人工维护、
-        真机验证后发布。
+        基于可信上游持续生成 App
+        专用规则，并适配七种客户端配置。统一订阅入口，替换一次即可复用；规则自动更新，配置经人工维护与真机验证后发布。
       </p>
       <div
         className="hero-enter mt-7 flex justify-center gap-3"

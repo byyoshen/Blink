@@ -21,21 +21,23 @@ import { useMediaQuery } from "../hooks";
 
 const MENU_WIDTH = 168;
 
-/* Below 640px the list is a grid of app tiles and nothing is folded; above it,
-   cards with a fold at ten.
+/* Below 640px the list is a grid of app tiles; above it, cards. Each layout
+   folds at its own count, because a row holds a different number of apps in
+   each one.
  *
- * Folding was the wrong tool for the phone. A card list is one column there, so
- * thirty apps is about ten screens and fifty is about seventeen; a fold hides
- * that until someone taps "expand", at which point the full length is back. The
- * count is the problem, not the initial view. Tiles change the slope instead --
- * five or six per row, so thirty apps land in roughly one screen and fifty in
- * under two -- which is why the phone needs no fold at all.
+ * Tiles fold at twelve, which is four rows of three -- the column count a phone
+ * lands on at a 92px track minimum (a 390-430px viewport gives three). Tiles
+ * were previously shown in full on the argument that they are cheap; the count,
+ * not the cost, is what makes that wrong. Thirty apps is eleven rows of tiles,
+ * roughly a screen and a half of scrolling before the next section starts, so
+ * the section read as the whole page.
  *
  * Ten still suits the desktop card grid: auto-fill over a 175px minimum gives
- * four or five columns at common widths, so ten is two tidy rows. That number is
- * coupled to the grid template below; changing the track minimum or the gutter
- * wants it re-derived. */
+ * four or five columns at common widths, so ten is two tidy rows. Both numbers
+ * are coupled to the grid templates below; changing a track minimum or the
+ * gutter wants them re-derived. */
 const COLLAPSED_WIDE = 10;
+const COLLAPSED_NARROW = 12;
 
 function CopyRuleButton({ options }: { options: CopyOption[] }) {
   const [open, setOpen] = useState(false);
@@ -338,9 +340,9 @@ export default function Rulesets({
   const categoryApps = filter === "all" ? apps : apps.filter((app) => app.category === filter);
   const results = categoryApps.filter((app) => appMatchesQuery(app, query));
   const activeNote = CLIENT_TABS.find((tab) => tab.key === client)?.note ?? "";
-  // Tiles are cheap enough to show in full, so the fold is a desktop concern.
-  const shown = wide && !expanded ? results.slice(0, COLLAPSED_WIDE) : results;
-  const collapsible = wide && results.length > COLLAPSED_WIDE;
+  const foldAt = wide ? COLLAPSED_WIDE : COLLAPSED_NARROW;
+  const shown = expanded ? results : results.slice(0, foldAt);
+  const collapsible = results.length > foldAt;
 
   useEffect(() => {
     if (wide) setOpenApp(null);

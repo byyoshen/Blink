@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useActiveSection, type Theme } from "../hooks";
 import MascotSwap from "./MascotSwap";
+import ThemeGlyph from "./ThemeGlyph";
 
 interface NavProps {
   repo: string;
@@ -10,14 +11,21 @@ interface NavProps {
   sectionsMounted: boolean;
 }
 
+/* Menu order, top to bottom: 使用 first, because that is what the hero's
+   primary CTA points at -- the menu should open on the same door the page
+   offers. The rest follow in build order. */
 const NAV_LINKS = [
-  { href: "#rulesets", label: "规则集" },
   { href: "#usage", label: "使用" },
+  { href: "#rulesets", label: "规则集" },
   { href: "#profiles", label: "配置文件" },
   { href: "#about", label: "构建与来源" },
 ] as const;
 
-const SECTION_IDS = NAV_LINKS.map((link) => link.href.slice(1));
+/* Document order, which the menu order above is no longer. useActiveSection
+   breaks a tie between two visible sections by taking the earlier id in this
+   list, and "earlier" has to mean earlier on the page: menu order would
+   highlight 使用 while the reader is still inside 规则集. */
+const SECTION_IDS = ["rulesets", "usage", "profiles", "about"];
 
 /* Shape encodes role, which is what keeps the bar coherent rather than merely
    decorated: a borderless pill is in-page navigation, a bordered pill is an
@@ -95,10 +103,10 @@ export default function Nav({ repo, theme, toggleTheme, sectionsMounted }: NavPr
           onClick={toggleTheme}
           aria-label={themeLabel}
           title={themeLabel}
-          className="relative ml-auto flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line bg-card transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-line-strong hover:bg-paper hover:shadow-md active:scale-90 sm:ml-0"
+          className="relative ml-auto flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line bg-card text-ink transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-line-strong hover:bg-paper hover:shadow-md active:scale-90 sm:ml-0"
         >
-          <span className="relative h-5 w-5 overflow-hidden rounded-full">
-            <MascotSwap dark={dark} />
+          <span className="relative h-6 w-6">
+            <ThemeGlyph dark={dark} />
           </span>
         </button>
         <button
@@ -106,9 +114,30 @@ export default function Nav({ repo, theme, toggleTheme, sectionsMounted }: NavPr
           onClick={() => setMenuOpen((open) => !open)}
           aria-label={menuOpen ? "关闭菜单" : "打开菜单"}
           aria-expanded={menuOpen}
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line bg-card text-[15px] leading-none transition-all duration-200 ease-out hover:bg-paper active:scale-90 sm:hidden"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line bg-card text-ink transition-all duration-200 ease-out hover:bg-paper active:scale-90 sm:hidden"
         >
-          {menuOpen ? "✕" : "☰"}
+          {/* Three bars folding into an X, rather than two glyphs trading
+              places. The middle bar collapses faster than the outer two travel
+              (200ms against 320ms), so it is gone before they arrive. The bars
+              are heavy and fully rounded on purpose: hairlines read as drawn
+              rules rather than as a button. */}
+          <span className="relative block h-[16px] w-[17px]">
+            <span
+              className={`absolute left-0 h-[3px] w-full rounded-full bg-current transition-all duration-[320ms] ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none ${
+                menuOpen ? "top-[6.5px] rotate-45" : "top-0 rotate-0"
+              }`}
+            />
+            <span
+              className={`absolute left-0 top-[6.5px] h-[3px] w-full rounded-full bg-current transition-all duration-200 ease-out motion-reduce:transition-none ${
+                menuOpen ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"
+              }`}
+            />
+            <span
+              className={`absolute left-0 h-[3px] w-full rounded-full bg-current transition-all duration-[320ms] ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none ${
+                menuOpen ? "top-[6.5px] -rotate-45" : "top-[13px] rotate-0"
+              }`}
+            />
+          </span>
         </button>
       </div>
 
@@ -126,7 +155,7 @@ export default function Nav({ repo, theme, toggleTheme, sectionsMounted }: NavPr
                 href={link.href}
                 aria-current={current ? "true" : undefined}
                 onClick={() => setMenuOpen(false)}
-                className={`block border-b border-line px-6 py-3.5 text-sm font-medium tracking-[0.01em] transition-colors duration-150 ease-out last:border-b-0 ${
+                className={`block border-b border-line px-6 py-3.5 text-sm font-medium tracking-[0.01em] transition-colors duration-150 ease-out ${
                   current ? "bg-accent-soft text-accent" : "text-ink hover:bg-paper"
                 }`}
               >
@@ -140,19 +169,17 @@ export default function Nav({ repo, theme, toggleTheme, sectionsMounted }: NavPr
               toggleTheme();
               setMenuOpen(false);
             }}
-            className="flex w-full items-center gap-2.5 border-t border-line px-6 py-3.5 text-left text-sm text-mute transition-colors duration-150 ease-out hover:bg-paper"
+            aria-label={`主题切换 · ${themeLabel}`}
+            className="flex w-full items-center border-b border-line px-6 py-3.5 text-left text-sm text-mute transition-colors duration-150 ease-out hover:bg-paper"
           >
-            <span className="relative h-5 w-5 shrink-0 overflow-hidden rounded-full border border-line bg-card">
-              <MascotSwap dark={dark} />
-            </span>
-            {themeLabel}
+            主题切换
           </button>
           <a
             href={repo}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMenuOpen(false)}
-            className="flex items-center gap-2.5 border-t border-line px-6 py-3.5 text-sm text-mute transition-colors duration-150 ease-out hover:bg-paper"
+            className="flex items-center gap-2.5 px-6 py-3.5 text-sm text-mute transition-colors duration-150 ease-out hover:bg-paper"
           >
             <GitHubMark />
             GitHub
