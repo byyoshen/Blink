@@ -10,7 +10,7 @@
  */
 export default function MascotSwap({ dark }: { dark: boolean }) {
   const base =
-    "absolute h-full w-full rounded-full object-cover transition-all duration-300 ease-out";
+    "absolute h-full w-full rounded-full object-cover transition-all duration-300 ease-out motion-reduce:transition-none";
   return (
     <>
       <img
