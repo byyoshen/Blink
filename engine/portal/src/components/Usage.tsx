@@ -25,7 +25,8 @@ const STEPS: Record<ClientKey, ReactNode[]> = {
       打开 Stash 配置，把下面整段复制进 <code>rule-providers</code> 与 <code>rules</code>。
     </>,
     <>
-      把每个 <code>RULE-SET</code> 行放在 <code>MATCH</code>/<code>FINAL</code> 之前合适的位置。
+      把每个 <code>RULE-SET</code> 行放在 <code>MATCH</code>/<code>FINAL</code> 之前合适的位置；
+      分两段的 App，域名段那条要排在 IP 段之前。
     </>,
     <>
       策略名换成你自己的；<code>interval: 86400</code> 控制规则集更新周期。
@@ -37,8 +38,8 @@ const STEPS: Record<ClientKey, ReactNode[]> = {
       <code>rule-providers</code> 与 <code>rules</code>。
     </>,
     <>
-      把每个 <code>RULE-SET</code> 行放在 <code>MATCH</code> 之前合适的位置；规则经 Clash/ 目录分发
-      （USER-AGENT 已显式去除）。
+      把每个 <code>RULE-SET</code> 行放在 <code>MATCH</code> 之前合适的位置，域名段排在 IP 段之前；
+      规则经 Clash/ 目录分发（USER-AGENT 已显式去除）。
     </>,
     <>
       策略名换成你自己的；<code>interval: 86400</code> 控制规则集更新周期。
@@ -127,9 +128,7 @@ export default function Usage({ data, query }: { data: PortalData; query: string
         </Reveal>
         <Reveal>
           <div className="mx-auto mb-6 max-w-3xl rounded-2xl border border-accent-soft bg-accent-soft px-5 py-4 text-[13.5px] leading-relaxed">
-            <p className="font-semibold text-ink">
-              复制前先看：文件后缀就是引用方式，用错不会报错但规则会静默失效
-            </p>
+            <p className="font-semibold text-ink">复制前先看：文件后缀决定引用方式</p>
             <ul className="mt-2 space-y-1.5 text-mute">
               <li>
                 <code>-domainset.conf</code>（裸域名清单，如 <code>.example.com</code>）→{" "}
@@ -140,11 +139,10 @@ export default function Usage({ data, query }: { data: PortalData; query: string
                 <code>RULE-SET,&lt;URL&gt;,&lt;策略&gt;</code>；IP 段末尾再加{" "}
                 <code>,no-resolve</code>
               </li>
-              <li>以 Surge / Shadowrocket 为例；其他客户端照抄页面片段即可，不要自己改类型。</li>
               <li>
-                写反了 Surge 不报错，只是规则不生效、流量落到 <code>FINAL</code> —— 分流没按预期走，
-                先查这里。
+                用错不报错：Surge 只是让规则失效、流量落到 <code>FINAL</code>。分流不对，先查这里。
               </li>
+              <li>以 Surge / Shadowrocket 为例；其他客户端照抄页面片段，不要自己改类型。</li>
             </ul>
           </div>
         </Reveal>
