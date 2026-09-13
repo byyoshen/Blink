@@ -1,9 +1,6 @@
 <div align="center">
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="engine/docs/images/banner-on-dark.webp">
-  <img src="engine/docs/images/banner-on-light.webp" width="560" alt="Blink" />
-</picture>
+# <img src="engine/docs/images/avatar.png" width="36" height="36" alt="" style="vertical-align:middle;border-radius:50%" /> Blink
 
 **多客户端规则与配置 · 自动构建 · 稳定分发**
 
@@ -190,17 +187,8 @@ https://raw.githubusercontent.com/byyoshen/Blink/main/QuantumultX/<App>.list, ta
 
 <div align="center">
   <a href="https://byyoshen.github.io/Blink/">
-    <img src="engine/docs/images/portal-preview-1.png" alt="Blink 门户首页" width="720" />
+    <img src="engine/docs/images/portal-preview.png" alt="Blink 门户预览" width="720" />
   </a>
-  <br />
-  <sub>首页 —— 一次审计，多端适用</sub>
-  <br />
-  <br />
-  <a href="https://byyoshen.github.io/Blink/#rulesets">
-    <img src="engine/docs/images/portal-preview-2.png" alt="Blink 门户规则集板块" width="720" />
-  </a>
-  <br />
-  <sub>规则集 —— 每个 App 的规则数、来源与一键复制</sub>
 </div>
 
 ---
