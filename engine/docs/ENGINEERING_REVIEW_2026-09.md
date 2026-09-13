@@ -6,7 +6,11 @@
 > 这不是设计文档。格式事实以 `MULTI_CLIENT_AUDIT.md` 为准，门禁机制以
 > `MACHINE_GATES.md` 为准，规则与选源规范以 `AGENTS.md` 为准。
 >
-> **修订**：2026-09-13 —— F9 由推断改为实证，O2 关闭。审查结论本身未变。
+> **修订**：
+> 
+> - 2026-09-13 —— F9 由推断改为实证，O2 关闭。审查结论本身未变。
+> - 2026-09-13 —— portal 覆盖度由 37% 提到 54%（`Nav.tsx` / `hooks.ts` 逐行审完），
+>   新增 F14。盲区结论本身被证实，未变。
 
 ## 审查范围
 
@@ -22,11 +26,15 @@
 | `engine/sources/apps.yaml`、`profile/intent.yaml` | 全部 |
 | `AGENTS.md`、`README.md`、`MACHINE_GATES.md`、`PHASE_OPTIMIZATION_PLAN.md`、`STATUS.md` | 全部 |
 | `MULTI_CLIENT_AUDIT.md` | 按主题检索，未逐行 |
-| **`engine/portal/src/`（1870 行）** | **约 37%** —— 读了 `data.ts` / `Usage.tsx` / `App.tsx` / `Hero.tsx`；`Rulesets.tsx`(469) / `Nav.tsx`(166) / `Profiles.tsx`(128) / `About.tsx`(100) / `hooks.ts`(102) 未审 |
+| **`engine/portal/src/`（1941 行）** | **约 54%** —— 读了 `data.ts`(372) / `Nav.tsx`(189) / `Usage.tsx`(160) / `hooks.ts`(140) / `Hero.tsx`(91) / `App.tsx`(87)；`Rulesets.tsx`(469) / `Profiles.tsx`(128) / `About.tsx`(100) / `Footer.tsx`(61) / `Reveal.tsx`(49) / `CodeBlock.tsx`(44) / `types.ts`(41) / `main.tsx`(10) 未审 |
 | **`engine/SOURCE_AUDITS.md`（310 行）** | **0** —— 选源判断全部来自 `apps.yaml` 的 `note` 字段，未核对档案本身与 apps.yaml 是否一致 |
 | **`engine/sources/profile/templates/`（7 个）** | **部分** —— 只读了 `loon.conf` 头部与全部生成结果，未逐个审模板的 General / DNS 段 |
 
 **盲区结论**：portal 是最可能仍藏有问题的区域。TypeScript 占仓库 26.9%，审查密度远低于 Python；30 App × 7 客户端的接入片段生成逻辑只验证了 `behavior: domain` 一条分支。
+
+> **该预测已被检验（2026-09-13）**：首次逐行审 `Nav.tsx` + `hooks.ts` 共 329 行，
+> 当场出了 F14（一个使功能永久失效的时序缺陷）。这是支持而非推翻本表：
+> 盲区被宣布为高风险，它确实是。剩下 46%（尤其 `Rulesets.tsx` 469 行）仍未审。
 
 ## 结论登记表
 
@@ -108,6 +116,25 @@ type-level 记在 `skipped_excluded`，domain 级命中后直接 `continue`。HB
 #### F13 · Stash / Clash 无视声明的 `phase` · 实证 · `167e609`
 
 inline 规则被收进 `local_rules` 统一追加到 IP 段之后，改为就地输出。影响有限（`DST-PORT` 不需要 DNS），但破坏了「同一份意图跨七端一致」。
+
+### 门户（portal）
+
+> 本节来自 2026-09-13 对 `Nav.tsx` / `hooks.ts` 的补审，不属于 09-12 那轮全仓库审查。
+
+#### F14 · 导航滚动定位在挂载时就死锁 · 实证 · `bc20c8f`
+
+`useActiveSection` 的 effect 在 `<Nav>` 挂载时跑，而四个 section 要等 `stats.json` fetch
+回来后才渲染。挂载那一瞬 `getElementById` 全返回 `null`，`elements.length === 0`
+提前 return，IntersectionObserver 从未创建；依赖数组又永不变化，**effect 再也不会重跑**。
+不是闪烁，是永久失效。修法是把「section 是否已存在」显式作为 `sectionsMounted` prop 传入，
+而不是让 hook 去猜。
+
+可复现：设置网络限速后加载页面，滚动至任一 section，导航项全不高亮（修前）。
+验证：修后逐区块 DOM 查询 `aria-current`，hero 不点亮任何项，
+`rulesets` / `usage` / `profiles` / `about` 各自点亮正确项。
+
+**取样偏差提醒**：这是补审 329 行就撞到的第一个缺陷，不能据此推算剩余 portal
+代码的缺陷密度 —— `Nav.tsx` 正好是当时在改的文件，看得比其他部分仔。
 
 ## 验证结果（2026-09-12）
 
