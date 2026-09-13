@@ -203,6 +203,9 @@ batch 2 那次真实 `--write` 在 batch 3 / 4 的改动之前；之后只跑过
 **O6 · `secret_scan.py` 扫文件系统而非 git tracked 集合**
 任何未跟踪的本机文件都能让它假红。改为扫 tracked + staged 会缩小「提交前自检」的覆盖面，是取舍问题，未擅自改动安全门禁的 scope。
 
+**O7 · `overlap_check` 的 `removed_since_baseline` 只报不管**
+基线会残留已消失的交集；若某交集消失后重现将不被拦截。「发现减少即失败」会重造 F5 那类自锁，正确做法是定期人工 `--write-baseline`，属流程而非代码。
+
 **O8 · Surge 引用行的 `no-resolve` 槽位无依据**（回写 O1 时发现）
 `MULTI_CLIENT_AUDIT.md` §2 记录的 Surge 官方引用语法是
 `RULE-SET,<URL>,<policy>[,pre-matching][,extended-matching]`，**未列出 `no-resolve`**；
@@ -210,9 +213,6 @@ batch 2 那次真实 `--write` 在 batch 3 / 4 的改动之前；之后只跑过
 行内 `no-resolve` 有官方依据，引用行第 4 字段是否同样生效尚无本仓库证据。
 若不生效，后果恰好是 F1 要修的那个问题（IP 段静默丢失 no-resolve）。
 **需真机或官方文档确认，属维护者行动项。**
-
-**O7 · `overlap_check` 的 `removed_since_baseline` 只报不管**
-基线会残留已消失的交集；若某交集消失后重现将不被拦截。「发现减少即失败」会重造 F5 那类自锁，正确做法是定期人工 `--write-baseline`，属流程而非代码。
 
 ## 明确不做
 
