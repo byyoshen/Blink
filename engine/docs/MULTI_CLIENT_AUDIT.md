@@ -223,14 +223,7 @@ QuantumultX/<App>.list   # QX filter 行（行尾占位符 policy，force-policy
 
 以下来自 §13 的 sing-box 审计（候选目标，尚未实现）：
 
-11. **sing-box 对 IPv6 CIDR 的写法**：headless rule 只列出 `ip_cidr`，未明说 IPv6 是否同字段。
-    本仓库现有 10 条 `IP-CIDR6`，映射错会静默漏匹配。
-12. **`no-resolve` 的结构等价性**（阻塞项）：sing-box 无逐规则解析开关。
-    需证实「域名段与 IP 段各自独立 rule-set、由先后两条 route rule 引用」
-    是否等价于 Surge 的 `no-resolve`（即域名目标不因 IP 规则而触发本地解析）。
-    **未决则不应开工** —— 若不等价，sing-box 输出会重演 F1。
-13. **待支持客户端的最低 rule-set `version`**：所需字段自 v1 即存在，
-    但取值需根据实际目标客户端的最低支持版本决定。
+> 上述三项已于 2026-09-13 由上游生产证据全部解决，见 §13.7。保留条目以记录当时的不确定性。
 
 ## 11. 测试策略（实现阶段）
 
@@ -313,10 +306,35 @@ QuantumultX/<App>.list   # QX filter 行（行尾占位符 policy，force-policy
 
 > **这不必然是缺陷**。本仓库的域名先于 IP 的不变量，在 sing-box 上应当由**结构**承载而非选项承载：域名段与 IP 段各自是独立 rule-set，由各自的 route rule 按先后顺序引用。这与既有的 `-domainset` / `-nonip` / `-ip` 三视图天然吻合 —— 三视图本身就是这个不变量的物化。
 >
-> 但「结构上分开是否等价于 `no-resolve`」尚未证实，见 Needs Verification 12。**这是实现前必须先解决的问题**，不是实现细节：若不等价，sing-box 输出会重演 F1（IP 段静默触发本地解析）。
+> 该做法已由上游生产证据确认（§13.7）：Repcz 正是通过成对发布 `Telegram.json` 与 `Telegram_NoIP.json` 来表达这一语义的。
+
+### 13.7 上游生产证据（Repcz/Tool，2026-09-13）
+
+`Repcz/Tool` 同时发布 `mihomo/Rules/*.list`（classical）与 `sing-box/Rules/*.json` + `*.srs`，
+是本仓库已采用的上游之一，其产物可直接作为格式事实的生产证据。实测读取结果：
+
+| 原 Needs Verification | 结论 | 证据 |
+| --- | --- | --- |
+| 11 · IPv6 写法 | **同一个 `ip_cidr` 字段** | `Netflix.json` 共 465 条 `ip_cidr`，其中 **199 条为 IPv6**（如 `2607:fb10:16::/48`），与 IPv4 同列一表 |
+| 12 · `no-resolve` 等价性 | **靠结构：另发一份无 IP 变体** | `Telegram.json`（含 `ip_cidr` 16 条）与 `Telegram_NoIP.json`（同域名集，**无 `ip_cidr`**）成对发布 |
+| 13 · `version` 取值 | **5** | 全量产物均为 `"version": 5` |
+
+补充观察：
+
+- **按字段分组**，不是一条规则一个对象：`rules` 数组里每个对象持一类字段的数组
+  （`{"domain":[...]}`、`{"domain_suffix":[...]}`、`{"ip_cidr":[...]}`）。
+- **`process_name` 确实在用**：`Netflix.json` 带 `process_name: ["com.netflix.mediaclient"]`，
+  印证 §13.5 「PROCESS-NAME 保留」的结论。
+- **无任何 USER-AGENT 字段**，印证该类型必须丢弃。
+- `.json` 与 `.srs` **并存发布**（如 `AI.json` 1601 B / `AI.srs` 604 B）—— 与 §13.2 一致：
+  `.srs` 是体积优化，不是必需。
+
+> **对本仓库的含义**：NV 12 的答案恰好就是 Blink 已有的三视图架构 ——
+> `-domainset` / `-nonip` 即 Repcz 的 `_NoIP` 变体，`-ip` 即 IP 段。
+> 换言之，**不需要为 sing-box 新造语义切分，现有切分本身就是 sing-box 所需的形状**。
 
 ### 13.6 实现前置条件
 
-1. 先解决 Needs Verification 12（no-resolve 等价性）——**未决则不应开工**。
-2. 确定 `version` 取值：所需字段自 v1 即存在，取低版本可最大化客户端兼容，但需确认目标客户端的最低支持版本（Needs Verification 13）。
+1. ~~先解决 Needs Verification 12（no-resolve 等价性）~~ —— **已于 2026-09-13 解决**，见 §13.7：靠分发无 IP 变体，即现有三视图。
+2. ~~确定 `version` 取值~~ —— **取 5**，与上游生产一致（§13.7）。
 3. 新增 renderer（JSON）、`SingBox/` 产物目录、Profile 模板（JSON，不同于现有七端的 INI / YAML）、门户 7→8、`parity_check` / `validate_views` / `verify_profiles` 三道门禁扩展。
