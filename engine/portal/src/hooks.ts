@@ -100,3 +100,41 @@ export function useTheme(): { theme: Theme; toggle: () => void } {
 
   return { theme, toggle };
 }
+
+/** The in-page section currently being read, for the nav's active state.
+ *
+ * The observer's root margin keeps only a band across the upper middle of the
+ * viewport live, so the highlight moves when the reader's eye arrives at a
+ * section rather than the moment its top edge slips under the nav bar. When
+ * the band spans two sections the earlier one wins, which keeps the highlight
+ * from flickering at a boundary. Returns null in the hero, where no nav item
+ * should be marked current.
+ *
+ * ``mounted`` exists because the nav renders before the sections do: the portal
+ * fetches its data first, so on the nav's own mount every getElementById would
+ * return null and the observer would attach to nothing, permanently.
+ */
+export function useActiveSection(ids: readonly string[], mounted: boolean): string | null {
+  const [active, setActive] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter((element): element is HTMLElement => element !== null);
+    if (elements.length === 0) return;
+
+    const visible = new Map<string, boolean>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) visible.set(entry.target.id, entry.isIntersecting);
+        setActive(ids.find((id) => visible.get(id)) ?? null);
+      },
+      { rootMargin: "-30% 0px -50% 0px" },
+    );
+    for (const element of elements) observer.observe(element);
+    return () => observer.disconnect();
+  }, [ids, mounted]);
+
+  return active;
+}

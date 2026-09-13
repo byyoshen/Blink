@@ -76,7 +76,7 @@ export default function Hero({ appsCount, totalRules, rawBase }: HeroProps) {
         className="hero-enter mx-auto mt-10 grid max-w-3xl grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:justify-center"
         style={{ animationDelay: "350ms" }}
       >
-        <Stat value={String(appsCount)} label="Rule-Sets" />
+        <Stat value={String(appsCount)} label="规则集" />
         <Stat value={String(totalRules)} label="有效规则" />
         <Stat
           value="7 客户端"

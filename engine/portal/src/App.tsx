@@ -43,7 +43,12 @@ export default function App() {
 
   return (
     <>
-      <Nav repo={data?.repo ?? FALLBACK_REPO} theme={theme} toggleTheme={toggle} />
+      <Nav
+        repo={data?.repo ?? FALLBACK_REPO}
+        theme={theme}
+        toggleTheme={toggle}
+        sectionsMounted={Boolean(data)}
+      />
       <main>
         {error ? (
           <section className="px-6 py-24 text-center">
