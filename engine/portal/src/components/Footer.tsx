@@ -1,4 +1,5 @@
 import type { Theme } from "../hooks";
+import MascotSwap from "./MascotSwap";
 
 interface FooterProps {
   repo: string;
@@ -10,7 +11,7 @@ export default function Footer({ repo, theme }: FooterProps) {
   const links = [
     { label: "GitHub", href: repo },
     { label: "README", href: `${repo}/blob/main/README.md` },
-    { label: "审计档案", href: `${repo}/blob/main/SOURCE_AUDITS.md` },
+    { label: "审计档案", href: `${repo}/blob/main/engine/SOURCE_AUDITS.md` },
     { label: "第三方声明", href: `${repo}/blob/main/THIRD_PARTY_NOTICES.md` },
   ];
   return (
@@ -18,24 +19,7 @@ export default function Footer({ repo, theme }: FooterProps) {
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 text-center">
         <p className="flex items-center justify-center gap-2 text-sm font-semibold">
           <span className="relative h-6 w-6 shrink-0 overflow-hidden rounded-full border border-line bg-card">
-            <img
-              src="blink-logo.png"
-              alt=""
-              width={24}
-              height={24}
-              className={`absolute h-full w-full object-cover transition-all duration-300 ease-out ${
-                dark ? "rotate-0 scale-100 opacity-100" : "-rotate-180 scale-0 opacity-0"
-              }`}
-            />
-            <img
-              src="blink-logo-2.png"
-              alt=""
-              width={24}
-              height={24}
-              className={`absolute h-full w-full object-cover transition-all duration-300 ease-out ${
-                dark ? "rotate-180 scale-0 opacity-0" : "rotate-0 scale-100 opacity-100"
-              }`}
-            />
+            <MascotSwap dark={dark} />
           </span>
           Blink · 多客户端规则与配置
         </p>

@@ -156,5 +156,64 @@ class SelfReferenceTests(unittest.TestCase):
         self.assertIn("engine/portal/index.html", covered)
 
 
+class RepoDocLinkTests(unittest.TestCase):
+    """Every in-repo document the portal and docs link to must actually exist."""
+
+    # The portal's footer shipped `blob/main/SOURCE_AUDITS.md` for months while
+    # the file lived at `engine/SOURCE_AUDITS.md`.  Nothing caught it: the slug
+    # was correct, the URL was well-formed, and only GitHub knew it was a 404.
+    # A path that moves under `engine/` is the likely repeat of this.
+    LINK_PATTERN = re.compile(r"(?:blob|tree)/(?:main|\$\{[^}]*\})/([A-Za-z0-9_./-]+)")
+
+    LINK_GLOBS = SCANNED_GLOBS
+
+    # A floor for the same reason as MINIMUM_SELF_REFERENCES: a pattern that
+    # stops matching would otherwise pass silently forever.
+    MINIMUM_LINKS = 5
+
+    # Known limitation, deliberately not worked around: this scans text, so a
+    # document that *quotes* a broken link as evidence fails the same as one
+    # that publishes it.  The engineering register tripped exactly this while
+    # recording the bug above.  The rule is that prose describes a broken path
+    # rather than reproducing it; an allow-list would also excuse real ones.
+
+    def _links(self) -> list[tuple[Path, str]]:
+        found: list[tuple[Path, str]] = []
+        for pattern in self.LINK_GLOBS:
+            for path in sorted(ROOT.glob(pattern)):
+                if not path.is_file():
+                    continue
+                text = path.read_text(encoding="utf-8", errors="replace")
+                found.extend((path, target) for target in self.LINK_PATTERN.findall(text))
+        return found
+
+    def test_linked_repository_paths_exist(self) -> None:
+        links = self._links()
+        broken = sorted(
+            {
+                f"{path.relative_to(ROOT).as_posix()} -> {target}"
+                for path, target in links
+                if not (ROOT / target).exists()
+            }
+        )
+        self.assertEqual(broken, [], "link points at a path that is not in the repository")
+        self.assertGreaterEqual(
+            len(links),
+            self.MINIMUM_LINKS,
+            "the repository-link scan matched almost nothing, so it is no longer "
+            "guarding anything; check LINK_PATTERN and LINK_GLOBS",
+        )
+
+    def test_the_scan_would_catch_a_moved_file(self) -> None:
+        # Guards the guard, in both spellings the repo actually uses.
+        samples = (
+            "https://github.com/o/r/blob/main/NOT_HERE.md",
+            "`${repo}/blob/main/NOT_HERE.md`",
+            "https://github.com/o/r/tree/main/NOT_HERE.md",
+        )
+        for sample in samples:
+            self.assertIn("NOT_HERE.md", self.LINK_PATTERN.findall(sample), sample)
+
+
 if __name__ == "__main__":
     unittest.main()

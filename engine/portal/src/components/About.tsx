@@ -4,6 +4,10 @@ interface AboutProps {
   repo: string;
 }
 
+/* These two were the only unstyled anchors in the portal, so they fell back to
+   the browser default -- which in dark mode is a near-unreadable blue. */
+const DOC_LINK = "text-accent underline underline-offset-2 hover:text-accent-strong";
+
 const PIPELINE = [
   { title: "Source audit", text: "每个 App 记录候选、证据与结论" },
   { title: "build.py", text: "解析 / 转换 / 规范化 / 去重，异常即中止" },
@@ -77,6 +81,7 @@ export default function About({ repo }: AboutProps) {
                     href={`${repo}/blob/main/THIRD_PARTY_NOTICES.md`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className={DOC_LINK}
                   >
                     第三方声明
                   </a>{" "}
@@ -85,6 +90,7 @@ export default function About({ repo }: AboutProps) {
                     href={`${repo}/blob/main/DISCLAIMER.md`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className={DOC_LINK}
                   >
                     免责说明
                   </a>
