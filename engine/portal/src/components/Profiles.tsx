@@ -22,7 +22,7 @@ export default function Profiles({ data }: { data: PortalData }) {
   const [client, setClient] = useState<ClientKey>("surge");
   const url = profileFileUrl(data.raw_base, client);
   const scheme = profileInstallScheme(data.raw_base, client);
-  const { copied, copy } = useCopy(url);
+  const { state, copy } = useCopy(url);
   const tab = CLIENT_TABS.find((item) => item.key === client);
 
   return (
@@ -94,7 +94,7 @@ export default function Profiles({ data }: { data: PortalData }) {
                   onClick={copy}
                   className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white transition-all duration-200 ease-out hover:bg-accent-strong hover:shadow-md hover:shadow-accent/30 active:scale-[0.96]"
                 >
-                  {copied ? "已复制链接 ✓" : "复制链接"}
+                  {state === "done" ? "已复制链接 ✓" : state === "failed" ? "复制失败" : "复制链接"}
                 </button>
                 <a
                   href={url}

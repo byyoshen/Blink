@@ -310,7 +310,9 @@ function AppTile({
       <span className="w-full truncate text-center text-[11.5px] font-medium leading-tight">
         {app.name}
       </span>
-      <span className="text-[10px] leading-none text-mute">{app.clients[client].rules}</span>
+      <span className="mt-auto text-[10px] leading-none text-mute">
+        {app.clients[client].rules} 条
+      </span>
     </button>
   );
 }
@@ -491,7 +493,7 @@ export default function Rulesets({
         ) : (
           <div
             ref={gridRef}
-            className="grid scroll-mt-24 grid-cols-[repeat(auto-fill,minmax(72px,1fr))] gap-2"
+            className="grid scroll-mt-24 grid-cols-[repeat(auto-fill,minmax(92px,1fr))] gap-2"
           >
             {shown.map((app) => (
               <AppTile key={app.name} app={app} client={client} onOpen={() => setOpenApp(app)} />

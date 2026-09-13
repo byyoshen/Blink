@@ -1,47 +1,68 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-function fallbackCopy(text: string): void {
+function fallbackCopy(text: string): boolean {
   const area = document.createElement("textarea");
   area.value = text;
   area.style.position = "fixed";
   area.style.opacity = "0";
   document.body.appendChild(area);
   area.select();
+  let ok = false;
   try {
-    document.execCommand("copy");
+    ok = document.execCommand("copy");
   } catch {
-    /* ignore */
+    ok = false;
   }
   document.body.removeChild(area);
+  return ok;
 }
 
-export function useCopy(text: string, copiedMs = 1600): { copied: boolean; copy: () => void } {
-  const [copied, setCopied] = useState(false);
+/** Copy text, reporting whether it actually worked.
+ *
+ * `navigator.clipboard` is undefined on insecure origins, so the optional call
+ * returns undefined rather than a promise -- chaining `.then` onto it throws.
+ * Callers need the boolean too: telling someone "copied" when it failed leaves
+ * them pasting whatever was in the clipboard before.
+ */
+export async function copyText(text: string): Promise<boolean> {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      return fallbackCopy(text);
+    }
+  }
+  return fallbackCopy(text);
+}
+
+export type CopyState = "idle" | "done" | "failed";
+
+/** Copy-to-clipboard with a state the caller can show.
+ *
+ * "failed" exists because a copy really can fail -- an unfocused document
+ * rejects the clipboard API, and insecure origins have no clipboard at all.
+ * Reporting success anyway leaves someone pasting whatever they copied last
+ * and wondering why their config is wrong.
+ */
+export function useCopy(
+  text: string,
+  copiedMs = 1600,
+): { copied: boolean; state: CopyState; copy: () => void } {
+  const [state, setState] = useState<CopyState>("idle");
   const timer = useRef<number | undefined>(undefined);
 
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
   const copy = useCallback(() => {
-    const done = () => {
-      setCopied(true);
+    void copyText(text).then((ok) => {
+      setState(ok ? "done" : "failed");
       window.clearTimeout(timer.current);
-      timer.current = window.setTimeout(() => setCopied(false), copiedMs);
-    };
-    if (navigator.clipboard?.writeText) {
-      navigator.clipboard
-        .writeText(text)
-        .then(done)
-        .catch(() => {
-          fallbackCopy(text);
-          done();
-        });
-    } else {
-      fallbackCopy(text);
-      done();
-    }
+      timer.current = window.setTimeout(() => setState("idle"), copiedMs);
+    });
   }, [text, copiedMs]);
 
-  return { copied, copy };
+  return { copied: state === "done", state, copy };
 }
 
 /* Manual theme: persisted in localStorage, falling back to the system
