@@ -22,7 +22,7 @@ const SECTION_IDS = NAV_LINKS.map((link) => link.href.slice(1));
    decorated: a borderless pill is in-page navigation, a bordered pill is an
    action that leaves the site, a circle is an icon-only control. */
 const NAV_ITEM =
-  "rounded-full px-3 py-1.5 text-[13.5px] transition-[color,background-color,transform] duration-150 ease-out active:scale-[0.97]";
+  "rounded-full px-3 py-1.5 text-sm font-medium tracking-[0.01em] transition-[color,background-color,transform] duration-150 ease-out active:scale-[0.97]";
 
 /** The mascot pair, cross-faded on theme change: cat on dark, dog on light.
  *
@@ -96,9 +96,7 @@ export default function Nav({ repo, theme, toggleTheme, sectionsMounted }: NavPr
                 href={link.href}
                 aria-current={current ? "true" : undefined}
                 className={`${NAV_ITEM} ${
-                  current
-                    ? "bg-accent-soft font-medium text-accent"
-                    : "text-mute hover:bg-paper hover:text-ink"
+                  current ? "bg-accent-soft text-accent" : "text-mute hover:bg-paper hover:text-ink"
                 }`}
               >
                 {link.label}
@@ -151,8 +149,8 @@ export default function Nav({ repo, theme, toggleTheme, sectionsMounted }: NavPr
                 href={link.href}
                 aria-current={current ? "true" : undefined}
                 onClick={() => setMenuOpen(false)}
-                className={`block border-b border-line px-6 py-3.5 text-sm transition-colors duration-150 ease-out last:border-b-0 ${
-                  current ? "bg-accent-soft font-medium text-accent" : "text-ink hover:bg-paper"
+                className={`block border-b border-line px-6 py-3.5 text-sm font-medium tracking-[0.01em] transition-colors duration-150 ease-out last:border-b-0 ${
+                  current ? "bg-accent-soft text-accent" : "text-ink hover:bg-paper"
                 }`}
               >
                 {link.label}
