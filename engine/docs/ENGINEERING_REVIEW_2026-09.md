@@ -5,6 +5,8 @@
 >
 > 这不是设计文档。格式事实以 `MULTI_CLIENT_AUDIT.md` 为准，门禁机制以
 > `MACHINE_GATES.md` 为准，规则与选源规范以 `AGENTS.md` 为准。
+>
+> **修订**：2026-09-13 —— F9 由推断改为实证，O2 关闭。审查结论本身未变。
 
 ## 审查范围
 
@@ -78,9 +80,18 @@ manifest 记录 `build.py` / `renderers.py` 的 SHA256，重建过去只能靠�
 
 type-level 记在 `skipped_excluded`，domain 级命中后直接 `continue`。HBO 的 `input_rules 48 → rules 46` 无法区分 exclude 与去重。现按声明逐条计入 `canonical.excluded_domains`。实测当前 5 条各命中 1 条（Instagram 1、HBO 2、AWSConsole 2）。零命中在 stderr 警告但不阻断。
 
-#### F9 · 每日提交的门户数据永不部署 · **推断（待实证）** · `8d10ed3`
+#### F9 · 每日提交的门户数据永不部署 · 实证（2026-09-13 补证） · `8d10ed3`
 
-`update.yml` 用默认 `GITHUB_TOKEN` push，该类 push 不触发其他 workflow（GitHub 文档化行为）；`pages.yml` 仅监听 `push: paths: engine/portal/**`。加 `workflow_run` 触发（仅 success）。本仓库内尚无实证，见 O2。
+`update.yml` 用默认 `GITHUB_TOKEN` push，该类 push 不触发其他 workflow（GitHub 文档化行为）；`pages.yml` 仅监听 `push: paths: engine/portal/**`。加 `workflow_run` 触发（仅 success）。
+
+本条在审查当日只有推理、没有本仓库内的证据，因此原记为**推断**。2026-09-13 由第一次经过该路径的每日更新补上实证：
+
+```text
+09-12 18:12Z  Update Rule-Sets [schedule]                   success
+09-12 18:13Z  Deploy portal to GitHub Pages [workflow_run]  success
+```
+
+每日更新成功后一分钟内，`workflow_run` 自动触发了一次 Pages 部署。修复成立，O2 关闭。（cron 声明 16:01，实际 18:12 才起跑 —— GitHub 对 schedule 事件在高峰期的排队延迟，与本结论无关。）
 
 #### F10 · 无门禁保证 `stats.json` 与产物同步 · 实证 · `8d10ed3`
 
@@ -119,8 +130,9 @@ CI（PR #1，4 个 job）          全部 pass
 **O1 · 真机证据未回写 `MULTI_CLIENT_AUDIT.md`**（F1）
 Shadowrocket / Stash 的引用行 `no-resolve` 已由维护者真机确认，但审计文档未更新。当前状态是「代码依赖了一条比文档更强的结论」，与 `AGENTS.md`「实现若与本文件冲突，先回改本文件再改代码」冲突。
 
-**O2 · `pages.yml` 的 `workflow_run` 尚无本仓库实证**（F9）
-需观察一次 `Update Rule-Sets` 成功后是否自动触发 Pages 部署。
+**O2 · `pages.yml` 的 `workflow_run` 尚无本仓库实证**（F9）—— **已于 2026-09-13 闭环**
+2026-09-12 18:12Z 的每日更新成功后，18:13Z 出现 `event=workflow_run` 的 Pages 部署并成功。详见 F9。
+条目保留而非删除：这份文件是登记表，一条推断最后被证实还是被推翻，本身就是要记的内容。
 
 **O3 · 当前代码的 `--write` 路径未在生产执行过**
 batch 2 那次真实 `--write` 在 batch 3 / 4 的改动之前；之后只跑过 `--verify-only`（不走 write / prune）。`write_outputs → write_client_views → prune_stale_views` 在当前代码下仅有单元测试（沙箱）覆盖。
@@ -177,5 +189,6 @@ python engine/scripts/build.py --verify-only
 - **F1 的能力假设**：Shadowrocket 的 `RULE-SET,<url>,<policy>,no-resolve` 第 4 字段支持性只有真机证据，无官方文档。若被证伪，回滚成本是一个常量：从 `build_profile.IP_NO_RESOLVE_CLIENTS` 移除 `shadowrocket`、删掉 intent 对应项、重新生成 Profiles（capability 测试会自动跟随）。
 - **F2 / F4**：直接构造输入调用 `renderers.render_egern_yaml` / `build_profile.render_client("quantumultx", ...)`，在修复前的提交上应复现异常。
 - **F3**：`grep 104.244 Surge/X-ip.conf` 与上游原文对比。
-- **F9**：唯一证伪方式是观察一次每日运行。
+- **F9**：已由 2026-09-12 的每日运行证实（见上）。要复核，在任一次 `Update Rule-Sets` 成功之后跑
+  `gh run list --branch main --json name,event,conclusion`，应能看到一条 `Deploy portal to GitHub Pages [workflow_run]`。
 - **覆盖盲区**：portal 源码与 `SOURCE_AUDITS.md` 未经审查。在这两处发现的任何问题都不构成对本记录的反驳，而是它明确承认的范围之外。
