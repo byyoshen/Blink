@@ -16,7 +16,7 @@ import repo_identity
 # slug (and therefore silently verifying nothing).
 BLINK_RAW = re.compile(
     re.escape(repo_identity.RAW_BASE) + r"/"
-    r"(Surge|Loon|Shadowrocket|Stash|Clash|Egern|QuantumultX)/"
+    r"(Surge|Loon|Shadowrocket|Stash|mihomo|Egern|QuantumultX)/"
     r"([A-Za-z0-9._-]+\.(?:list|yaml|conf))"
 )
 PLACEHOLDER = "https://YOUR-SUBSCRIPTION-URL"

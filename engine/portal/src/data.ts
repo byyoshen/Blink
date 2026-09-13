@@ -60,11 +60,11 @@ export const CLIENT_TABS: ClientTab[] = [
     note: "classical text 规则集与 Surge 同语法；分段的 App 域名段用 behavior:domain、IP 段用 behavior:classical，各注册一个 provider。",
   },
   {
-    key: "clash",
-    label: "Clash",
+    key: "mihomo",
+    label: "mihomo",
     badge: "YAML · rule-providers",
-    fileLabel: "Clash 配置 · rule-providers",
-    note: "Mihomo 内核（Clash Meta for Android / FLClash）通用，规则经 Clash/ 目录分发、已去 USER-AGENT；分段写法同 Stash。",
+    fileLabel: "mihomo 配置 · rule-providers",
+    note: "Clash Meta for Android / FLClash 等 mihomo 内核客户端通用，规则经 mihomo/ 目录分发、已去 USER-AGENT；分段写法同 Stash。",
   },
   {
     key: "egern",
@@ -109,7 +109,7 @@ export const PROFILE_FILES: Record<ClientKey, ProfileFile> = {
   shadowrocket: { file: "Profiles/Shadowrocket.conf", format: "conf", kind: "INI · [Proxy Group]" },
   loon: { file: "Profiles/Loon.conf", format: "conf", kind: "INI · [Remote Filter]" },
   stash: { file: "Profiles/Stash.yaml", format: "yaml", kind: "YAML · proxy-groups" },
-  clash: { file: "Profiles/Clash.yaml", format: "yaml", kind: "YAML · proxy-groups" },
+  mihomo: { file: "Profiles/mihomo.yaml", format: "yaml", kind: "YAML · proxy-groups" },
   egern: { file: "Profiles/Egern.yaml", format: "yaml", kind: "YAML · policy_groups" },
   quantumultx: { file: "Profiles/QuantumultX.conf", format: "conf", kind: "INI · [policy]" },
 };
@@ -131,7 +131,7 @@ export function profileInstallScheme(rawBase: string, client: ClientKey): string
       return `loon://import?sub=${url}`;
     case "stash":
       return `stash://install-config?url=${url}`;
-    case "clash":
+    case "mihomo":
       return null; // Android 客户端无 URL Scheme 整体配置导入
     case "egern":
       return `egern:/profiles/new?name=${encodeURIComponent("Blink")}&url=${url}`;
@@ -222,9 +222,9 @@ function appViews(app: AppEntry, client: ClientKey): string[] {
 /** Reference lines for one app in one client; uses split domain/IP files when views exist. */
 export function appReferenceLines(rawBase: string, app: AppEntry, client: ClientKey): string[] {
   const viewNames = appViews(app, client);
-  const mihomo = client === "stash" || client === "clash";
-  if (mihomo) {
-    // mihomo 系（Stash/Clash）：需在配置文件里手写 rule-providers + RULE-SET，保留该写法。
+  const mihomoFamily = client === "stash" || client === "mihomo";
+  if (mihomoFamily) {
+    // mihomo 系（Stash / mihomo）：需在配置文件里手写 rule-providers + RULE-SET，保留该写法。
     if (viewNames.length > 0) {
       const lines: string[] = ["rule-providers:"];
       for (const view of viewNames) {
@@ -274,7 +274,7 @@ export function clientViewSnippet(
   const entry = app.views?.[client]?.[view];
   if (!entry) return clientSnippet(rawBase, app, client);
   const url = clientViewFileUrl(rawBase, app, client, view);
-  if (client === "stash" || client === "clash") {
+  if (client === "stash" || client === "mihomo") {
     // mihomo 系：保留配置文件写法（rule-providers + RULE-SET）。
     return [
       "rule-providers:",
@@ -326,7 +326,7 @@ export function allSnippets(data: PortalData, client: ClientKey, query = ""): st
   const apps = query.trim()
     ? sortedApps(data.apps).filter((app) => appMatchesQuery(app, query))
     : sortedApps(data.apps);
-  if (client === "stash" || client === "clash") {
+  if (client === "stash" || client === "mihomo") {
     // mihomo 系：需在配置文件手写 rule-providers + RULE-SET，保留该写法。
     out.push("rule-providers:");
     for (const app of apps) {

@@ -146,7 +146,7 @@ class BuildTests(unittest.TestCase):
                 )
             # Clash consumes the same classical bytes when no USER-AGENT is
             # present (its own directory, UA-dropped variant of the same body).
-            self.assertEqual((root / "Clash" / "Test.list").read_text(encoding="utf-8"), surge)
+            self.assertEqual((root / "mihomo" / "Test.list").read_text(encoding="utf-8"), surge)
             # Egern gets its own YAML rule-set schema.
             self.assertEqual(
                 (root / "Egern" / "Test.yaml").read_text(encoding="utf-8"),
@@ -195,7 +195,7 @@ class BuildTests(unittest.TestCase):
             build.Rule("USER-AGENT", "Example App*", (), location),
             build.Rule("PROCESS-NAME", "com.example.app", (), location),
         ]
-        text, dropped = build.render_classical_clash(rules, "Test")
+        text, dropped = build.render_classical_mihomo(rules, "Test")
         # USER-AGENT is the only kind Clash cannot express: dropped and
         # reported, never silently skipped by the kernel.
         self.assertEqual(dropped, ["USER-AGENT,Example App*"])
@@ -215,7 +215,7 @@ class BuildTests(unittest.TestCase):
     def test_clash_output_never_silently_empty(self) -> None:
         location = build.SourceLocation("test", 1, ("Test",))
         with self.assertRaisesRegex(build.RendererError, "empty"):
-            build.render_classical_clash(
+            build.render_classical_mihomo(
                 [build.Rule("USER-AGENT", "Example App*", (), location)], "Test"
             )
 

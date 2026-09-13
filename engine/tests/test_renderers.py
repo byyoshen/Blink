@@ -183,7 +183,7 @@ class RenderViewTests(unittest.TestCase):
             "shadowrocket": ["api.example.com", ".example.com"],
             # mihomo behavior: domain payload.
             "stash": ["api.example.com", "+.example.com"],
-            "clash": ["api.example.com", "+.example.com"],
+            "mihomo": ["api.example.com", "+.example.com"],
             # Clients that consume the classical form instead.
             "loon": ["DOMAIN,api.example.com", "DOMAIN-SUFFIX,example.com"],
             "egern": ["DOMAIN,api.example.com", "DOMAIN-SUFFIX,example.com"],
@@ -200,7 +200,7 @@ class RenderViewTests(unittest.TestCase):
             self.assertIn("PROCESS-NAME,com.example.app", lines)
             self.assertIn("USER-AGENT,Example*", lines)
         # Clash kernels have no USER-AGENT type.
-        clash = body(renderers.render_view("clash", "nonip", self.NONIP, "App"))
+        clash = body(renderers.render_view("mihomo", "nonip", self.NONIP, "App"))
         self.assertIn("PROCESS-NAME,com.example.app", clash)
         self.assertNotIn("USER-AGENT,Example*", clash)
         # Egern and QX cannot express PROCESS-NAME.
@@ -218,7 +218,7 @@ class RenderViewTests(unittest.TestCase):
         )
 
     def test_ip_view_keeps_no_resolve_wherever_the_format_carries_it(self) -> None:
-        for client in ("surge", "shadowrocket", "loon", "stash", "clash", "egern"):
+        for client in ("surge", "shadowrocket", "loon", "stash", "mihomo", "egern"):
             lines = body(renderers.render_view(client, "ip", self.IP, "App"))
             self.assertEqual(
                 lines,

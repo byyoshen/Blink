@@ -77,7 +77,7 @@ def _parse_surge_domainset(path: Path, context: str) -> list[tuple[str, str, tup
 
 def _dropped_for_client(client_key: str, rules: list[object]) -> int:
     """Rules the client cannot express (mirrors the renderer's explicit drops)."""
-    if client_key == "clash":
+    if client_key == "mihomo":
         return sum(1 for rule in rules if rule.kind == "USER-AGENT")
     if client_key in {"egern", "quantumultx"}:
         return sum(1 for rule in rules if rule.kind == "PROCESS-NAME")

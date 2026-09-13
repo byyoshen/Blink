@@ -18,7 +18,7 @@ const PIPELINE = [
   },
   {
     title: "多客户端渲染",
-    text: "classical ×4 + Clash 变体（去 UA）+ Egern YAML + QX filter；无法表达的类型显式丢弃并计数",
+    text: "classical ×4 + mihomo 变体（去 UA）+ Egern YAML + QX filter；无法表达的类型显式丢弃并计数",
   },
   { title: "配置迁移", text: "Canonical Profile Intent → 七客户端配置文件，人工审核 + 真机验证" },
   { title: "稳定 raw URL", text: "规则每日自动更新；配置人工维护后发布" },

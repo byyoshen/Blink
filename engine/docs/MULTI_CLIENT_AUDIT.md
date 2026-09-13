@@ -1,4 +1,4 @@
-# Blink Multi-Client Audit（Surge / Shadowrocket / Loon / Stash / Egern / Quantumult X / Clash）
+# Blink Multi-Client Audit（Surge / Shadowrocket / Loon / Stash / Egern / Quantumult X / mihomo）
 
 > 审计日期：2026-08。目的：在动手改代码前，确认七个客户端的规则格式事实，
 > 决定 Shared Output、Renderer 数量与 Output Architecture。本文件是
@@ -119,22 +119,22 @@
   ```
 - 注释：`#` 头两行（三家一致）。更新/缓存：`update-interval=172800`（48h，引用行内）。
 
-### Clash（Mihomo 内核，Android 通用；官方文档 + 内核源码 + 生产实证）
+### mihomo（Clash Meta for Android / FLClash 通用；官方文档 + 内核源码 + 生产实证）
 
 - 定位：Android 系通用目标。**target = Mihomo（Clash.Meta）内核**（Clash Meta for Android、FLClash 完整兼容）；CFA（Clash Premium 内核，已停更）为部分兼容 legacy——不支持 `format`/`mrs`/`size-limit` 等 Meta 扩展字段。
 - 证据：① 官方 [MetaCubeX/Meta-Docs](https://github.com/MetaCubeX/Meta-Docs)（rule-providers / rules / proxy-groups / proxy-providers / dns 章节）+ ① 内核源码逐行核对（[MetaCubeX/Clash.Meta](https://github.com/MetaCubeX/Clash.Meta) `rules/parser.go`、`rules/provider/classical_strategy.go`；[Kuingsmile/clash-core](https://github.com/Kuingsmile/clash-core) `constant/rule.go`、`constant/provider/interface.go`）；② 生产实证：[Repcz/Tool `mihomo/`](https://github.com/Repcz/Tool)（`mihomo/Rules/*.list` classical 含 PROCESS-NAME、全目录无 USER-AGENT；`mihomo/Client/config.yaml` 完整配置范式）、[Paxxs/clash-skk](https://github.com/Paxxs/clash-skk)（classical txt → mihomo rule-provider 生产流水线）。
 - rule-providers schema：`type: http`、`behavior: classical`、**`format: text`（必填：默认是 yaml）**、`url`、`interval`（秒；0/省略 = 仅启动加载一次；生产惯例 86400）、`path`（缺省 = url 的 MD5，可选）、`size-limit`（默认 0 不限）。
 - 规则类型（classical payload）：`DOMAIN`、`DOMAIN-SUFFIX`、`DOMAIN-KEYWORD`（keyword 小写归一、大小写不敏感）、`IP-CIDR`、`IP-CIDR6`（等价别名）、`PROCESS-NAME`（Android 匹配包名，官方明文 + `component/process` 源码）、`DST-PORT`、`GEOIP`、`MATCH`；**`USER-AGENT` ❌ 内核无此类型**——classical 内 `USER-AGENT` 行被加载器打 warning 后静默跳过（`classical_strategy.go` `Insert()` 不 append、不 count）。
-- **Blink 7 种 canonical 类型：6/7 无损，USER-AGENT 为唯一降级项**（受影响 4 条：Netflix / ParamountPlus / PayPal / Spotify 各 1）→ 独立 `Clash/` 目录**显式丢弃并计数**（与 Egern/QX 对 PROCESS-NAME 的先例一致；2026-08 定稿）。
+- **Blink 7 种 canonical 类型：6/7 无损，USER-AGENT 为唯一降级项**（受影响 4 条：Netflix / ParamountPlus / PayPal / Spotify 各 1）→ 独立 `mihomo/` 目录**显式丢弃并计数**（与 Egern/QX 对 PROCESS-NAME 的先例一致；2026-08 定稿）。
 - 引用：`rules:` 段 `- RULE-SET,<name>,<policy>`（支持尾随 `no-resolve`），与内联规则自上而下混排；`MATCH` 为 FINAL 等价尾规则。
 - proxy-groups：`select` / `url-test` 原生（`interval`/`tolerance`/`lazy`）；`filter` 正则 + `include-all` 官方支持；**select 组的 `proxies` 数组不引用 provider 名**（订阅池由地区 filter 组覆盖，与 Loon 渲染器同构处理）。
 - 主配置：YAML；`mixed-port` / `mode` / `log-level` / `unified-delay` / `keep-alive-interval`（移动端省电，官方建议 15）/ `dns.enhanced-mode: fake-ip`（Android 推荐，默认 redir-host）。
 - 注释：classical 文本只认 `#` / `//` 行首（不认 `;`）——Blink classical 用 `#` 头，安全。
-- 输出架构决策：`Clash/<App>.list` = classical body 去掉 USER-AGENT 行（其余 6 类逐行同 Surge）；渲染器 = classical 加 per-target 丢弃集；Surge 字节不变（backward compat 门禁不变）。
+- 输出架构决策：`mihomo/<App>.list` = classical body 去掉 USER-AGENT 行（其余 6 类逐行同 Surge）；渲染器 = classical 加 per-target 丢弃集；Surge 字节不变（backward compat 门禁不变）。
 
 ## 3. Client Capability Matrix
 
-| Rule Type | Surge | Shadowrocket | Loon | Stash | Egern | Quantumult X | Clash |
+| Rule Type | Surge | Shadowrocket | Loon | Stash | Egern | Quantumult X | mihomo |
 |---|---|---|---|---|---|---|---|
 | DOMAIN | ✅ 官方 | ✅ 手册 | ✅ 官方 | ✅ 内核+生产 | ✅ 生产 | ✅ 生产（HOST） | ✅ 官方 |
 | DOMAIN-SUFFIX | ✅ 官方 | ✅ 手册 | ✅ 官方 | ✅ 内核+生产 | ✅ 生产 | ✅ 生产（HOST-SUFFIX） | ✅ 官方 |
@@ -149,12 +149,12 @@
 
 ## 4. Remote Rule-Set Compatibility Matrix
 
-| | Surge | Shadowrocket | Loon | Stash | Egern | Quantumult X | Clash |
+| | Surge | Shadowrocket | Loon | Stash | Egern | Quantumult X | mihomo |
 |---|---|---|---|---|---|---|---|
 | 引用指令 | `RULE-SET,URL,POLICY` | `RULE-SET,URL,POLICY` | `[Remote Rule]` 段 `URL, policy=P, tag=T, enabled=true` | `rule-providers`（name/behavior/format/url/interval）+ `RULE-SET,name,POLICY` | `rule_set: {match: URL, policy: P}` | `[filter_remote]` 段 `URL, tag=T, force-policy=P, update-interval=172800, opt-parser=false, enabled=true` | `rule-providers`（type/behavior/format/url/interval）+ `RULE-SET,name,POLICY` |
 | Policy 位置 | 引用处 | 引用处 | 引用处 | 引用处 | 引用处 | 引用处（force-policy 覆盖行尾占位符） | 引用处 |
 | 远程文件带 policy？ | 否 | 否 | 否 | 否（text classical） | 否 | 行尾必有字段（占位符 `policy`，被 force-policy 覆盖） | 否（text classical） |
-| 独立 classical 文件 | ✅ | ✅ | ✅ | ✅（format: text） | ✅ | ❌ 需自有 HOST* filter 格式 | ✅（format: text，独立 Clash 目录去 UA） |
+| 独立 classical 文件 | ✅ | ✅ | ✅ | ✅（format: text） | ✅ | ❌ 需自有 HOST* filter 格式 | ✅（format: text，独立 mihomo 目录去 UA） |
 | 需要 YAML wrapper/payload | ❌ | ❌ | ❌ | ❌（可选 yaml/mrs 优化） | ❌（可选自有 YAML schema） | ❌ | ❌ |
 | 更新/缓存 | App 管理 | App 管理 | App 管理 | `interval: 86400` | App 管理（字段 Needs Verification） | `update-interval=172800` | `interval: 86400` |
 | 主配置格式 | INI | INI | INI | YAML（Clash 系） | YAML（自有 schema） | INI | YAML（Clash 系） |
@@ -164,15 +164,15 @@
 
 ## 5. 兼容性结论（A–E）
 
-- **A. 可共享同一 output**：Surge / Shadowrocket / Loon / Stash 共享**逐字节相同**的 classical `.list`；Clash 为第 5 个 classical 消费端，但内容 = classical 去掉 USER-AGENT（内核无此类型），故**不**共享逐字节文件、独立 `Clash/` 目录输出。
-- **B. 引用方式不同、Rule-Set 内容相同**：上述四客户端；Egern 也能直接消费同一 classical 文件（`rule_set.match`）；Clash 经 `rule-providers`（`behavior: classical, format: text`）消费 UA 丢弃后的 classical 变体。
-- **C. 真正需要不同 serialization**：**Egern 自有 YAML schema**（可选但采纳）与 **Quantumult X 自有 filter 格式**（必需：QX 不消费 policy-free classical）。共 3 种序列化格式覆盖 7 客户端（Clash 复用 classical 序列化 + per-target 丢弃集）。
-- **D. 无法无损表达的 Canonical Type**：对 **Egern ❌、Quantumult X ❌** 只有 **PROCESS-NAME**；对 **Clash ❌** 是 **USER-AGENT**（内核无此类型，classical 加载器静默跳过 → 必须显式丢弃）。Loon 与 Shadowrocket 无 PROCESS-NAME 类型，但 §7 classical 渲染器的逐字节一致性要求保留该行（客户端忽略未知规则类型），不属于序列化降级。QX 另外无法表达 no-resolve 选项（生产源全部省略）。
-- **E. 必须 capability fail/downgrade 的项目**：PROCESS-NAME → 对 Egern / Quantumult X **显式降级丢弃**（构建报告计数，绝不 silent）。受影响 App：Netflix（1 条）、Spotify（1 条）、Disney（2 条）、Hulu（1 条）、Twitch（1 条）、HBO（1 条）。USER-AGENT → 对 Clash **显式降级丢弃**（构建报告计数），受影响 App：Netflix（1 条）、ParamountPlus（1 条）、PayPal（1 条）、Spotify（1 条）。Egern 的 `no_resolve: true` 为 set 级：全部 IP 规则带 no-resolve 时输出，全不带时省略（语义等价），**混合时显式构建失败**。QX 的 no-resolve 省略为全类型统一行为，记入本文档而非逐行报告。
+- **A. 可共享同一 output**：Surge / Shadowrocket / Loon / Stash 共享**逐字节相同**的 classical `.list`；mihomo 为第 5 个 classical 消费端，但内容 = classical 去掉 USER-AGENT（内核无此类型），故**不**共享逐字节文件、独立 `mihomo/` 目录输出。
+- **B. 引用方式不同、Rule-Set 内容相同**：上述四客户端；Egern 也能直接消费同一 classical 文件（`rule_set.match`）；mihomo 经 `rule-providers`（`behavior: classical, format: text`）消费 UA 丢弃后的 classical 变体。
+- **C. 真正需要不同 serialization**：**Egern 自有 YAML schema**（可选但采纳）与 **Quantumult X 自有 filter 格式**（必需：QX 不消费 policy-free classical）。共 3 种序列化格式覆盖 7 客户端（mihomo 复用 classical 序列化 + per-target 丢弃集）。
+- **D. 无法无损表达的 Canonical Type**：对 **Egern ❌、Quantumult X ❌** 只有 **PROCESS-NAME**；对 **mihomo ❌** 是 **USER-AGENT**（内核无此类型，classical 加载器静默跳过 → 必须显式丢弃）。Loon 与 Shadowrocket 无 PROCESS-NAME 类型，但 §7 classical 渲染器的逐字节一致性要求保留该行（客户端忽略未知规则类型），不属于序列化降级。QX 另外无法表达 no-resolve 选项（生产源全部省略）。
+- **E. 必须 capability fail/downgrade 的项目**：PROCESS-NAME → 对 Egern / Quantumult X **显式降级丢弃**（构建报告计数，绝不 silent）。受影响 App：Netflix（1 条）、Spotify（1 条）、Disney（2 条）、Hulu（1 条）、Twitch（1 条）、HBO（1 条）。USER-AGENT → 对 mihomo **显式降级丢弃**（构建报告计数），受影响 App：Netflix（1 条）、ParamountPlus（1 条）、PayPal（1 条）、Spotify（1 条）。Egern 的 `no_resolve: true` 为 set 级：全部 IP 规则带 no-resolve 时输出，全不带时省略（语义等价），**混合时显式构建失败**。QX 的 no-resolve 省略为全类型统一行为，记入本文档而非逐行报告。
 
 ## 6. Shared Output Feasibility
 
-**可行且为最优解**。共享 classical 输出 ×4 客户端 + Clash classical 变体（去 USER-AGENT）×1 + Egern YAML ×1 + QX filter ×1，共 **3 种序列化格式覆盖 7 客户端**。Stash 与 Clash 的关键疑问已有答案：classical text 直接消费（`format: text`），**不需要为它们制造 YAML Rule-Set**；Clash 唯一差异是内核无 USER-AGENT → 独立目录显式丢弃并计数。
+**可行且为最优解**。共享 classical 输出 ×4 客户端 + mihomo classical 变体（去 USER-AGENT）×1 + Egern YAML ×1 + QX filter ×1，共 **3 种序列化格式覆盖 7 客户端**。Stash 与 mihomo 的关键疑问已有答案：classical text 直接消费（`format: text`），**不需要为它们制造 YAML Rule-Set**；mihomo 唯一差异是内核无 USER-AGENT → 独立目录显式丢弃并计数。
 
 ## 7. Renderer Architecture
 
@@ -181,7 +181,7 @@
 | Renderer | 输出 | 目标客户端 | 规则类型处理 |
 |---|---|---|---|
 | `classical` | policy-free classical text（与现行 `SurgeRule.render()` 字节一致，含两行 `#` 头） | Surge / Shadowrocket / Loon / Stash | 7 种全保留（Stash 文件保留 UA 行，内核跳过 → Needs Verification） |
-| `classical-clash` | classical 变体（去 USER-AGENT，其余 6 类逐行同 Surge） | Clash | 6 类保留；USER-AGENT → 显式丢弃 + 报告计数 |
+| `classical-mihomo` | classical 变体（去 USER-AGENT，其余 6 类逐行同 Surge） | mihomo | 6 类保留；USER-AGENT → 显式丢弃 + 报告计数 |
 | `egern-yaml` | Egern `*_set` schema | Egern | 域名类 → 对应 set；IP → `ip_cidr(_6)_set` + `no_resolve`；USER-AGENT → `user_agent_set`；PROCESS-NAME → 显式丢弃 + 报告 |
 | `quantumultx` | QX filter 行（行尾占位符 `policy`） | Quantumult X | DOMAIN→`HOST`、SUFFIX→`HOST-SUFFIX`、KEYWORD→`HOST-KEYWORD`、IP-CIDR6→`IP6-CIDR`、UA→`USER-AGENT`；no-resolve 省略（文档化）；PROCESS-NAME → 显式丢弃 + 报告 |
 
@@ -194,7 +194,7 @@ Surge/<App>.list         # 保持现有路径与字节（backward compat）
 Loon/<App>.list          # 与 Surge 逐字节相同
 Shadowrocket/<App>.list  # 与 Surge 逐字节相同
 Stash/<App>.list         # 与 Surge 逐字节相同
-Clash/<App>.list        # classical 去 USER-AGENT（其余逐行同 Surge；UA 丢弃计数）
+mihomo/<App>.list       # classical 去 USER-AGENT（其余逐行同 Surge；UA 丢弃计数）
 Egern/<App>.yaml         # Egern schema
 QuantumultX/<App>.list   # QX filter 行（行尾占位符 policy，force-policy 覆盖）
 ```
@@ -218,7 +218,7 @@ QuantumultX/<App>.list   # QX filter 行（行尾占位符 policy，force-policy
 6. QX 行尾策略字段是否可省略、no-resolve 是否有可用槽位——生产源全部带字段/省略 no-resolve，本仓库随生产惯例并文档化。
 7. `;` 注释在非 Surge 客户端的支持（本仓库只依赖 `#`，风险可规避）。
 8. CFA（Clash Premium 内核）对 mihomo `format` / `mrs` / `size-limit` 等 Meta 扩展字段的行为（忽略 vs 报错）——本仓库 target 为 mihomo 内核，CFA 标注 partial / legacy。
-9. Clash 端 `keep-alive-interval` / `unified-delay` 等 Meta 扩展字段在 CMFA / FLClash 的实际表现（官方文档支持，真机验证）。
+9. mihomo 端 `keep-alive-interval` / `unified-delay` 等 Meta 扩展字段在 CMFA / FLClash 的实际表现（官方文档支持，真机验证）。
 10. `keep-alive-interval: 15`（移动端省电建议值）与 `dns.enhanced-mode: fake-ip` 在真机上的功耗与 DNS 表现（官方建议，真机验证）。
 
 以下来自 §13 的 sing-box 审计（候选目标，尚未实现）：
@@ -228,7 +228,7 @@ QuantumultX/<App>.list   # QX filter 行（行尾占位符 policy，force-policy
 ## 11. 测试策略（实现阶段）
 
 - **A · Smoke**：OKX（v2fly 转换路径）→ canonical → classical ×4 + Egern YAML + QX filter，人工核对结构。
-- **B · YouTube 跨端 E2E**：当前主源 Repcz 14 条不变；七端最小引用示例内置 README（Clash 示例含 UA 丢弃说明）；真机验证首页/搜索/播放/Shorts/图床/CDN/评论/API，观察落 Final、CDN 漏网与七端一致性。
+- **B · YouTube 跨端 E2E**：当前主源 Repcz 14 条不变；七端最小引用示例内置 README（mihomo 示例含 UA 丢弃说明）；真机验证首页/搜索/播放/Shorts/图床/CDN/评论/API，观察落 Final、CDN 漏网与七端一致性。
 - **C · Complex Semantics**：GitHub（include allow/deny + attributes + exclude + provenance + dedup + nested source）跑全管线七端输出一致性。
 - 核心代码禁止 OKX/YouTube/GitHub 业务特例。
 
@@ -238,8 +238,13 @@ QuantumultX/<App>.list   # QX filter 行（行尾占位符 policy，force-policy
 
 > ✅ 已完成（commit `77ebe22`，QX 于六客户端扩展时加入）：portal 规则集与接入区均带客户端切换与官方 App 图标，`gen_portal_stats.py` 输出每 App 的 `clients` 统计（Egern / Quantumult X 含显式 dropped 计数）。
 
-- 2026-08：第 7 客户端 **Clash（Mihomo 内核 / Android 通用）**审计落地（见 §2.8，内核源码级证据）；`Clash/` 目录（去 USER-AGENT 显式丢弃）与 portal / Profiles / 文档同步扩展中。
-- 2026-08-21+：**语义多视图落地**（SukkaW 式 domainset / non_ip / ip 拆分，见 `build.py` 的 `semantic_views` / `phase_of` 与 `engine/scripts/validate_views.py` 门禁）：每个 App 按语义派生出 `-domainset.conf`（纯域名，Surge/Shadowrocket 域名清单、Stash/Clash behavior:domain）/ `-nonip.conf`（含 keyword/UA/PROCESS，classical）/ `-ip.conf`（IP 段，classical/QX filter）七端视图，IP 段恒置于域名段之后；主输出 `.list`/`.yaml` 与各客户端格式事实保持本文件所述不变。
+- 2026-08：第 7 客户端 **Clash（Mihomo 内核 / Android 通用）**审计落地（见 §2.8，内核源码级证据）；`mihomo/` 目录（去 USER-AGENT 显式丢弃）与 portal / Profiles / 文档同步扩展中。
+- 2026-09-13：第 7 个客户端由 **Clash 重命名为 mihomo**（client key、`Clash/` → `mihomo/`、
+  `Profiles/Clash.yaml` → `Profiles/mihomo.yaml`、renderer `classical-clash` → `classical-mihomo`）。
+  本仓库 target 一直是 mihomo 内核（见 §2 该章节），「Clash」只是遗留的显示名；上游 Repcz/Tool 同样以
+  `mihomo/` 命名。关于 Clash 系内核特性的表述（无 USER-AGENT 类型等）未变 —— mihomo 属于该族。
+  **破坏性变更**：旧 `Clash/*.list` raw URL 失效。
+- 2026-08-21+：**语义多视图落地**（SukkaW 式 domainset / non_ip / ip 拆分，见 `build.py` 的 `semantic_views` / `phase_of` 与 `engine/scripts/validate_views.py` 门禁）：每个 App 按语义派生出 `-domainset.conf`（纯域名，Surge/Shadowrocket 域名清单、Stash/mihomo behavior:domain）/ `-nonip.conf`（含 keyword/UA/PROCESS，classical）/ `-ip.conf`（IP 段，classical/QX filter）七端视图，IP 段恒置于域名段之后；主输出 `.list`/`.yaml` 与各客户端格式事实保持本文件所述不变。
 
 ## 13. sing-box（候选目标 · 尚未实现）
 
@@ -247,13 +252,13 @@ QuantumultX/<App>.list   # QX filter 行（行尾占位符 policy，force-policy
 >
 > 审计日期 2026-09-13。证据层级同 §1：**官方**＝ sing-box 官方文档站正文；**实测**＝对本仓库当前产物的计算；**Needs Verification**＝尚无证据。
 
-### 13.1 为什么另立目标，而不是替换 Clash
+### 13.1 为什么另立目标，而不是替换 mihomo
 
-维护者最初的提议是用 sing-box 顶替 Clash 那一格，理由是「mihomo 内核的配置文件通用」。前半句成立 —— mihomo YAML 在 CMFA / FLClash 上确实通吃；但**规则集文件不在此列**。
+维护者最初的提议是用 sing-box 顶替该目标（当时名为 Clash），理由是「mihomo 内核的配置文件通用」。前半句成立 —— mihomo YAML 在 CMFA / FLClash 上确实通吃；但**规则集文件不在此列**。
 
-`Clash/` 目录独立存在的唯一理由（见 §5 D/E）是：**Clash 系内核没有 `USER-AGENT` 规则类型**，classical 加载器遇到会 warning 后静默跳过，所以该目录 = classical 去 UA。删掉它，mihomo 用户只能改用 `Stash/` 的文件，而那里**带着他们内核看不懂的规则行** —— 这不是少了便利，是引入静默失效，与 F1 / F15 同类。
+`mihomo/` 目录独立存在的唯一理由（见 §5 D/E）是：**Clash 系内核没有 `USER-AGENT` 规则类型**，classical 加载器遇到会 warning 后静默跳过，所以该目录 = classical 去 UA。删掉它，mihomo 用户只能改用 `Stash/` 的文件，而那里**带着他们内核看不懂的规则行** —— 这不是少了便利，是引入静默失效，与 F1 / F15 同类。
 
-外加 `Clash/` 是 68 个已发布的稳定 raw URL，移除会直接打断现有引用。
+外加该目录是 68 个已发布的稳定 raw URL，移除会直接打断现有引用。
 
 **结论**：sing-box 若实现，作为**新增目标**，不替换任何现有目标。
 
@@ -298,7 +303,7 @@ QuantumultX/<App>.list   # QX filter 行（行尾占位符 policy，force-policy
 
 ### 13.5 能力降级结论
 
-- **USER-AGENT → 显式丢弃 + 计数**，与 Clash / Egern / QX 同一处置方式，绝不静默。
+- **USER-AGENT → 显式丢弃 + 计数**，与 mihomo / Egern / QX 同一处置方式，绝不静默。
   实测影响：**4 条 / 2781（0.14%）**，分布为 PayPal 1、Netflix 1、Spotify 1、ParamountPlus 1。
 - **PROCESS-NAME → 保留**。这是 sing-box 与 Egern / QX 的关键差异（后两者无对应 key，必须丢弃 7 条）。
   **因此 sing-box 是 classical 四端之外丢失最少的目标**：唯一损失是上述 4 条 UA。

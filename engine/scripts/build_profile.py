@@ -32,7 +32,7 @@ CLIENTS = {
     "shadowrocket": ("shadowrocket.conf", "Shadowrocket.conf"),
     "loon": ("loon.conf", "Loon.conf"),
     "stash": ("stash.yaml", "Stash.yaml"),
-    "clash": ("clash.yaml", "Clash.yaml"),
+    "mihomo": ("mihomo.yaml", "mihomo.yaml"),
     "egern": ("egern.yaml", "Egern.yaml"),
     "quantumultx": ("quantumultx.conf", "QuantumultX.conf"),
 }
@@ -41,7 +41,7 @@ BUILTIN_POLICIES = {"DIRECT", "REJECT", "REJECT-DROP", "Sub"}
 # Every published reference derives from repo_identity, so renaming the account
 # is a one-line change instead of a find-and-replace across the generators.
 BLINK_RAW = repo_identity.raw_url("Surge")
-BLINK_RAW_CLASH = repo_identity.raw_url("Clash")
+BLINK_RAW_MIHOMO = repo_identity.raw_url("mihomo")
 BLINK_RAW_QX = repo_identity.raw_url("QuantumultX")
 
 # Per-client view file directory for the multi-view pilot (view payloads are
@@ -52,7 +52,7 @@ VIEW_DIR = {
     "shadowrocket": "Shadowrocket",
     "loon": "Loon",
     "stash": "Stash",
-    "clash": "Clash",
+    "mihomo": "mihomo",
     "egern": "Egern",
     "quantumultx": "QuantumultX",
 }
@@ -70,7 +70,7 @@ def _view_url(client: str, app_name: str, view_name: str) -> str:
 #                  rule lines inside the referenced set can carry it.
 #   - egern:       no_resolve is set-level, declared inside the rule set itself.
 #   - quantumultx: no production-proven slot on a filter_remote line.
-IP_NO_RESOLVE_CLIENTS = frozenset({"surge", "shadowrocket", "stash", "clash"})
+IP_NO_RESOLVE_CLIENTS = frozenset({"surge", "shadowrocket", "stash", "mihomo"})
 
 
 def _no_resolve_suffix(client: str) -> str:
@@ -588,7 +588,7 @@ def _render_stash(intent: dict) -> dict[str, str]:
     }
 
 
-def _render_clash(intent: dict) -> dict[str, str]:
+def _render_mihomo(intent: dict) -> dict[str, str]:
     sub = intent["subscription"]
     subscription = [
         "proxy-providers:",
@@ -642,8 +642,8 @@ def _render_clash(intent: dict) -> dict[str, str]:
     provider_lines: list[str] = ["rule-providers:"]
 
     def add_rule_entry(entry: dict) -> None:
-        policy = _policy_for(entry, "clash")
-        options = (entry.get("options") or {}).get("clash")
+        policy = _policy_for(entry, "mihomo")
+        options = (entry.get("options") or {}).get("mihomo")
         suffix = f",{options}" if options else ""
         # Emitted at the declared phase position (see the Stash renderer).
         if entry.get("kind") == "dest-port":
@@ -661,9 +661,9 @@ def _render_clash(intent: dict) -> dict[str, str]:
         provider_lines.append("    interval: 86400")
         rules.append(f"  - RULE-SET,{key},{policy}{suffix}")
 
-    for entry in _infra_for_phase(intent, "clash", "domain"):
+    for entry in _infra_for_phase(intent, "mihomo", "domain"):
         add_rule_entry(entry)
-    rules.extend(_infra_unsupported_lines(intent, "clash", "domain", "  "))
+    rules.extend(_infra_unsupported_lines(intent, "mihomo", "domain", "  "))
     for app_name, app in intent["apps"].items():
         if app.get("views"):
             for view_name in app["views"]:
@@ -673,14 +673,14 @@ def _render_clash(intent: dict) -> dict[str, str]:
                 provider_lines.append("    type: http")
                 provider_lines.append(f"    behavior: {behavior}")
                 provider_lines.append("    format: text")
-                provider_lines.append(f"    url: {_view_url('clash', app_name, view_name)}")
+                provider_lines.append(f"    url: {_view_url('mihomo', app_name, view_name)}")
                 provider_lines.append("    interval: 86400")
-                suffix = _no_resolve_suffix("clash") if view_name == "ip" else ""
+                suffix = _no_resolve_suffix("mihomo") if view_name == "ip" else ""
                 rules.append(f"  - RULE-SET,{key},{app['policy']}{suffix}")
             continue
         # Blink 的 App 规则经 Clash/ 目录分发（classical 已去除 USER-AGENT）；
         # 显式指定外部 source 的 App（如 AppleMusic）按上游原样引用。
-        source = app.get("source") or f"{BLINK_RAW_CLASH}/{app_name}.list"
+        source = app.get("source") or f"{BLINK_RAW_MIHOMO}/{app_name}.list"
         key = provider_name(app_name)
         provider_lines.append(f"  {key}:")
         provider_lines.append("    type: http")
@@ -689,9 +689,9 @@ def _render_clash(intent: dict) -> dict[str, str]:
         provider_lines.append(f"    url: {source}")
         provider_lines.append("    interval: 86400")
         rules.append(f"  - RULE-SET,{key},{app['policy']}")
-    for entry in _infra_for_phase(intent, "clash", "ip"):
+    for entry in _infra_for_phase(intent, "mihomo", "ip"):
         add_rule_entry(entry)
-    rules.extend(_infra_unsupported_lines(intent, "clash", "ip", "  "))
+    rules.extend(_infra_unsupported_lines(intent, "mihomo", "ip", "  "))
     rules.append("  - MATCH,Final")
     return {
         "__SUBSCRIPTION__": "\n".join(subscription),
@@ -855,7 +855,7 @@ RENDERERS = {
     "shadowrocket": _render_shadowrocket,
     "loon": _render_loon,
     "stash": _render_stash,
-    "clash": _render_clash,
+    "mihomo": _render_mihomo,
     "egern": _render_egern,
     "quantumultx": _render_quantumultx,
 }

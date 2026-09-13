@@ -16,7 +16,7 @@
 | 门禁 | 命令 | 强制内容 |
 | --- | --- | --- |
 | 单元与回归 | `python -m unittest discover -s engine/tests -v` | Parser、renderer、Profile、变化阈值和故障注入 |
-| 七端等价性 | `python engine/scripts/parity_check.py --root .` | 四端 classical 逐字节相同；Clash 仅移除 USER-AGENT；Egern/QX 仅移除 PROCESS-NAME；QX 统一省略 no-resolve |
+| 七端等价性 | `python engine/scripts/parity_check.py --root .` | 四端 classical 逐字节相同；mihomo 仅移除 USER-AGENT；Egern/QX 仅移除 PROCESS-NAME；QX 统一省略 no-resolve |
 | 产物健康度 | `python engine/scripts/health_check.py --root .` | 非空、合法、无重复、确定性排序、文件头统计正确 |
 | 语义多视图一致性 | `python engine/scripts/validate_views.py --root .` | 每个视图（domainset/nonip/ip）种类合法：IP 不进 nonip、domain 不进 ip、纯域名 App 无多余空 ip 视图；Surge 视图内容与 canonical 拆分一致；七端视图文件齐全、头统计（含显式丢弃）正确 |
 | 产物溯源 | `python engine/scripts/verify_manifest.py --root .` | 30 App、七端文件、supplement、构建器和 source definition 的 SHA256 完整且一致 |

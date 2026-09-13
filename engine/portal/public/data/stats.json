@@ -31,8 +31,8 @@
           "file": "Stash/OKX.list",
           "rules": 9
         },
-        "clash": {
-          "file": "Clash/OKX.list",
+        "mihomo": {
+          "file": "mihomo/OKX.list",
           "rules": 9,
           "dropped": 0
         },
@@ -72,9 +72,9 @@
             "rules": 9
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/OKX-domainset.conf",
+            "file": "mihomo/OKX-domainset.conf",
             "rules": 9
           }
         },
@@ -127,8 +127,8 @@
           "file": "Stash/WhatsApp.list",
           "rules": 11
         },
-        "clash": {
-          "file": "Clash/WhatsApp.list",
+        "mihomo": {
+          "file": "mihomo/WhatsApp.list",
           "rules": 11,
           "dropped": 0
         },
@@ -168,9 +168,9 @@
             "rules": 11
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/WhatsApp-domainset.conf",
+            "file": "mihomo/WhatsApp-domainset.conf",
             "rules": 11
           }
         },
@@ -223,8 +223,8 @@
           "file": "Stash/LINE.list",
           "rules": 20
         },
-        "clash": {
-          "file": "Clash/LINE.list",
+        "mihomo": {
+          "file": "mihomo/LINE.list",
           "rules": 20,
           "dropped": 0
         },
@@ -264,9 +264,9 @@
             "rules": 20
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/LINE-domainset.conf",
+            "file": "mihomo/LINE-domainset.conf",
             "rules": 20
           }
         },
@@ -320,8 +320,8 @@
           "file": "Stash/GitHub.list",
           "rules": 58
         },
-        "clash": {
-          "file": "Clash/GitHub.list",
+        "mihomo": {
+          "file": "mihomo/GitHub.list",
           "rules": 58,
           "dropped": 0
         },
@@ -361,9 +361,9 @@
             "rules": 58
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/GitHub-domainset.conf",
+            "file": "mihomo/GitHub-domainset.conf",
             "rules": 58
           }
         },
@@ -416,8 +416,8 @@
           "file": "Stash/SafePal.list",
           "rules": 2
         },
-        "clash": {
-          "file": "Clash/SafePal.list",
+        "mihomo": {
+          "file": "mihomo/SafePal.list",
           "rules": 2,
           "dropped": 0
         },
@@ -457,9 +457,9 @@
             "rules": 2
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/SafePal-domainset.conf",
+            "file": "mihomo/SafePal-domainset.conf",
             "rules": 2
           }
         },
@@ -514,8 +514,8 @@
           "file": "Stash/PayPal.list",
           "rules": 248
         },
-        "clash": {
-          "file": "Clash/PayPal.list",
+        "mihomo": {
+          "file": "mihomo/PayPal.list",
           "rules": 247,
           "dropped": 1
         },
@@ -555,9 +555,9 @@
             "rules": 248
           }
         },
-        "clash": {
+        "mihomo": {
           "nonip": {
-            "file": "Clash/PayPal-nonip.conf",
+            "file": "mihomo/PayPal-nonip.conf",
             "rules": 247
           }
         },
@@ -616,8 +616,8 @@
           "file": "Stash/Netflix.list",
           "rules": 1158
         },
-        "clash": {
-          "file": "Clash/Netflix.list",
+        "mihomo": {
+          "file": "mihomo/Netflix.list",
           "rules": 1157,
           "dropped": 1
         },
@@ -673,13 +673,13 @@
             "rules": 1119
           }
         },
-        "clash": {
+        "mihomo": {
           "nonip": {
-            "file": "Clash/Netflix-nonip.conf",
+            "file": "mihomo/Netflix-nonip.conf",
             "rules": 38
           },
           "ip": {
-            "file": "Clash/Netflix-ip.conf",
+            "file": "mihomo/Netflix-ip.conf",
             "rules": 1119
           }
         },
@@ -742,8 +742,8 @@
           "file": "Stash/YouTube.list",
           "rules": 14
         },
-        "clash": {
-          "file": "Clash/YouTube.list",
+        "mihomo": {
+          "file": "mihomo/YouTube.list",
           "rules": 14,
           "dropped": 0
         },
@@ -783,9 +783,9 @@
             "rules": 14
           }
         },
-        "clash": {
+        "mihomo": {
           "nonip": {
-            "file": "Clash/YouTube-nonip.conf",
+            "file": "mihomo/YouTube-nonip.conf",
             "rules": 14
           }
         },
@@ -839,8 +839,8 @@
           "file": "Stash/X.list",
           "rules": 34
         },
-        "clash": {
-          "file": "Clash/X.list",
+        "mihomo": {
+          "file": "mihomo/X.list",
           "rules": 34,
           "dropped": 0
         },
@@ -896,13 +896,13 @@
             "rules": 8
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/X-domainset.conf",
+            "file": "mihomo/X-domainset.conf",
             "rules": 26
           },
           "ip": {
-            "file": "Clash/X-ip.conf",
+            "file": "mihomo/X-ip.conf",
             "rules": 8
           }
         },
@@ -963,8 +963,8 @@
           "file": "Stash/Instagram.list",
           "rules": 3
         },
-        "clash": {
-          "file": "Clash/Instagram.list",
+        "mihomo": {
+          "file": "mihomo/Instagram.list",
           "rules": 3,
           "dropped": 0
         },
@@ -1004,9 +1004,9 @@
             "rules": 3
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/Instagram-domainset.conf",
+            "file": "mihomo/Instagram-domainset.conf",
             "rules": 3
           }
         },
@@ -1062,8 +1062,8 @@
           "file": "Stash/Telegram.list",
           "rules": 29
         },
-        "clash": {
-          "file": "Clash/Telegram.list",
+        "mihomo": {
+          "file": "mihomo/Telegram.list",
           "rules": 29,
           "dropped": 0
         },
@@ -1119,13 +1119,13 @@
             "rules": 14
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/Telegram-domainset.conf",
+            "file": "mihomo/Telegram-domainset.conf",
             "rules": 15
           },
           "ip": {
-            "file": "Clash/Telegram-ip.conf",
+            "file": "mihomo/Telegram-ip.conf",
             "rules": 14
           }
         },
@@ -1186,8 +1186,8 @@
           "file": "Stash/Threads.list",
           "rules": 2
         },
-        "clash": {
-          "file": "Clash/Threads.list",
+        "mihomo": {
+          "file": "mihomo/Threads.list",
           "rules": 2,
           "dropped": 0
         },
@@ -1227,9 +1227,9 @@
             "rules": 2
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/Threads-domainset.conf",
+            "file": "mihomo/Threads-domainset.conf",
             "rules": 2
           }
         },
@@ -1284,8 +1284,8 @@
           "file": "Stash/TikTok.list",
           "rules": 81
         },
-        "clash": {
-          "file": "Clash/TikTok.list",
+        "mihomo": {
+          "file": "mihomo/TikTok.list",
           "rules": 81,
           "dropped": 0
         },
@@ -1325,9 +1325,9 @@
             "rules": 81
           }
         },
-        "clash": {
+        "mihomo": {
           "nonip": {
-            "file": "Clash/TikTok-nonip.conf",
+            "file": "mihomo/TikTok-nonip.conf",
             "rules": 81
           }
         },
@@ -1384,8 +1384,8 @@
           "file": "Stash/Spotify.list",
           "rules": 21
         },
-        "clash": {
-          "file": "Clash/Spotify.list",
+        "mihomo": {
+          "file": "mihomo/Spotify.list",
           "rules": 20,
           "dropped": 1
         },
@@ -1441,13 +1441,13 @@
             "rules": 1
           }
         },
-        "clash": {
+        "mihomo": {
           "nonip": {
-            "file": "Clash/Spotify-nonip.conf",
+            "file": "mihomo/Spotify-nonip.conf",
             "rules": 19
           },
           "ip": {
-            "file": "Clash/Spotify-ip.conf",
+            "file": "mihomo/Spotify-ip.conf",
             "rules": 1
           }
         },
@@ -1510,8 +1510,8 @@
           "file": "Stash/AI.list",
           "rules": 51
         },
-        "clash": {
-          "file": "Clash/AI.list",
+        "mihomo": {
+          "file": "mihomo/AI.list",
           "rules": 51,
           "dropped": 0
         },
@@ -1551,9 +1551,9 @@
             "rules": 51
           }
         },
-        "clash": {
+        "mihomo": {
           "nonip": {
-            "file": "Clash/AI-nonip.conf",
+            "file": "mihomo/AI-nonip.conf",
             "rules": 51
           }
         },
@@ -1606,8 +1606,8 @@
           "file": "Stash/ZABank.list",
           "rules": 3
         },
-        "clash": {
-          "file": "Clash/ZABank.list",
+        "mihomo": {
+          "file": "mihomo/ZABank.list",
           "rules": 3,
           "dropped": 0
         },
@@ -1647,9 +1647,9 @@
             "rules": 3
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/ZABank-domainset.conf",
+            "file": "mihomo/ZABank-domainset.conf",
             "rules": 3
           }
         },
@@ -1702,8 +1702,8 @@
           "file": "Stash/Steam.list",
           "rules": 20
         },
-        "clash": {
-          "file": "Clash/Steam.list",
+        "mihomo": {
+          "file": "mihomo/Steam.list",
           "rules": 20,
           "dropped": 0
         },
@@ -1743,9 +1743,9 @@
             "rules": 20
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/Steam-domainset.conf",
+            "file": "mihomo/Steam-domainset.conf",
             "rules": 20
           }
         },
@@ -1800,8 +1800,8 @@
           "file": "Stash/APTV.list",
           "rules": 31
         },
-        "clash": {
-          "file": "Clash/APTV.list",
+        "mihomo": {
+          "file": "mihomo/APTV.list",
           "rules": 31,
           "dropped": 0
         },
@@ -1857,13 +1857,13 @@
             "rules": 7
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/APTV-domainset.conf",
+            "file": "mihomo/APTV-domainset.conf",
             "rules": 24
           },
           "ip": {
-            "file": "Clash/APTV-ip.conf",
+            "file": "mihomo/APTV-ip.conf",
             "rules": 7
           }
         },
@@ -1925,8 +1925,8 @@
           "file": "Stash/Disney.list",
           "rules": 174
         },
-        "clash": {
-          "file": "Clash/Disney.list",
+        "mihomo": {
+          "file": "mihomo/Disney.list",
           "rules": 174,
           "dropped": 0
         },
@@ -1966,9 +1966,9 @@
             "rules": 174
           }
         },
-        "clash": {
+        "mihomo": {
           "nonip": {
-            "file": "Clash/Disney-nonip.conf",
+            "file": "mihomo/Disney-nonip.conf",
             "rules": 174
           }
         },
@@ -2023,8 +2023,8 @@
           "file": "Stash/ParamountPlus.list",
           "rules": 10
         },
-        "clash": {
-          "file": "Clash/ParamountPlus.list",
+        "mihomo": {
+          "file": "mihomo/ParamountPlus.list",
           "rules": 9,
           "dropped": 1
         },
@@ -2064,9 +2064,9 @@
             "rules": 10
           }
         },
-        "clash": {
+        "mihomo": {
           "nonip": {
-            "file": "Clash/ParamountPlus-nonip.conf",
+            "file": "mihomo/ParamountPlus-nonip.conf",
             "rules": 9
           }
         },
@@ -2121,8 +2121,8 @@
           "file": "Stash/Hulu.list",
           "rules": 59
         },
-        "clash": {
-          "file": "Clash/Hulu.list",
+        "mihomo": {
+          "file": "mihomo/Hulu.list",
           "rules": 59,
           "dropped": 0
         },
@@ -2162,9 +2162,9 @@
             "rules": 59
           }
         },
-        "clash": {
+        "mihomo": {
           "nonip": {
-            "file": "Clash/Hulu-nonip.conf",
+            "file": "mihomo/Hulu-nonip.conf",
             "rules": 59
           }
         },
@@ -2219,8 +2219,8 @@
           "file": "Stash/PrimeVideo.list",
           "rules": 16
         },
-        "clash": {
-          "file": "Clash/PrimeVideo.list",
+        "mihomo": {
+          "file": "mihomo/PrimeVideo.list",
           "rules": 16,
           "dropped": 0
         },
@@ -2260,9 +2260,9 @@
             "rules": 16
           }
         },
-        "clash": {
+        "mihomo": {
           "nonip": {
-            "file": "Clash/PrimeVideo-nonip.conf",
+            "file": "mihomo/PrimeVideo-nonip.conf",
             "rules": 16
           }
         },
@@ -2316,8 +2316,8 @@
           "file": "Stash/HBO.list",
           "rules": 46
         },
-        "clash": {
-          "file": "Clash/HBO.list",
+        "mihomo": {
+          "file": "mihomo/HBO.list",
           "rules": 46,
           "dropped": 0
         },
@@ -2357,9 +2357,9 @@
             "rules": 46
           }
         },
-        "clash": {
+        "mihomo": {
           "nonip": {
-            "file": "Clash/HBO-nonip.conf",
+            "file": "mihomo/HBO-nonip.conf",
             "rules": 46
           }
         },
@@ -2416,8 +2416,8 @@
           "file": "Stash/Twitch.list",
           "rules": 22
         },
-        "clash": {
-          "file": "Clash/Twitch.list",
+        "mihomo": {
+          "file": "mihomo/Twitch.list",
           "rules": 22,
           "dropped": 0
         },
@@ -2473,13 +2473,13 @@
             "rules": 12
           }
         },
-        "clash": {
+        "mihomo": {
           "nonip": {
-            "file": "Clash/Twitch-nonip.conf",
+            "file": "mihomo/Twitch-nonip.conf",
             "rules": 10
           },
           "ip": {
-            "file": "Clash/Twitch-ip.conf",
+            "file": "mihomo/Twitch-ip.conf",
             "rules": 12
           }
         },
@@ -2541,8 +2541,8 @@
           "file": "Stash/Facebook.list",
           "rules": 580
         },
-        "clash": {
-          "file": "Clash/Facebook.list",
+        "mihomo": {
+          "file": "mihomo/Facebook.list",
           "rules": 580,
           "dropped": 0
         },
@@ -2598,13 +2598,13 @@
             "rules": 35
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/Facebook-domainset.conf",
+            "file": "mihomo/Facebook-domainset.conf",
             "rules": 545
           },
           "ip": {
-            "file": "Clash/Facebook-ip.conf",
+            "file": "mihomo/Facebook-ip.conf",
             "rules": 35
           }
         },
@@ -2667,8 +2667,8 @@
           "file": "Stash/Google.list",
           "rules": 25
         },
-        "clash": {
-          "file": "Clash/Google.list",
+        "mihomo": {
+          "file": "mihomo/Google.list",
           "rules": 25,
           "dropped": 0
         },
@@ -2724,13 +2724,13 @@
             "rules": 2
           }
         },
-        "clash": {
+        "mihomo": {
           "nonip": {
-            "file": "Clash/Google-nonip.conf",
+            "file": "mihomo/Google-nonip.conf",
             "rules": 23
           },
           "ip": {
-            "file": "Clash/Google-ip.conf",
+            "file": "mihomo/Google-ip.conf",
             "rules": 2
           }
         },
@@ -2791,8 +2791,8 @@
           "file": "Stash/NBA.list",
           "rules": 2
         },
-        "clash": {
-          "file": "Clash/NBA.list",
+        "mihomo": {
+          "file": "mihomo/NBA.list",
           "rules": 2,
           "dropped": 0
         },
@@ -2832,9 +2832,9 @@
             "rules": 2
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/NBA-domainset.conf",
+            "file": "mihomo/NBA-domainset.conf",
             "rules": 2
           }
         },
@@ -2887,8 +2887,8 @@
           "file": "Stash/Suno.list",
           "rules": 2
         },
-        "clash": {
-          "file": "Clash/Suno.list",
+        "mihomo": {
+          "file": "mihomo/Suno.list",
           "rules": 2,
           "dropped": 0
         },
@@ -2928,9 +2928,9 @@
             "rules": 2
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/Suno-domainset.conf",
+            "file": "mihomo/Suno-domainset.conf",
             "rules": 2
           }
         },
@@ -2983,8 +2983,8 @@
           "file": "Stash/Starryblu.list",
           "rules": 1
         },
-        "clash": {
-          "file": "Clash/Starryblu.list",
+        "mihomo": {
+          "file": "mihomo/Starryblu.list",
           "rules": 1,
           "dropped": 0
         },
@@ -3024,9 +3024,9 @@
             "rules": 1
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/Starryblu-domainset.conf",
+            "file": "mihomo/Starryblu-domainset.conf",
             "rules": 1
           }
         },
@@ -3079,8 +3079,8 @@
           "file": "Stash/AWSConsole.list",
           "rules": 49
         },
-        "clash": {
-          "file": "Clash/AWSConsole.list",
+        "mihomo": {
+          "file": "mihomo/AWSConsole.list",
           "rules": 49,
           "dropped": 0
         },
@@ -3120,9 +3120,9 @@
             "rules": 49
           }
         },
-        "clash": {
+        "mihomo": {
           "domainset": {
-            "file": "Clash/AWSConsole-domainset.conf",
+            "file": "mihomo/AWSConsole-domainset.conf",
             "rules": 49
           }
         },

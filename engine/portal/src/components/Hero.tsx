@@ -80,7 +80,7 @@ export default function Hero({ appsCount, totalRules, rawBase }: HeroProps) {
         <Stat value={String(totalRules)} label="有效规则" />
         <Stat
           value="7 客户端"
-          label="Surge · Shadowrocket · Loon · Stash · Clash · Egern · Quantumult X"
+          label="Surge · Shadowrocket · Loon · Stash · mihomo · Egern · Quantumult X"
         />
         <Stat value="7 配置文件" label="完整可导入 · 单订阅池 · 占位符内置" />
         <Stat value="每日 00:01" label="规则自动检查上游" />

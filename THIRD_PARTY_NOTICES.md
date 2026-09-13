@@ -24,7 +24,7 @@ file.
 
 The `Surge/<App>.list` table below is the canonical provenance record.
 `Loon/<App>.list`, `Shadowrocket/<App>.list`, and `Stash/<App>.list` are
-byte-identical copies of the Surge output; `Clash/<App>.list` is the same
+byte-identical copies of the Surge output; `mihomo/<App>.list` is the same
 classical output with `USER-AGENT` lines removed (the Clash family has no
 such rule type; the builder drops and counts them explicitly);
 `Egern/<App>.yaml` and `QuantumultX/<App>.list` are rendered from the same
@@ -94,7 +94,7 @@ this notice must be reviewed whenever a source is added or replaced.
 | `engine/docs/images/avatar.png` | 仓库所有者原创 IP mascot（白猫，与 portal `blink-logo.png` 相同图源） | Circular-cropped variant (transparent corners) used as the README title mark. Owned by the repository owner; not covered by any third-party license. |
 | `assets/brand/*.png` | Repository owner (original IP mascot) | An alternative bear mascot, trialled in 2026-09 and rolled back; kept as archived masters together with the derivation recipe. Referenced by nothing that ships. Owned by the repository owner; not covered by any third-party license. |
 | `engine/portal/public/icons/*.jpg` | Apple App Store artwork (iTunes Search API) | Official app icons of Surge, Shadowrocket, Loon, Stash, Egern, and Quantumult X, downloaded from the App Store and used only to identify each supported client in the portal. Trademarks and icons belong to their respective owners; not covered by this repository's terms. |
-| `engine/portal/public/icons/clash.jpg` | https://github.com/MetaCubeX/ClashMetaForAndroid (`app/src/main/res/mipmap-xxxhdpi/ic_launcher.png`) | Clash Meta for Android app icon (GPL-3.0), re-encoded to JPEG and used only to identify the Clash client in the portal. Icon and trademark belong to the Clash Meta project; not covered by this repository's terms. |
+| `engine/portal/public/icons/mihomo.jpg` | https://github.com/MetaCubeX/mihomo (`Meta.png`, `Alpha` branch) | The mihomo kernel's own project logo (GPL-3.0), inset on white and re-encoded to JPEG, used only to identify the mihomo client in the portal. The repository's default branch carries unrelated placeholder content; the kernel and this asset live on `Alpha`. Icon and trademark belong to the MetaCubeX project; not covered by this repository's terms. |
 | `engine/portal/src/components/Nav.tsx` (inline `GitHubMark` SVG) | GitHub, Inc. | GitHub's Octocat mark, inlined in the navigation to label the link that goes to this repository on GitHub — the use GitHub's logo guidelines permit. Trademark belongs to GitHub, Inc.; not covered by this repository's terms. |
 | `engine/portal/public/app-icons/*.jpg` | Apple App Store artwork (iTunes Search API) | Official app icons of each covered App (OKX, PayPal, SafePal, ZA Bank, LINE, Telegram, WhatsApp, GitHub, Steam, Instagram, Threads, X, YouTube, Netflix, TikTok, Spotify, APTV, Starryblu, AWS Console, and ChatGPT for the aggregated AI Rule-Set), downloaded from the App Store and used only to identify each Rule-Set in the portal. Trademarks and icons belong to their respective owners; not covered by this repository's terms. |
 

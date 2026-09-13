@@ -18,12 +18,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/AI.list",
-          "rules": 51,
-          "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/AI.yaml",
@@ -33,6 +27,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/AI.list",
+          "rules": 51,
+          "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/AI.list",
           "rules": 51,
           "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
         },
@@ -75,13 +75,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "nonip": {
-            "path": "Clash/AI-nonip.conf",
-            "rules": 51,
-            "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
-          }
-        },
         "egern": {
           "nonip": {
             "path": "Egern/AI-nonip.conf",
@@ -92,6 +85,13 @@
         "loon": {
           "nonip": {
             "path": "Loon/AI-nonip.conf",
+            "rules": 51,
+            "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
+          }
+        },
+        "mihomo": {
+          "nonip": {
+            "path": "mihomo/AI-nonip.conf",
             "rules": 51,
             "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
           }
@@ -146,12 +146,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/APTV.list",
-          "rules": 31,
-          "sha256": "53f66413f7030075d36e4548526dad4e1d09f05d38936c4ebd79b4f6332177d1"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/APTV.yaml",
@@ -161,6 +155,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/APTV.list",
+          "rules": 31,
+          "sha256": "53f66413f7030075d36e4548526dad4e1d09f05d38936c4ebd79b4f6332177d1"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/APTV.list",
           "rules": 31,
           "sha256": "53f66413f7030075d36e4548526dad4e1d09f05d38936c4ebd79b4f6332177d1"
         },
@@ -197,18 +197,6 @@
         "sha256": "5caea5da94a0bde6bf0ce2aa613d58996b8233efe56c01fb7966cade12173548"
       },
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/APTV-domainset.conf",
-            "rules": 24,
-            "sha256": "626b7608b11da8dc72801a43cfc1677d2082cb1688077baefb15a7dc159263fd"
-          },
-          "ip": {
-            "path": "Clash/APTV-ip.conf",
-            "rules": 7,
-            "sha256": "fa630f100fb51bab2901ff3d9bb9fc47e52971a7c81ab9c0b3ea818d0d97e304"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/APTV-domainset.conf",
@@ -229,6 +217,18 @@
           },
           "ip": {
             "path": "Loon/APTV-ip.conf",
+            "rules": 7,
+            "sha256": "fa630f100fb51bab2901ff3d9bb9fc47e52971a7c81ab9c0b3ea818d0d97e304"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/APTV-domainset.conf",
+            "rules": 24,
+            "sha256": "626b7608b11da8dc72801a43cfc1677d2082cb1688077baefb15a7dc159263fd"
+          },
+          "ip": {
+            "path": "mihomo/APTV-ip.conf",
             "rules": 7,
             "sha256": "fa630f100fb51bab2901ff3d9bb9fc47e52971a7c81ab9c0b3ea818d0d97e304"
           }
@@ -307,12 +307,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/AWSConsole.list",
-          "rules": 49,
-          "sha256": "65bb24359eed88529e67377b34baa652d26eddd63314c52f7a251265b9809670"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/AWSConsole.yaml",
@@ -322,6 +316,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/AWSConsole.list",
+          "rules": 49,
+          "sha256": "65bb24359eed88529e67377b34baa652d26eddd63314c52f7a251265b9809670"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/AWSConsole.list",
           "rules": 49,
           "sha256": "65bb24359eed88529e67377b34baa652d26eddd63314c52f7a251265b9809670"
         },
@@ -364,13 +364,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/AWSConsole-domainset.conf",
-            "rules": 49,
-            "sha256": "4c3c66aea8d34b9f5455e144dfc49d4915f01264cbbeb2e4daf5c40fe5b760b5"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/AWSConsole-domainset.conf",
@@ -383,6 +376,13 @@
             "path": "Loon/AWSConsole-domainset.conf",
             "rules": 49,
             "sha256": "65bb24359eed88529e67377b34baa652d26eddd63314c52f7a251265b9809670"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/AWSConsole-domainset.conf",
+            "rules": 49,
+            "sha256": "4c3c66aea8d34b9f5455e144dfc49d4915f01264cbbeb2e4daf5c40fe5b760b5"
           }
         },
         "quantumultx": {
@@ -431,12 +431,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/Disney.list",
-          "rules": 174,
-          "sha256": "dfb70c476af5bc043a8551a57d86683f3092be68c6261e82d7a7c8437b4532cb"
-        },
         "egern": {
           "dropped": [
             "PROCESS-NAME,com.disney.datg.videoplatforms.android.abc",
@@ -449,6 +443,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/Disney.list",
+          "rules": 174,
+          "sha256": "dfb70c476af5bc043a8551a57d86683f3092be68c6261e82d7a7c8437b4532cb"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/Disney.list",
           "rules": 174,
           "sha256": "dfb70c476af5bc043a8551a57d86683f3092be68c6261e82d7a7c8437b4532cb"
         },
@@ -494,13 +494,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "nonip": {
-            "path": "Clash/Disney-nonip.conf",
-            "rules": 174,
-            "sha256": "dfb70c476af5bc043a8551a57d86683f3092be68c6261e82d7a7c8437b4532cb"
-          }
-        },
         "egern": {
           "nonip": {
             "path": "Egern/Disney-nonip.conf",
@@ -511,6 +504,13 @@
         "loon": {
           "nonip": {
             "path": "Loon/Disney-nonip.conf",
+            "rules": 174,
+            "sha256": "dfb70c476af5bc043a8551a57d86683f3092be68c6261e82d7a7c8437b4532cb"
+          }
+        },
+        "mihomo": {
+          "nonip": {
+            "path": "mihomo/Disney-nonip.conf",
             "rules": 174,
             "sha256": "dfb70c476af5bc043a8551a57d86683f3092be68c6261e82d7a7c8437b4532cb"
           }
@@ -565,12 +565,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/Facebook.list",
-          "rules": 580,
-          "sha256": "961d04df45646298e0d488c8208781a608cb3f30f99629b6f2d1973d3e9b8918"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/Facebook.yaml",
@@ -580,6 +574,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/Facebook.list",
+          "rules": 580,
+          "sha256": "961d04df45646298e0d488c8208781a608cb3f30f99629b6f2d1973d3e9b8918"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/Facebook.list",
           "rules": 580,
           "sha256": "961d04df45646298e0d488c8208781a608cb3f30f99629b6f2d1973d3e9b8918"
         },
@@ -622,18 +622,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/Facebook-domainset.conf",
-            "rules": 545,
-            "sha256": "4d3bc52a08233a7fd364ebbb0c4d9fffea8f6b040734e6071819a7caedd48dc7"
-          },
-          "ip": {
-            "path": "Clash/Facebook-ip.conf",
-            "rules": 35,
-            "sha256": "6c2189528adbe9f93c8d01c29639214b223e7f64d1d27aa0f1091139c2ff7e8f"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/Facebook-domainset.conf",
@@ -654,6 +642,18 @@
           },
           "ip": {
             "path": "Loon/Facebook-ip.conf",
+            "rules": 35,
+            "sha256": "6c2189528adbe9f93c8d01c29639214b223e7f64d1d27aa0f1091139c2ff7e8f"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/Facebook-domainset.conf",
+            "rules": 545,
+            "sha256": "4d3bc52a08233a7fd364ebbb0c4d9fffea8f6b040734e6071819a7caedd48dc7"
+          },
+          "ip": {
+            "path": "mihomo/Facebook-ip.conf",
             "rules": 35,
             "sha256": "6c2189528adbe9f93c8d01c29639214b223e7f64d1d27aa0f1091139c2ff7e8f"
           }
@@ -726,12 +726,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/GitHub.list",
-          "rules": 58,
-          "sha256": "c29600d558cf3eb45e4d7ff081227007d7f71093b2183a2ddba13b379e1b7cd4"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/GitHub.yaml",
@@ -741,6 +735,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/GitHub.list",
+          "rules": 58,
+          "sha256": "c29600d558cf3eb45e4d7ff081227007d7f71093b2183a2ddba13b379e1b7cd4"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/GitHub.list",
           "rules": 58,
           "sha256": "c29600d558cf3eb45e4d7ff081227007d7f71093b2183a2ddba13b379e1b7cd4"
         },
@@ -791,13 +791,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/GitHub-domainset.conf",
-            "rules": 58,
-            "sha256": "11709a61a9ca51983906413df63970bc9c7d93e00eeb69ea3582bfc928661cad"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/GitHub-domainset.conf",
@@ -810,6 +803,13 @@
             "path": "Loon/GitHub-domainset.conf",
             "rules": 58,
             "sha256": "c29600d558cf3eb45e4d7ff081227007d7f71093b2183a2ddba13b379e1b7cd4"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/GitHub-domainset.conf",
+            "rules": 58,
+            "sha256": "11709a61a9ca51983906413df63970bc9c7d93e00eeb69ea3582bfc928661cad"
           }
         },
         "quantumultx": {
@@ -862,12 +862,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/Google.list",
-          "rules": 25,
-          "sha256": "f8cd468437e9b9634690480e67ab262fe73041cfb57a80a4f8572d86ffaf6423"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/Google.yaml",
@@ -877,6 +871,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/Google.list",
+          "rules": 25,
+          "sha256": "f8cd468437e9b9634690480e67ab262fe73041cfb57a80a4f8572d86ffaf6423"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/Google.list",
           "rules": 25,
           "sha256": "f8cd468437e9b9634690480e67ab262fe73041cfb57a80a4f8572d86ffaf6423"
         },
@@ -919,18 +919,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "ip": {
-            "path": "Clash/Google-ip.conf",
-            "rules": 2,
-            "sha256": "3a4ab7a085856316aac641e39a49caa206d1173541d5a2d8abf80eb861d40e52"
-          },
-          "nonip": {
-            "path": "Clash/Google-nonip.conf",
-            "rules": 23,
-            "sha256": "dbbeb60eeac3e856d31f6b6407bc3c86c9f4b30ce097addfc6a957ae198f0017"
-          }
-        },
         "egern": {
           "ip": {
             "path": "Egern/Google-ip.conf",
@@ -951,6 +939,18 @@
           },
           "nonip": {
             "path": "Loon/Google-nonip.conf",
+            "rules": 23,
+            "sha256": "dbbeb60eeac3e856d31f6b6407bc3c86c9f4b30ce097addfc6a957ae198f0017"
+          }
+        },
+        "mihomo": {
+          "ip": {
+            "path": "mihomo/Google-ip.conf",
+            "rules": 2,
+            "sha256": "3a4ab7a085856316aac641e39a49caa206d1173541d5a2d8abf80eb861d40e52"
+          },
+          "nonip": {
+            "path": "mihomo/Google-nonip.conf",
             "rules": 23,
             "sha256": "dbbeb60eeac3e856d31f6b6407bc3c86c9f4b30ce097addfc6a957ae198f0017"
           }
@@ -1025,12 +1025,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/HBO.list",
-          "rules": 46,
-          "sha256": "cbaa5828cf74dc990e6ddef1da53dc9580fe94a14f8c0a1860ea80f6a9db6991"
-        },
         "egern": {
           "dropped": [
             "PROCESS-NAME,com.hbo.hbonow"
@@ -1042,6 +1036,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/HBO.list",
+          "rules": 46,
+          "sha256": "cbaa5828cf74dc990e6ddef1da53dc9580fe94a14f8c0a1860ea80f6a9db6991"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/HBO.list",
           "rules": 46,
           "sha256": "cbaa5828cf74dc990e6ddef1da53dc9580fe94a14f8c0a1860ea80f6a9db6991"
         },
@@ -1086,13 +1086,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "nonip": {
-            "path": "Clash/HBO-nonip.conf",
-            "rules": 46,
-            "sha256": "cbaa5828cf74dc990e6ddef1da53dc9580fe94a14f8c0a1860ea80f6a9db6991"
-          }
-        },
         "egern": {
           "nonip": {
             "path": "Egern/HBO-nonip.conf",
@@ -1103,6 +1096,13 @@
         "loon": {
           "nonip": {
             "path": "Loon/HBO-nonip.conf",
+            "rules": 46,
+            "sha256": "cbaa5828cf74dc990e6ddef1da53dc9580fe94a14f8c0a1860ea80f6a9db6991"
+          }
+        },
+        "mihomo": {
+          "nonip": {
+            "path": "mihomo/HBO-nonip.conf",
             "rules": 46,
             "sha256": "cbaa5828cf74dc990e6ddef1da53dc9580fe94a14f8c0a1860ea80f6a9db6991"
           }
@@ -1153,12 +1153,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/Hulu.list",
-          "rules": 59,
-          "sha256": "ff3065202da0f8741216cb88d7783256f999e42820067cb2fc453e32419c45c8"
-        },
         "egern": {
           "dropped": [
             "PROCESS-NAME,com.hulu.plus"
@@ -1170,6 +1164,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/Hulu.list",
+          "rules": 59,
+          "sha256": "ff3065202da0f8741216cb88d7783256f999e42820067cb2fc453e32419c45c8"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/Hulu.list",
           "rules": 59,
           "sha256": "ff3065202da0f8741216cb88d7783256f999e42820067cb2fc453e32419c45c8"
         },
@@ -1214,13 +1214,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "nonip": {
-            "path": "Clash/Hulu-nonip.conf",
-            "rules": 59,
-            "sha256": "ff3065202da0f8741216cb88d7783256f999e42820067cb2fc453e32419c45c8"
-          }
-        },
         "egern": {
           "nonip": {
             "path": "Egern/Hulu-nonip.conf",
@@ -1231,6 +1224,13 @@
         "loon": {
           "nonip": {
             "path": "Loon/Hulu-nonip.conf",
+            "rules": 59,
+            "sha256": "ff3065202da0f8741216cb88d7783256f999e42820067cb2fc453e32419c45c8"
+          }
+        },
+        "mihomo": {
+          "nonip": {
+            "path": "mihomo/Hulu-nonip.conf",
             "rules": 59,
             "sha256": "ff3065202da0f8741216cb88d7783256f999e42820067cb2fc453e32419c45c8"
           }
@@ -1284,12 +1284,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/Instagram.list",
-          "rules": 3,
-          "sha256": "10ce8682c38256e5ba5e15b6a6f69af38e7180409dd504db5efacbedede21c87"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/Instagram.yaml",
@@ -1299,6 +1293,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/Instagram.list",
+          "rules": 3,
+          "sha256": "10ce8682c38256e5ba5e15b6a6f69af38e7180409dd504db5efacbedede21c87"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/Instagram.list",
           "rules": 3,
           "sha256": "10ce8682c38256e5ba5e15b6a6f69af38e7180409dd504db5efacbedede21c87"
         },
@@ -1341,13 +1341,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/Instagram-domainset.conf",
-            "rules": 3,
-            "sha256": "b0557200c230eae05b8ded93ad647cb80e8989b5a86b8a5fc7a45f6060db76f8"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/Instagram-domainset.conf",
@@ -1360,6 +1353,13 @@
             "path": "Loon/Instagram-domainset.conf",
             "rules": 3,
             "sha256": "10ce8682c38256e5ba5e15b6a6f69af38e7180409dd504db5efacbedede21c87"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/Instagram-domainset.conf",
+            "rules": 3,
+            "sha256": "b0557200c230eae05b8ded93ad647cb80e8989b5a86b8a5fc7a45f6060db76f8"
           }
         },
         "quantumultx": {
@@ -1408,12 +1408,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/LINE.list",
-          "rules": 20,
-          "sha256": "b55814cf9ebb07c5bafadf7b04a9eb55cdf3741d8d45b4f9af15b077365cf1b4"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/LINE.yaml",
@@ -1423,6 +1417,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/LINE.list",
+          "rules": 20,
+          "sha256": "b55814cf9ebb07c5bafadf7b04a9eb55cdf3741d8d45b4f9af15b077365cf1b4"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/LINE.list",
           "rules": 20,
           "sha256": "b55814cf9ebb07c5bafadf7b04a9eb55cdf3741d8d45b4f9af15b077365cf1b4"
         },
@@ -1465,13 +1465,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/LINE-domainset.conf",
-            "rules": 20,
-            "sha256": "b623c108b53fc5933a7c57ffdbadd6737c7f1ea71cb499579ab7ceb6e8c8d16c"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/LINE-domainset.conf",
@@ -1484,6 +1477,13 @@
             "path": "Loon/LINE-domainset.conf",
             "rules": 20,
             "sha256": "b55814cf9ebb07c5bafadf7b04a9eb55cdf3741d8d45b4f9af15b077365cf1b4"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/LINE-domainset.conf",
+            "rules": 20,
+            "sha256": "b623c108b53fc5933a7c57ffdbadd6737c7f1ea71cb499579ab7ceb6e8c8d16c"
           }
         },
         "quantumultx": {
@@ -1532,12 +1532,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/NBA.list",
-          "rules": 2,
-          "sha256": "78cb9de1965ea827c4f6732b2f8bc7e63f26631eb780936c70de1ac1aa6650b1"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/NBA.yaml",
@@ -1547,6 +1541,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/NBA.list",
+          "rules": 2,
+          "sha256": "78cb9de1965ea827c4f6732b2f8bc7e63f26631eb780936c70de1ac1aa6650b1"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/NBA.list",
           "rules": 2,
           "sha256": "78cb9de1965ea827c4f6732b2f8bc7e63f26631eb780936c70de1ac1aa6650b1"
         },
@@ -1583,13 +1583,6 @@
         "sha256": "53712555d8212c5b01383208e41d6aeccec82ca04b1d109720506c315f985f4b"
       },
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/NBA-domainset.conf",
-            "rules": 2,
-            "sha256": "bded21ef365a9d60a93f5d0b15ae872049c58bcb21e8a9e7d50e4a882c237e93"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/NBA-domainset.conf",
@@ -1602,6 +1595,13 @@
             "path": "Loon/NBA-domainset.conf",
             "rules": 2,
             "sha256": "78cb9de1965ea827c4f6732b2f8bc7e63f26631eb780936c70de1ac1aa6650b1"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/NBA-domainset.conf",
+            "rules": 2,
+            "sha256": "bded21ef365a9d60a93f5d0b15ae872049c58bcb21e8a9e7d50e4a882c237e93"
           }
         },
         "quantumultx": {
@@ -1654,14 +1654,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [
-            "USER-AGENT,Argo*"
-          ],
-          "path": "Clash/Netflix.list",
-          "rules": 1157,
-          "sha256": "632842c0056f79e33b5fcebe2c173c40b254fd14f6982479570f97ee0b3c5d35"
-        },
         "egern": {
           "dropped": [
             "PROCESS-NAME,com.netflix.mediaclient"
@@ -1675,6 +1667,14 @@
           "path": "Loon/Netflix.list",
           "rules": 1158,
           "sha256": "c057e338ea7925b87bce46606a61b58a5184920c5ff86992afa81f84ea1b1b55"
+        },
+        "mihomo": {
+          "dropped": [
+            "USER-AGENT,Argo*"
+          ],
+          "path": "mihomo/Netflix.list",
+          "rules": 1157,
+          "sha256": "632842c0056f79e33b5fcebe2c173c40b254fd14f6982479570f97ee0b3c5d35"
         },
         "quantumultx": {
           "dropped": [
@@ -1717,18 +1717,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "ip": {
-            "path": "Clash/Netflix-ip.conf",
-            "rules": 1119,
-            "sha256": "92a45294f8b0c3689fca389c656ddc41b08c327f1320c61cd6139c34718f1e90"
-          },
-          "nonip": {
-            "path": "Clash/Netflix-nonip.conf",
-            "rules": 39,
-            "sha256": "225f4aed7b147d9922d14dc3ad12e7d21ed1a1553eec730c01e0aa7cda8ee007"
-          }
-        },
         "egern": {
           "ip": {
             "path": "Egern/Netflix-ip.conf",
@@ -1751,6 +1739,18 @@
             "path": "Loon/Netflix-nonip.conf",
             "rules": 39,
             "sha256": "bc934647c8910ca6b0b3f37529ba6155364814e997774ec6f7097c20742a3e4f"
+          }
+        },
+        "mihomo": {
+          "ip": {
+            "path": "mihomo/Netflix-ip.conf",
+            "rules": 1119,
+            "sha256": "92a45294f8b0c3689fca389c656ddc41b08c327f1320c61cd6139c34718f1e90"
+          },
+          "nonip": {
+            "path": "mihomo/Netflix-nonip.conf",
+            "rules": 39,
+            "sha256": "225f4aed7b147d9922d14dc3ad12e7d21ed1a1553eec730c01e0aa7cda8ee007"
           }
         },
         "quantumultx": {
@@ -1819,12 +1819,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/OKX.list",
-          "rules": 9,
-          "sha256": "a1042d8b97875ab79f618b802d245b46d43090f0108805566acf1bbdc2c6de10"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/OKX.yaml",
@@ -1834,6 +1828,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/OKX.list",
+          "rules": 9,
+          "sha256": "a1042d8b97875ab79f618b802d245b46d43090f0108805566acf1bbdc2c6de10"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/OKX.list",
           "rules": 9,
           "sha256": "a1042d8b97875ab79f618b802d245b46d43090f0108805566acf1bbdc2c6de10"
         },
@@ -1876,13 +1876,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/OKX-domainset.conf",
-            "rules": 9,
-            "sha256": "5d021ec93a8a7fbec90ba730e236a5cfb503574f1ade1fecf0f032da3fb76e45"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/OKX-domainset.conf",
@@ -1895,6 +1888,13 @@
             "path": "Loon/OKX-domainset.conf",
             "rules": 9,
             "sha256": "a1042d8b97875ab79f618b802d245b46d43090f0108805566acf1bbdc2c6de10"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/OKX-domainset.conf",
+            "rules": 9,
+            "sha256": "5d021ec93a8a7fbec90ba730e236a5cfb503574f1ade1fecf0f032da3fb76e45"
           }
         },
         "quantumultx": {
@@ -1943,14 +1943,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [
-            "USER-AGENT,PPlus*"
-          ],
-          "path": "Clash/ParamountPlus.list",
-          "rules": 9,
-          "sha256": "7b6b9697259f346b2a13a31ddbcad2ea9427608385d02ddc3e5b098031e421d1"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/ParamountPlus.yaml",
@@ -1962,6 +1954,14 @@
           "path": "Loon/ParamountPlus.list",
           "rules": 10,
           "sha256": "b8c1b1806a3f2e25155e806e2b64c995eb75aada80ed093be54d0d1c4533ea59"
+        },
+        "mihomo": {
+          "dropped": [
+            "USER-AGENT,PPlus*"
+          ],
+          "path": "mihomo/ParamountPlus.list",
+          "rules": 9,
+          "sha256": "7b6b9697259f346b2a13a31ddbcad2ea9427608385d02ddc3e5b098031e421d1"
         },
         "quantumultx": {
           "dropped": [],
@@ -2002,13 +2002,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "nonip": {
-            "path": "Clash/ParamountPlus-nonip.conf",
-            "rules": 10,
-            "sha256": "7b6b9697259f346b2a13a31ddbcad2ea9427608385d02ddc3e5b098031e421d1"
-          }
-        },
         "egern": {
           "nonip": {
             "path": "Egern/ParamountPlus-nonip.conf",
@@ -2021,6 +2014,13 @@
             "path": "Loon/ParamountPlus-nonip.conf",
             "rules": 10,
             "sha256": "b8c1b1806a3f2e25155e806e2b64c995eb75aada80ed093be54d0d1c4533ea59"
+          }
+        },
+        "mihomo": {
+          "nonip": {
+            "path": "mihomo/ParamountPlus-nonip.conf",
+            "rules": 10,
+            "sha256": "7b6b9697259f346b2a13a31ddbcad2ea9427608385d02ddc3e5b098031e421d1"
           }
         },
         "quantumultx": {
@@ -2069,14 +2069,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [
-            "USER-AGENT,PayPal*"
-          ],
-          "path": "Clash/PayPal.list",
-          "rules": 247,
-          "sha256": "617a370f28791bbe1bbd6b081f6843ff21a557476becd16d6dc22f40cf8d9374"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/PayPal.yaml",
@@ -2088,6 +2080,14 @@
           "path": "Loon/PayPal.list",
           "rules": 248,
           "sha256": "536e7791837573920b93416957093f428fdbe226d7bbad71e284feb28b1be3f4"
+        },
+        "mihomo": {
+          "dropped": [
+            "USER-AGENT,PayPal*"
+          ],
+          "path": "mihomo/PayPal.list",
+          "rules": 247,
+          "sha256": "617a370f28791bbe1bbd6b081f6843ff21a557476becd16d6dc22f40cf8d9374"
         },
         "quantumultx": {
           "dropped": [],
@@ -2128,13 +2128,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "nonip": {
-            "path": "Clash/PayPal-nonip.conf",
-            "rules": 248,
-            "sha256": "617a370f28791bbe1bbd6b081f6843ff21a557476becd16d6dc22f40cf8d9374"
-          }
-        },
         "egern": {
           "nonip": {
             "path": "Egern/PayPal-nonip.conf",
@@ -2147,6 +2140,13 @@
             "path": "Loon/PayPal-nonip.conf",
             "rules": 248,
             "sha256": "536e7791837573920b93416957093f428fdbe226d7bbad71e284feb28b1be3f4"
+          }
+        },
+        "mihomo": {
+          "nonip": {
+            "path": "mihomo/PayPal-nonip.conf",
+            "rules": 248,
+            "sha256": "617a370f28791bbe1bbd6b081f6843ff21a557476becd16d6dc22f40cf8d9374"
           }
         },
         "quantumultx": {
@@ -2195,12 +2195,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/PrimeVideo.list",
-          "rules": 16,
-          "sha256": "92503fa1523490a89779c0646431825972bae472a3025b3467f9e2424066b8bf"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/PrimeVideo.yaml",
@@ -2210,6 +2204,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/PrimeVideo.list",
+          "rules": 16,
+          "sha256": "92503fa1523490a89779c0646431825972bae472a3025b3467f9e2424066b8bf"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/PrimeVideo.list",
           "rules": 16,
           "sha256": "92503fa1523490a89779c0646431825972bae472a3025b3467f9e2424066b8bf"
         },
@@ -2252,13 +2252,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "nonip": {
-            "path": "Clash/PrimeVideo-nonip.conf",
-            "rules": 16,
-            "sha256": "92503fa1523490a89779c0646431825972bae472a3025b3467f9e2424066b8bf"
-          }
-        },
         "egern": {
           "nonip": {
             "path": "Egern/PrimeVideo-nonip.conf",
@@ -2269,6 +2262,13 @@
         "loon": {
           "nonip": {
             "path": "Loon/PrimeVideo-nonip.conf",
+            "rules": 16,
+            "sha256": "92503fa1523490a89779c0646431825972bae472a3025b3467f9e2424066b8bf"
+          }
+        },
+        "mihomo": {
+          "nonip": {
+            "path": "mihomo/PrimeVideo-nonip.conf",
             "rules": 16,
             "sha256": "92503fa1523490a89779c0646431825972bae472a3025b3467f9e2424066b8bf"
           }
@@ -2319,12 +2319,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/SafePal.list",
-          "rules": 2,
-          "sha256": "0669a230ebac2478b0e3c8b7288c2ecb0018fba9ddca50a1d910864f5e2d71f2"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/SafePal.yaml",
@@ -2334,6 +2328,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/SafePal.list",
+          "rules": 2,
+          "sha256": "0669a230ebac2478b0e3c8b7288c2ecb0018fba9ddca50a1d910864f5e2d71f2"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/SafePal.list",
           "rules": 2,
           "sha256": "0669a230ebac2478b0e3c8b7288c2ecb0018fba9ddca50a1d910864f5e2d71f2"
         },
@@ -2376,13 +2376,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/SafePal-domainset.conf",
-            "rules": 2,
-            "sha256": "0ea32837025cfaa4cb7027404007aa0903aa8cfcd4a27e224d9223918cd97ccb"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/SafePal-domainset.conf",
@@ -2395,6 +2388,13 @@
             "path": "Loon/SafePal-domainset.conf",
             "rules": 2,
             "sha256": "0669a230ebac2478b0e3c8b7288c2ecb0018fba9ddca50a1d910864f5e2d71f2"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/SafePal-domainset.conf",
+            "rules": 2,
+            "sha256": "0ea32837025cfaa4cb7027404007aa0903aa8cfcd4a27e224d9223918cd97ccb"
           }
         },
         "quantumultx": {
@@ -2447,14 +2447,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [
-            "USER-AGENT,Spotify*"
-          ],
-          "path": "Clash/Spotify.list",
-          "rules": 20,
-          "sha256": "f4db116aad2a71908a6d7406c5d2990fd203239518340f075beca374befc8abc"
-        },
         "egern": {
           "dropped": [
             "PROCESS-NAME,com.spotify.music"
@@ -2468,6 +2460,14 @@
           "path": "Loon/Spotify.list",
           "rules": 21,
           "sha256": "ab4fa9036b902bca55e1664394cb68f9fdc347f6bb3bc091080a3adc5130cdd4"
+        },
+        "mihomo": {
+          "dropped": [
+            "USER-AGENT,Spotify*"
+          ],
+          "path": "mihomo/Spotify.list",
+          "rules": 20,
+          "sha256": "f4db116aad2a71908a6d7406c5d2990fd203239518340f075beca374befc8abc"
         },
         "quantumultx": {
           "dropped": [
@@ -2510,18 +2510,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "ip": {
-            "path": "Clash/Spotify-ip.conf",
-            "rules": 1,
-            "sha256": "efc5d615dcc3846d67dc92deac57054d85362704238914bf5e75258df3a66669"
-          },
-          "nonip": {
-            "path": "Clash/Spotify-nonip.conf",
-            "rules": 20,
-            "sha256": "1099c561e6af9fe061d91f26cb68b96f0d3526833acc85fe97f64855e8cd7cce"
-          }
-        },
         "egern": {
           "ip": {
             "path": "Egern/Spotify-ip.conf",
@@ -2544,6 +2532,18 @@
             "path": "Loon/Spotify-nonip.conf",
             "rules": 20,
             "sha256": "b61b37481bdf05524cd7c9eecbf8c656f7f571dcee648e38e573423f23b04dad"
+          }
+        },
+        "mihomo": {
+          "ip": {
+            "path": "mihomo/Spotify-ip.conf",
+            "rules": 1,
+            "sha256": "efc5d615dcc3846d67dc92deac57054d85362704238914bf5e75258df3a66669"
+          },
+          "nonip": {
+            "path": "mihomo/Spotify-nonip.conf",
+            "rules": 20,
+            "sha256": "1099c561e6af9fe061d91f26cb68b96f0d3526833acc85fe97f64855e8cd7cce"
           }
         },
         "quantumultx": {
@@ -2612,12 +2612,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/Starryblu.list",
-          "rules": 1,
-          "sha256": "009cf9ea93c5edff677a9c5db4369ed6ebb305cd1b09b640d2efc8c5a2db9f35"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/Starryblu.yaml",
@@ -2627,6 +2621,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/Starryblu.list",
+          "rules": 1,
+          "sha256": "009cf9ea93c5edff677a9c5db4369ed6ebb305cd1b09b640d2efc8c5a2db9f35"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/Starryblu.list",
           "rules": 1,
           "sha256": "009cf9ea93c5edff677a9c5db4369ed6ebb305cd1b09b640d2efc8c5a2db9f35"
         },
@@ -2663,13 +2663,6 @@
         "sha256": "7593c2fe50d450c0a8b38bf9d72908530fcc66526fb1b7260c652b1077a6762b"
       },
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/Starryblu-domainset.conf",
-            "rules": 1,
-            "sha256": "affc1af0f0b52c8efdee5457c52d8ed871aecf6016b373743e1e42972334a00b"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/Starryblu-domainset.conf",
@@ -2682,6 +2675,13 @@
             "path": "Loon/Starryblu-domainset.conf",
             "rules": 1,
             "sha256": "009cf9ea93c5edff677a9c5db4369ed6ebb305cd1b09b640d2efc8c5a2db9f35"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/Starryblu-domainset.conf",
+            "rules": 1,
+            "sha256": "affc1af0f0b52c8efdee5457c52d8ed871aecf6016b373743e1e42972334a00b"
           }
         },
         "quantumultx": {
@@ -2730,12 +2730,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/Steam.list",
-          "rules": 20,
-          "sha256": "0962fca87dfe8ba71642f06699471d0d5927fca900ba793784d46c09af3f28d5"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/Steam.yaml",
@@ -2745,6 +2739,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/Steam.list",
+          "rules": 20,
+          "sha256": "0962fca87dfe8ba71642f06699471d0d5927fca900ba793784d46c09af3f28d5"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/Steam.list",
           "rules": 20,
           "sha256": "0962fca87dfe8ba71642f06699471d0d5927fca900ba793784d46c09af3f28d5"
         },
@@ -2787,13 +2787,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/Steam-domainset.conf",
-            "rules": 20,
-            "sha256": "8fc6687702b1f33506a403b34560742a9593500d54b75e056dae8b9b99775974"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/Steam-domainset.conf",
@@ -2806,6 +2799,13 @@
             "path": "Loon/Steam-domainset.conf",
             "rules": 20,
             "sha256": "0962fca87dfe8ba71642f06699471d0d5927fca900ba793784d46c09af3f28d5"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/Steam-domainset.conf",
+            "rules": 20,
+            "sha256": "8fc6687702b1f33506a403b34560742a9593500d54b75e056dae8b9b99775974"
           }
         },
         "quantumultx": {
@@ -2854,12 +2854,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/Suno.list",
-          "rules": 2,
-          "sha256": "2b1c240a56767ba7145b40f0c1ffd1b17817e616280a83a758d63e3572aca999"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/Suno.yaml",
@@ -2869,6 +2863,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/Suno.list",
+          "rules": 2,
+          "sha256": "2b1c240a56767ba7145b40f0c1ffd1b17817e616280a83a758d63e3572aca999"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/Suno.list",
           "rules": 2,
           "sha256": "2b1c240a56767ba7145b40f0c1ffd1b17817e616280a83a758d63e3572aca999"
         },
@@ -2905,13 +2905,6 @@
         "sha256": "6a346a962e22fa7da9e1c982f50959187f54cfb1f44e546260533c790600288d"
       },
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/Suno-domainset.conf",
-            "rules": 2,
-            "sha256": "73ccde3cd1e24ff2d52518de59043a88c780ab913e3171d954b3c7f0881d548e"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/Suno-domainset.conf",
@@ -2924,6 +2917,13 @@
             "path": "Loon/Suno-domainset.conf",
             "rules": 2,
             "sha256": "2b1c240a56767ba7145b40f0c1ffd1b17817e616280a83a758d63e3572aca999"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/Suno-domainset.conf",
+            "rules": 2,
+            "sha256": "73ccde3cd1e24ff2d52518de59043a88c780ab913e3171d954b3c7f0881d548e"
           }
         },
         "quantumultx": {
@@ -2976,12 +2976,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/Telegram.list",
-          "rules": 29,
-          "sha256": "85f188f60b4693093173e20c367f055595c5bcc13979423bc94addd72751dc27"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/Telegram.yaml",
@@ -2991,6 +2985,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/Telegram.list",
+          "rules": 29,
+          "sha256": "85f188f60b4693093173e20c367f055595c5bcc13979423bc94addd72751dc27"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/Telegram.list",
           "rules": 29,
           "sha256": "85f188f60b4693093173e20c367f055595c5bcc13979423bc94addd72751dc27"
         },
@@ -3043,18 +3043,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/Telegram-domainset.conf",
-            "rules": 15,
-            "sha256": "5a1f563b66057756be7b26cb9ff678751de1018ca8df661b15bc75b64bd364a6"
-          },
-          "ip": {
-            "path": "Clash/Telegram-ip.conf",
-            "rules": 14,
-            "sha256": "ea9892c4bf0765d578c581951626640fcc347654ef7e74fce17a5c46ab0a04e1"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/Telegram-domainset.conf",
@@ -3075,6 +3063,18 @@
           },
           "ip": {
             "path": "Loon/Telegram-ip.conf",
+            "rules": 14,
+            "sha256": "ea9892c4bf0765d578c581951626640fcc347654ef7e74fce17a5c46ab0a04e1"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/Telegram-domainset.conf",
+            "rules": 15,
+            "sha256": "5a1f563b66057756be7b26cb9ff678751de1018ca8df661b15bc75b64bd364a6"
+          },
+          "ip": {
+            "path": "mihomo/Telegram-ip.conf",
             "rules": 14,
             "sha256": "ea9892c4bf0765d578c581951626640fcc347654ef7e74fce17a5c46ab0a04e1"
           }
@@ -3145,12 +3145,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/Threads.list",
-          "rules": 2,
-          "sha256": "3fca24abc3fdfad90cd7bdea7dad49204a86313723729858351c12ba94e80f90"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/Threads.yaml",
@@ -3160,6 +3154,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/Threads.list",
+          "rules": 2,
+          "sha256": "3fca24abc3fdfad90cd7bdea7dad49204a86313723729858351c12ba94e80f90"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/Threads.list",
           "rules": 2,
           "sha256": "3fca24abc3fdfad90cd7bdea7dad49204a86313723729858351c12ba94e80f90"
         },
@@ -3202,13 +3202,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/Threads-domainset.conf",
-            "rules": 2,
-            "sha256": "bca82a2356fcb4ad25b0c2e5269385fb5c53c76144951974fb060da28edc8047"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/Threads-domainset.conf",
@@ -3221,6 +3214,13 @@
             "path": "Loon/Threads-domainset.conf",
             "rules": 2,
             "sha256": "3fca24abc3fdfad90cd7bdea7dad49204a86313723729858351c12ba94e80f90"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/Threads-domainset.conf",
+            "rules": 2,
+            "sha256": "bca82a2356fcb4ad25b0c2e5269385fb5c53c76144951974fb060da28edc8047"
           }
         },
         "quantumultx": {
@@ -3272,12 +3272,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/TikTok.list",
-          "rules": 81,
-          "sha256": "8255c11372cc7939407bf2a03ee5a7a77d067bf1a900fbedd87798cb934ee07c"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/TikTok.yaml",
@@ -3287,6 +3281,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/TikTok.list",
+          "rules": 81,
+          "sha256": "8255c11372cc7939407bf2a03ee5a7a77d067bf1a900fbedd87798cb934ee07c"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/TikTok.list",
           "rules": 81,
           "sha256": "8255c11372cc7939407bf2a03ee5a7a77d067bf1a900fbedd87798cb934ee07c"
         },
@@ -3329,13 +3329,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "nonip": {
-            "path": "Clash/TikTok-nonip.conf",
-            "rules": 81,
-            "sha256": "8255c11372cc7939407bf2a03ee5a7a77d067bf1a900fbedd87798cb934ee07c"
-          }
-        },
         "egern": {
           "nonip": {
             "path": "Egern/TikTok-nonip.conf",
@@ -3346,6 +3339,13 @@
         "loon": {
           "nonip": {
             "path": "Loon/TikTok-nonip.conf",
+            "rules": 81,
+            "sha256": "8255c11372cc7939407bf2a03ee5a7a77d067bf1a900fbedd87798cb934ee07c"
+          }
+        },
+        "mihomo": {
+          "nonip": {
+            "path": "mihomo/TikTok-nonip.conf",
             "rules": 81,
             "sha256": "8255c11372cc7939407bf2a03ee5a7a77d067bf1a900fbedd87798cb934ee07c"
           }
@@ -3400,12 +3400,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/Twitch.list",
-          "rules": 22,
-          "sha256": "35a05e36460c22f625c27ec80b7c310aebca57eedf9196677c467616fba48d62"
-        },
         "egern": {
           "dropped": [
             "PROCESS-NAME,tv.twitch.android.app"
@@ -3417,6 +3411,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/Twitch.list",
+          "rules": 22,
+          "sha256": "35a05e36460c22f625c27ec80b7c310aebca57eedf9196677c467616fba48d62"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/Twitch.list",
           "rules": 22,
           "sha256": "35a05e36460c22f625c27ec80b7c310aebca57eedf9196677c467616fba48d62"
         },
@@ -3461,18 +3461,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "ip": {
-            "path": "Clash/Twitch-ip.conf",
-            "rules": 12,
-            "sha256": "cb334d18aa53094227696cff5adafb7cb14a0969d0a1913dc5adc6c50d57db03"
-          },
-          "nonip": {
-            "path": "Clash/Twitch-nonip.conf",
-            "rules": 10,
-            "sha256": "62b03ccaace92feb0f011d7cb4c52aba6d7ecdf919f7aa29110366829f3cc94b"
-          }
-        },
         "egern": {
           "ip": {
             "path": "Egern/Twitch-ip.conf",
@@ -3493,6 +3481,18 @@
           },
           "nonip": {
             "path": "Loon/Twitch-nonip.conf",
+            "rules": 10,
+            "sha256": "62b03ccaace92feb0f011d7cb4c52aba6d7ecdf919f7aa29110366829f3cc94b"
+          }
+        },
+        "mihomo": {
+          "ip": {
+            "path": "mihomo/Twitch-ip.conf",
+            "rules": 12,
+            "sha256": "cb334d18aa53094227696cff5adafb7cb14a0969d0a1913dc5adc6c50d57db03"
+          },
+          "nonip": {
+            "path": "mihomo/Twitch-nonip.conf",
             "rules": 10,
             "sha256": "62b03ccaace92feb0f011d7cb4c52aba6d7ecdf919f7aa29110366829f3cc94b"
           }
@@ -3563,12 +3563,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/WhatsApp.list",
-          "rules": 11,
-          "sha256": "079a7d3a88d23e6ce9179a8403dd76d26bf1f68ca6a9e4c928b1d9752f6c9efd"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/WhatsApp.yaml",
@@ -3578,6 +3572,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/WhatsApp.list",
+          "rules": 11,
+          "sha256": "079a7d3a88d23e6ce9179a8403dd76d26bf1f68ca6a9e4c928b1d9752f6c9efd"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/WhatsApp.list",
           "rules": 11,
           "sha256": "079a7d3a88d23e6ce9179a8403dd76d26bf1f68ca6a9e4c928b1d9752f6c9efd"
         },
@@ -3620,13 +3620,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/WhatsApp-domainset.conf",
-            "rules": 11,
-            "sha256": "aea739458de424bb6b129605e7cb8f3710ee6822cc0e3c77615fe07e8a8f4624"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/WhatsApp-domainset.conf",
@@ -3639,6 +3632,13 @@
             "path": "Loon/WhatsApp-domainset.conf",
             "rules": 11,
             "sha256": "079a7d3a88d23e6ce9179a8403dd76d26bf1f68ca6a9e4c928b1d9752f6c9efd"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/WhatsApp-domainset.conf",
+            "rules": 11,
+            "sha256": "aea739458de424bb6b129605e7cb8f3710ee6822cc0e3c77615fe07e8a8f4624"
           }
         },
         "quantumultx": {
@@ -3691,12 +3691,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/X.list",
-          "rules": 34,
-          "sha256": "60584adccecce741cd3f26043d47c1a2484b275338dc05d18c25079e4d8740ee"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/X.yaml",
@@ -3706,6 +3700,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/X.list",
+          "rules": 34,
+          "sha256": "60584adccecce741cd3f26043d47c1a2484b275338dc05d18c25079e4d8740ee"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/X.list",
           "rules": 34,
           "sha256": "60584adccecce741cd3f26043d47c1a2484b275338dc05d18c25079e4d8740ee"
         },
@@ -3748,18 +3748,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/X-domainset.conf",
-            "rules": 26,
-            "sha256": "086d6c36d82ef43fd37fc206ba7dfc21360358d9cdac2849369b87dfe45cd13b"
-          },
-          "ip": {
-            "path": "Clash/X-ip.conf",
-            "rules": 8,
-            "sha256": "ab037bd4640e8e090d05d2cc728a735ad5808efae151817e5f1182fbee3e4c9a"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/X-domainset.conf",
@@ -3780,6 +3768,18 @@
           },
           "ip": {
             "path": "Loon/X-ip.conf",
+            "rules": 8,
+            "sha256": "ab037bd4640e8e090d05d2cc728a735ad5808efae151817e5f1182fbee3e4c9a"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/X-domainset.conf",
+            "rules": 26,
+            "sha256": "086d6c36d82ef43fd37fc206ba7dfc21360358d9cdac2849369b87dfe45cd13b"
+          },
+          "ip": {
+            "path": "mihomo/X-ip.conf",
             "rules": 8,
             "sha256": "ab037bd4640e8e090d05d2cc728a735ad5808efae151817e5f1182fbee3e4c9a"
           }
@@ -3850,12 +3850,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/YouTube.list",
-          "rules": 14,
-          "sha256": "108b9fbf7e67aaad48b4dd8c1f05b999d37c0bea8e1a6f288b6dd9c514b8f4af"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/YouTube.yaml",
@@ -3865,6 +3859,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/YouTube.list",
+          "rules": 14,
+          "sha256": "108b9fbf7e67aaad48b4dd8c1f05b999d37c0bea8e1a6f288b6dd9c514b8f4af"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/YouTube.list",
           "rules": 14,
           "sha256": "108b9fbf7e67aaad48b4dd8c1f05b999d37c0bea8e1a6f288b6dd9c514b8f4af"
         },
@@ -3907,13 +3907,6 @@
       ],
       "supplement": null,
       "views": {
-        "clash": {
-          "nonip": {
-            "path": "Clash/YouTube-nonip.conf",
-            "rules": 14,
-            "sha256": "108b9fbf7e67aaad48b4dd8c1f05b999d37c0bea8e1a6f288b6dd9c514b8f4af"
-          }
-        },
         "egern": {
           "nonip": {
             "path": "Egern/YouTube-nonip.conf",
@@ -3924,6 +3917,13 @@
         "loon": {
           "nonip": {
             "path": "Loon/YouTube-nonip.conf",
+            "rules": 14,
+            "sha256": "108b9fbf7e67aaad48b4dd8c1f05b999d37c0bea8e1a6f288b6dd9c514b8f4af"
+          }
+        },
+        "mihomo": {
+          "nonip": {
+            "path": "mihomo/YouTube-nonip.conf",
             "rules": 14,
             "sha256": "108b9fbf7e67aaad48b4dd8c1f05b999d37c0bea8e1a6f288b6dd9c514b8f4af"
           }
@@ -3974,12 +3974,6 @@
         ]
       },
       "outputs": {
-        "clash": {
-          "dropped": [],
-          "path": "Clash/ZABank.list",
-          "rules": 3,
-          "sha256": "cdddb023b14bdd13669b3482d170f7220c974b34483822d652c3d00214cc906a"
-        },
         "egern": {
           "dropped": [],
           "path": "Egern/ZABank.yaml",
@@ -3989,6 +3983,12 @@
         "loon": {
           "dropped": [],
           "path": "Loon/ZABank.list",
+          "rules": 3,
+          "sha256": "cdddb023b14bdd13669b3482d170f7220c974b34483822d652c3d00214cc906a"
+        },
+        "mihomo": {
+          "dropped": [],
+          "path": "mihomo/ZABank.list",
           "rules": 3,
           "sha256": "cdddb023b14bdd13669b3482d170f7220c974b34483822d652c3d00214cc906a"
         },
@@ -4025,13 +4025,6 @@
         "sha256": "83706e4f3ca032ad7104da879ab70fddc9c575bbbfe46495ed874d6903937383"
       },
       "views": {
-        "clash": {
-          "domainset": {
-            "path": "Clash/ZABank-domainset.conf",
-            "rules": 3,
-            "sha256": "31afe1becbb6fda30fa551393fe3771079b371336b974db171211fd66de0457d"
-          }
-        },
         "egern": {
           "domainset": {
             "path": "Egern/ZABank-domainset.conf",
@@ -4044,6 +4037,13 @@
             "path": "Loon/ZABank-domainset.conf",
             "rules": 3,
             "sha256": "cdddb023b14bdd13669b3482d170f7220c974b34483822d652c3d00214cc906a"
+          }
+        },
+        "mihomo": {
+          "domainset": {
+            "path": "mihomo/ZABank-domainset.conf",
+            "rules": 3,
+            "sha256": "31afe1becbb6fda30fa551393fe3771079b371336b974db171211fd66de0457d"
           }
         },
         "quantumultx": {
@@ -4079,8 +4079,8 @@
   },
   "builder": {
     "files": {
-      "engine/scripts/build.py": "3cca9ec49832d6bc1dc56acb0f4541ca96ea0af6649fb37af8214334a8ff6a55",
-      "engine/scripts/renderers.py": "9b1fe98e5b243b6096814133fd6b1bd7ccd7fb16e924fc85d9ab1ff19e236092"
+      "engine/scripts/build.py": "987763ba2093bf449265d01a939852161589997f6df5be0c6e0e5d6e9cff0889",
+      "engine/scripts/renderers.py": "275d7f065b04c4db14d633a717a25c357b404fefd9fc56a82c2d8fdb32fa7fc0"
     },
     "version": "2.0.0"
   },

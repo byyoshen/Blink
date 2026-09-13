@@ -49,7 +49,7 @@ Facebook / NBA / Suno）**移出公开模板**，生成文件注释提示「按�
 
 | 类别 | 项 | 跨端呈现 |
 |---|---|---|
-| 通用基线 | `loglevel=notify`、`dns-server`、`encrypted-dns-server`、`hijack-dns=*:53`、`ipv6=false`、`udp-policy-not-supported-behaviour=REJECT`、`test-timeout=5`、`show-error-page-for-reject=true` | 各端映射到自有字段（Loon/Stash/Clash 的 `dns`/`fake-ip`/`ip-mode` 等） |
+| 通用基线 | `loglevel=notify`、`dns-server`、`encrypted-dns-server`、`hijack-dns=*:53`、`ipv6=false`、`udp-policy-not-supported-behaviour=REJECT`、`test-timeout=5`、`show-error-page-for-reject=true` | 各端映射到自有字段（Loon/Stash/mihomo 的 `dns`/`fake-ip`/`ip-mode` 等） |
 | Surge 强绑定 | `skip-proxy`、`always-real-ip`、`always-raw-tcp-hosts`、`proxy-test-udp`、`http-api*`、`internet-test-url`、`proxy-test-url` | 非 Surge 端 `ADAPTED`（注释「请在 App 内配置」）或 `UNSUPPORTED` |
 
 ## 五、Rule 引用结构（domain-first / IP-last）
@@ -68,11 +68,11 @@ IP:       ip/telegram.conf、ip/domestic.conf、ip/china_ip.conf → no-resolve
 Final:    FINAL → Final, dns-failed
 ```
 > Blink 的 6 个 App 规则引用：Surge/Shadowrocket/Loon/Stash/Egern 走 `Surge/<App>.list`，
-> Clash 走 `Clash/<App>.list`（已去 USER-AGENT）。跨端对 `extended-matching` 仅 Surge FULL，其余 UNSUPPORTED（注释）。
+> mihomo 走 `mihomo/<App>.list`（已去 USER-AGENT）。跨端对 `extended-matching` 仅 Surge FULL，其余 UNSUPPORTED（注释）。
 
 ## 六、能力矩阵框架（实施时逐项定）
 
-| 能力 | Surge | Shadowrocket | Loon | Stash | Clash | Egern | Quantumult X |
+| 能力 | Surge | Shadowrocket | Loon | Stash | mihomo | Egern | Quantumult X |
 |---|---|---|---|---|---|---|---|
 | `extended-matching` | FULL | UNSUPPORTED | UNSUPPORTED | UNSUPPORTED | UNSUPPORTED | UNSUPPORTED | UNSUPPORTED |
 | `pre-matching` | FULL | UNSUPPORTED | UNSUPPORTED | UNSUPPORTED | UNSUPPORTED | UNSUPPORTED | UNSUPPORTED |
@@ -82,7 +82,7 @@ Final:    FINAL → Final, dns-failed
 > 以 `engine/docs/MULTI_CLIENT_AUDIT.md` 为最终格式事实；冲突先改本文再改代码。各端字段无生产实证一律 UNSUPPORTED。
 
 > `no-resolve` 的落点分两层，必须同时看：规则集**行内**选项，和**引用行**选项。
-> Surge / Shadowrocket / Stash / Clash 的引用行都有槽位（`build_profile.IP_NO_RESOLVE_CLIENTS`
+> Surge / Shadowrocket / Stash / mihomo 的引用行都有槽位（`build_profile.IP_NO_RESOLVE_CLIENTS`
 > 是这份判断的唯一代码实现）；Loon 的 `[Remote Rule]` 引用行没有槽位，只能依赖规则集行内选项，
 > 所以对行内不带 `no-resolve` 的外部 IP 规则集（如 `skk List/ip/china_ip.conf`，3900 行全不带）
 > 是 ADAPTED 而非 FULL，已在 `templates/loon.conf` 头部显式标注。Blink 自产的 `-ip.conf`
@@ -114,7 +114,7 @@ Final:    FINAL → Final, dns-failed
   domainset / nonip / ip 三段（domain-first / IP-last；纯域名 App 不生成空 IP view）。
 - `renderers.py`：新增 `render_surge_domainset`、`render_mihomo_domainset`、统一 `render_view`；
   各端 view 文件（`.conf` 后缀，避开 parity 的 `.list`/`.yaml` glob）：Surge/Shadowrocket 域名清单、
-  Stash/Clash `behavior:domain`、Loon/Egern classical、QX `HOST*` filter；均 policy-free。
+  Stash/mihomo `behavior:domain`、Loon/Egern classical、QX `HOST*` filter；均 policy-free。
 - 全部 30 App 开启 `views:true`，产出七端 domainset/nonip/ip view 文件（主输出 `.list`/`.yaml` 零改动）。
 - `verify_manifest.py`：`views` 字段校验（per-client + 各端目录路径约定）。
 

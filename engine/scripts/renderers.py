@@ -5,7 +5,7 @@ One renderer exists per truly different serialization format, not per client:
 
 - ``classical``: policy-free classical text (Surge / Shadowrocket / Loon /
   Stash consume the exact same bytes; see engine/docs/MULTI_CLIENT_AUDIT.md).
-- ``classical-clash``: the same classical text minus USER-AGENT.  Clash
+- ``classical-mihomo``: the same classical text minus USER-AGENT.  Clash
   kernels (mihomo and original Clash Premium) have no USER-AGENT rule type;
   unknown lines are skipped with a warning by the classical loader, which
   would be a silent downgrade, so this renderer drops them explicitly and
@@ -53,7 +53,7 @@ CLIENTS: dict[str, ClientTarget] = {
     "loon": ClientTarget("loon", "Loon", ".list", "classical"),
     "shadowrocket": ClientTarget("shadowrocket", "Shadowrocket", ".list", "classical"),
     "stash": ClientTarget("stash", "Stash", ".list", "classical"),
-    "clash": ClientTarget("clash", "Clash", ".list", "classical-clash"),
+    "mihomo": ClientTarget("mihomo", "mihomo", ".list", "classical-mihomo"),
     "egern": ClientTarget("egern", "Egern", ".yaml", "egern-yaml"),
     "quantumultx": ClientTarget("quantumultx", "QuantumultX", ".list", "quantumultx"),
 }
@@ -143,15 +143,15 @@ def render_view(client_key: str, view_name: str, rules: Iterable[object], app_na
     if view_name == "domainset":
         if client_key in {"surge", "shadowrocket"}:
             return render_surge_domainset(rules, app_name)
-        if client_key in {"stash", "clash"}:
+        if client_key in {"stash", "mihomo"}:
             return render_mihomo_domainset(rules, app_name)
         if client_key in {"loon", "egern"}:
             return render_classical(rules, app_name)
         if client_key == "quantumultx":
             return render_quantumultx(rules, app_name)[0]
     if view_name in {"nonip", "ip"}:
-        if client_key == "clash":
-            return render_classical_clash(rules, app_name)[0]
+        if client_key == "mihomo":
+            return render_classical_mihomo(rules, app_name)[0]
         if client_key == "quantumultx":
             return render_quantumultx(rules, app_name)[0]
         if client_key == "egern":
@@ -175,8 +175,8 @@ def render_classical(rules: Iterable[object], app_name: str) -> str:
     return "\n".join(lines) + "\n"
 
 
-def render_classical_clash(rules: Iterable[object], app_name: str) -> tuple[str, list[str]]:
-    """Serialize rules into a Clash (mihomo) classical rule-provider payload.
+def render_classical_mihomo(rules: Iterable[object], app_name: str) -> tuple[str, list[str]]:
+    """Serialize rules into a mihomo classical rule-provider payload.
 
     Clash kernels have no USER-AGENT rule type; the classical loader warns
     and silently skips unknown lines, which would hide the downgrade.  This
@@ -192,7 +192,7 @@ def render_classical_clash(rules: Iterable[object], app_name: str) -> tuple[str,
             continue
         body.append(",".join((rule.kind, rule.value, *rule.options)))
     if not body:
-        raise RendererError("clash output is empty after dropping unsupported rules")
+        raise RendererError("mihomo output is empty after dropping unsupported rules")
     lines = [f"# 规则名称: {app_name}", f"# 规则统计: {len(body)}", "", *body]
     return "\n".join(lines) + "\n", dropped
 
@@ -289,8 +289,8 @@ def render_for_client(
     """Dispatch to the renderer declared by the client target."""
     if client.renderer == "classical":
         return render_classical(rules, app_name), []
-    if client.renderer == "classical-clash":
-        return render_classical_clash(rules, app_name)
+    if client.renderer == "classical-mihomo":
+        return render_classical_mihomo(rules, app_name)
     if client.renderer == "egern-yaml":
         return render_egern_yaml(rules, app_name)
     if client.renderer == "quantumultx":
