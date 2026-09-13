@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { AppEntry, ClientKey } from "../types";
 import { CATEGORY_LABELS, clientFileUrl, copyOptionsFor, sourceLine, typeChips } from "../data";
+import { copyText } from "../hooks";
 
 /* iOS-like drawer curve: fast to start, long settle. The sheet travels far
    enough that a plain ease-out reads as abrupt at the end. */
@@ -36,6 +37,7 @@ export default function AppSheet({ app, client, rawBase, onClose }: AppSheetProp
   const [drag, setDrag] = useState(0);
   const [dragging, setDragging] = useState(false);
   const [copied, setCopied] = useState("");
+  const [failed, setFailed] = useState("");
 
   const sheetRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -99,12 +101,15 @@ export default function AppSheet({ app, client, rawBase, onClose }: AppSheetProp
   useEffect(() => () => window.clearTimeout(copyTimer.current), []);
 
   const copy = (label: string, snippet: string) => {
-    const done = () => {
-      setCopied(label);
+    void copyText(snippet).then((ok) => {
+      setCopied(ok ? label : "");
+      setFailed(ok ? "" : label);
       window.clearTimeout(copyTimer.current);
-      copyTimer.current = window.setTimeout(() => setCopied(""), 1600);
-    };
-    navigator.clipboard?.writeText(snippet).then(done).catch(done);
+      copyTimer.current = window.setTimeout(() => {
+        setCopied("");
+        setFailed("");
+      }, 1600);
+    });
   };
 
   const onPointerDown = (event: React.PointerEvent) => {
@@ -116,7 +121,11 @@ export default function AppSheet({ app, client, rawBase, onClose }: AppSheetProp
     if ((scrollRef.current?.scrollTop ?? 0) > 0) return;
     pointer.current = { id: event.pointerId, startY: event.clientY, startTime: Date.now() };
     setDragging(true);
-    sheetRef.current?.setPointerCapture(event.pointerId);
+    try {
+      sheetRef.current?.setPointerCapture(event.pointerId);
+    } catch {
+      /* Pointer already released; the drag still tracks over the sheet. */
+    }
   };
 
   const onPointerMove = (event: React.PointerEvent) => {
@@ -228,10 +237,13 @@ export default function AppSheet({ app, client, rawBase, onClose }: AppSheetProp
 
           <div className="flex flex-col gap-2 border-t border-line pt-4">
             {options.length > 1 && (
-              <p className="text-[12px] text-mute">这个 App 分两段引用，域名段要放在 IP 段之前。</p>
+              <p className="text-[12px] text-mute">
+                这个 App 分两段引用，按下面的先后顺序放进配置 —— IP 段必须在后。
+              </p>
             )}
             {options.map((option) => {
               const isCopied = copied === option.label;
+              const isFailed = failed === option.label;
               return (
                 <button
                   key={option.label}
@@ -242,7 +254,7 @@ export default function AppSheet({ app, client, rawBase, onClose }: AppSheetProp
                   }`}
                 >
                   <span className="text-sm font-medium">
-                    {isCopied ? "已复制 ✓" : `复制${option.label}`}
+                    {isCopied ? "已复制 ✓" : isFailed ? "复制失败，请重试" : `复制${option.label}`}
                   </span>
                   {option.detail && (
                     <span className="ml-auto truncate text-[11px] text-white/70">

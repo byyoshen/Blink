@@ -16,7 +16,7 @@ export default function CodeBlock({
   maxHeight = false,
   children,
 }: CodeBlockProps) {
-  const { copied, copy } = useCopy(copyText);
+  const { state, copy } = useCopy(copyText);
   return (
     <div className="overflow-hidden rounded-2xl bg-codebg text-left shadow-lg">
       <div className="flex items-center gap-1.5 border-b border-white/10 px-4 py-2.5">
@@ -29,7 +29,7 @@ export default function CodeBlock({
           onClick={copy}
           className="ml-auto rounded-md border border-white/15 bg-white/5 px-2.5 py-1 text-xs text-white/70 transition-all duration-200 ease-out hover:bg-white/10 hover:text-white active:scale-95"
         >
-          {copied ? "已复制 ✓" : copyLabel}
+          {state === "done" ? "已复制 ✓" : state === "failed" ? "复制失败" : copyLabel}
         </button>
       </div>
       <pre
