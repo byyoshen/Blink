@@ -5,44 +5,37 @@ import {
   CATEGORY_LABELS,
   CATEGORY_ORDER,
   CLIENT_TABS,
-  VIEW_LABELS,
   VIEW_ORDER,
   appMatchesQuery,
   clientFileUrl,
   clientIcon,
-  clientSnippet,
-  clientViewSnippet,
+  copyOptionsFor,
   sortedApps,
   sourceLine,
   typeChips,
+  type CopyOption,
 } from "../data";
 import Reveal from "./Reveal";
+import AppSheet from "./AppSheet";
 import { useMediaQuery } from "../hooks";
 
 const MENU_WIDTH = 168;
 
-/* How many cards survive the fold.
+/* Below 640px the list is a grid of app tiles and nothing is folded; above it,
+   cards with a fold at ten.
  *
- * The target is the same *shape* at every width -- roughly three rows before
- * the fold -- not the same count. A single count cannot do that, because the
- * grid is auto-fill over a 175px minimum: a phone gets one column and a wide
- * desktop gets five, so ten cards are two tidy rows there and ten screens of
- * scrolling on a phone, burying the next section entirely.
+ * Folding was the wrong tool for the phone. A card list is one column there, so
+ * thirty apps is about ten screens and fifty is about seventeen; a fold hides
+ * that until someone taps "expand", at which point the full length is back. The
+ * count is the problem, not the initial view. Tiles change the slope instead --
+ * five or six per row, so thirty apps land in roughly one screen and fifty in
+ * under two -- which is why the phone needs no fold at all.
  *
- * Given `px-6` padding and a `gap-3` gutter, the column count changes at about
- * 410px (2 cols), 597px (3), 784px (4) and 971px (5). The tiers below are the
- * Tailwind breakpoints nearest those, so the three constants are coupled to
- * the grid template further down: change the 175px minimum or the gutter and
- * these want re-deriving. */
-const COLLAPSED_NARROW = 3;
-const COLLAPSED_MEDIUM = 6;
+ * Ten still suits the desktop card grid: auto-fill over a 175px minimum gives
+ * four or five columns at common widths, so ten is two tidy rows. That number is
+ * coupled to the grid template below; changing the track minimum or the gutter
+ * wants it re-derived. */
 const COLLAPSED_WIDE = 10;
-
-type CopyOption = {
-  label: string;
-  detail?: string;
-  snippet: string;
-};
 
 function CopyRuleButton({ options }: { options: CopyOption[] }) {
   const [open, setOpen] = useState(false);
@@ -195,14 +188,7 @@ function AppCard({
 }) {
   const stat = app.clients[client];
   const viewNames = VIEW_ORDER.filter((view) => view in (app.views?.[client] ?? {}));
-  const copyOptions: CopyOption[] =
-    viewNames.length > 0
-      ? viewNames.map((view) => ({
-          label: `${VIEW_LABELS[view]}段规则`,
-          detail: `${(app.views[client][view].file.split("/").pop() ?? "").replace(/\.conf$/, "")} · ${app.views[client][view].rules} 条`,
-          snippet: clientViewSnippet(rawBase, app, client, view),
-        }))
-      : [{ label: "规则", snippet: clientSnippet(rawBase, app, client) }];
+  const copyOptions = copyOptionsFor(rawBase, app, client);
   const dropped =
     client === "egern" || client === "quantumultx" || client === "clash" ? (stat.dropped ?? 0) : 0;
   return (
@@ -287,6 +273,48 @@ function AppCard({
   );
 }
 
+/** One app on the phone: icon, name, rule count. Tapping opens the sheet.
+ *
+ * Deliberately thin. Everything the card shows still exists, one tap away --
+ * putting it on the tile is what makes a phone list unreadable past ~20 apps.
+ */
+function AppTile({
+  app,
+  client,
+  onOpen,
+}: {
+  app: AppEntry;
+  client: ClientKey;
+  onOpen: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      aria-haspopup="dialog"
+      className="flex flex-col items-center gap-1.5 rounded-2xl border border-line bg-card p-2.5 transition-[transform,background-color] duration-150 ease-out active:scale-[0.94] active:bg-paper"
+    >
+      <span className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-line bg-paper">
+        {app.icon ? (
+          <img
+            src={app.icon}
+            alt=""
+            width={44}
+            height={44}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <span className="text-xl">{app.emoji}</span>
+        )}
+      </span>
+      <span className="w-full truncate text-center text-[11.5px] font-medium leading-tight">
+        {app.name}
+      </span>
+      <span className="text-[10px] leading-none text-mute">{app.clients[client].rules}</span>
+    </button>
+  );
+}
+
 export default function Rulesets({
   data,
   query,
@@ -300,7 +328,7 @@ export default function Rulesets({
   const [filter, setFilter] = useState("all");
   const [expanded, setExpanded] = useState(false);
   const wide = useMediaQuery("(min-width: 640px)");
-  const medium = useMediaQuery("(min-width: 480px)");
+  const [openApp, setOpenApp] = useState<AppEntry | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const apps = useMemo(() => sortedApps(data.apps), [data.apps]);
   const present = useMemo(() => new Set(apps.map((app) => app.category)), [apps]);
@@ -308,9 +336,13 @@ export default function Rulesets({
   const categoryApps = filter === "all" ? apps : apps.filter((app) => app.category === filter);
   const results = categoryApps.filter((app) => appMatchesQuery(app, query));
   const activeNote = CLIENT_TABS.find((tab) => tab.key === client)?.note ?? "";
-  const collapsedCount = wide ? COLLAPSED_WIDE : medium ? COLLAPSED_MEDIUM : COLLAPSED_NARROW;
-  const shown = expanded ? results : results.slice(0, collapsedCount);
-  const collapsible = results.length > collapsedCount;
+  // Tiles are cheap enough to show in full, so the fold is a desktop concern.
+  const shown = wide && !expanded ? results.slice(0, COLLAPSED_WIDE) : results;
+  const collapsible = wide && results.length > COLLAPSED_WIDE;
+
+  useEffect(() => {
+    if (wide) setOpenApp(null);
+  }, [wide]);
 
   const toggleExpanded = () => {
     // Collapsing deletes every row above the button, so whatever sits at the
@@ -335,39 +367,11 @@ export default function Rulesets({
           <div className="mx-auto mb-8 max-w-xl text-center">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">规则集</h2>
             <p className="mt-2.5 text-mute">
-              全部由构建器生成，绝不手工维护；范围优先于数量，不为覆盖而吞入无关 CDN。
+              先选客户端，再复制对应的规则链接。规则全部由构建器生成，范围优先于数量。
             </p>
           </div>
         </Reveal>
         <Reveal>
-          <div className="mx-auto mb-8 max-w-3xl rounded-2xl border border-line bg-card p-4 text-[13px] leading-relaxed text-mute">
-            <p className="mb-2 font-semibold text-ink">规则怎么用，看 App 而定</p>
-            <div className="grid gap-2 sm:grid-cols-2">
-              <div className="rounded-xl border border-line bg-paper p-3">
-                <p className="font-medium text-ink">只有域名规则</p>
-                <p className="mt-0.5">多数 App 只有域名规则，直接点「复制规则链接」导入即可。</p>
-              </div>
-              <div className="rounded-xl border border-line bg-paper p-3">
-                <p className="font-medium text-ink">域名 + IP</p>
-                <p className="mt-0.5">
-                  部分 App（如 Netflix / X / Telegram）分「域名段」「IP 段」两块，点「复制规则链接」
-                  会弹出两个选项，分别复制这两段。
-                </p>
-              </div>
-            </div>
-            <p className="mt-3 border-t border-line pt-2">
-              导出方式：非 mihomo 复制的是规则链接，去客户端前端导入；Stash / Clash 复制的是
-              配置文件写法（rule-providers + RULE-SET），需写进配置。
-            </p>
-          </div>
-        </Reveal>
-        <Reveal>
-          <div className="mb-4 flex justify-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-accent-soft bg-accent-soft px-5 py-2 text-[13.5px] font-bold tracking-wide text-accent shadow-sm">
-              <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
-              先选择你要导入的客户端，再复制规则链接
-            </span>
-          </div>
           <div className="mb-4 flex flex-wrap justify-center gap-2.5">
             {CLIENT_TABS.map((tab) => (
               <button
@@ -468,7 +472,7 @@ export default function Rulesets({
               清除搜索与分类
             </button>
           </div>
-        ) : (
+        ) : wide ? (
           <div
             ref={gridRef}
             className="grid scroll-mt-24 grid-cols-[repeat(auto-fill,minmax(175px,1fr))] gap-3"
@@ -482,6 +486,15 @@ export default function Rulesets({
                 query={query}
                 index={index}
               />
+            ))}
+          </div>
+        ) : (
+          <div
+            ref={gridRef}
+            className="grid scroll-mt-24 grid-cols-[repeat(auto-fill,minmax(72px,1fr))] gap-2"
+          >
+            {shown.map((app) => (
+              <AppTile key={app.name} app={app} client={client} onOpen={() => setOpenApp(app)} />
             ))}
           </div>
         )}
@@ -502,6 +515,14 @@ export default function Rulesets({
           </div>
         )}
       </div>
+      {openApp && !wide && (
+        <AppSheet
+          app={openApp}
+          client={client}
+          rawBase={data.raw_base}
+          onClose={() => setOpenApp(null)}
+        />
+      )}
     </section>
   );
 }
