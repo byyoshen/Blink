@@ -45,6 +45,7 @@
 - **IP-CIDR6**：手册只描述 `IP-CIDR` 匹配 IPv4/IPv6；Repcz Shadowrocket 目录实际发布 `IP-CIDR6,...no-resolve` 行（Netflix 199 条）→ 生产可用，官方文档级 Needs Verification。
 - **PROCESS-NAME**：手册无此类型；手册明确"iOS 没有常规分应用代理，只能域名/IP/UA 分流"；Repcz Shadowrocket 文件丢弃 PROCESS-NAME → 不可无损表达。
 - Rule-Set：`RULE-SET,<URL>,<policy>`（Repcz Shadowrocket.conf 生产实证，语法同 Surge）；规则集内容为含规则类型的 classical 行。
+- **引用行 no-resolve**：`RULE-SET,<URL>,<policy>,no-resolve` 的第 4 字段被尊重 —— **维护者真机确认（2026-09-12）**。这与上一条的行内 `no-resolve` 是两件事：Blink 的 IP 段视图通过引用行挂载（规则集文件内不写策略也不写选项），所以依赖的是本条而非行内形式。
 - 注释：`#`（生产实证）；`;` Needs Verification。
 - 更新/缓存：App 内"使用配置/编译配置"或自动更新，文件内无 TTL。存在 Clash 配置导入能力，但原生 RULE-SET 是更自然、维护成本最低的路径（本仓库不依赖 Clash 导入假设）。
 
@@ -70,6 +71,7 @@
   ```
   `format: text` 的 classical payload = policy-free classical 行；`no-resolve`、`IP-CIDR6`、`DOMAIN-KEYWORD`、`PROCESS-NAME` 均保留于 Repcz Stash 文件。
 - 变体：xkww3n 使用 Stash 特有 `behavior: domain-text`；mihomo 系另有 `yaml/text/mrs`。**`format: text` 的官方文档级确认 Needs Verification，生产级已证**。
+- **引用行 no-resolve**：`rules:` 段的 `- RULE-SET,<name>,<policy>,no-resolve` 尾随选项被尊重 —— **维护者真机确认（2026-09-12）**。同 Shadowrocket：Blink 的 IP 段视图依赖引用行形式，而非 `format: text` payload 内的行内选项。
 - **PROCESS-NAME**：✅ Repcz Stash 保留（com.netflix.mediaclient、com.spotify.music）。
 - **USER-AGENT**：2026-08 内核源码核对（MetaCubeX/Clash.Meta `rules/parser.go` 与原版 Clash Premium `constant/rule.go`）均**无此规则类型**——classical 加载器对未知类型打 warning 后静默跳过；Repcz 在 Stash 目录丢弃 UA 与此一致。受"四端逐字节相同"约束，Stash 文件保留该行、内核实际跳过 → Needs Verification（真机观察 warning）。
 - 注释：`#`（生产实证）；`;` Needs Verification。
@@ -154,6 +156,9 @@
 | 需要 YAML wrapper/payload | ❌ | ❌ | ❌ | ❌（可选 yaml/mrs 优化） | ❌（可选自有 YAML schema） | ❌ | ❌ |
 | 更新/缓存 | App 管理 | App 管理 | App 管理 | `interval: 86400` | App 管理（字段 Needs Verification） | `update-interval=172800` | `interval: 86400` |
 | 主配置格式 | INI | INI | INI | YAML（Clash 系） | YAML（自有 schema） | INI | YAML（Clash 系） |
+| 引用行 no-resolve 槽位 | ⚠️ 官方语法只列了 pre-matching / extended-matching（见 Needs Verification 11） | ✅ 真机 2026-09-12 | ❌ 无槽位（故 ADAPTED） | ✅ 真机 2026-09-12 | n/a（set 级 `no_resolve`） | ❌ 无生产实证槽位 | ✅ 官方（`rules:` 段尾随） |
+
+> §3 的「no-resolve 语义」行记的是**行内**形式（`IP-CIDR,net,no-resolve`）。Blink 的规则集文件是 policy-free 的，选项只能挂在引用处，因此实际依赖的是上表这一行。两者曾被当成同一件事，是 `ENGINEERING_REVIEW_2026-09.md` 中 O1 的成因。
 
 ## 5. 兼容性结论（A–E）
 
@@ -212,6 +217,7 @@ QuantumultX/<App>.list   # QX filter 行（行尾占位符 policy，force-policy
 7. `;` 注释在非 Surge 客户端的支持（本仓库只依赖 `#`，风险可规避）。
 8. CFA（Clash Premium 内核）对 mihomo `format` / `mrs` / `size-limit` 等 Meta 扩展字段的行为（忽略 vs 报错）——本仓库 target 为 mihomo 内核，CFA 标注 partial / legacy。
 9. Clash 端 `keep-alive-interval` / `unified-delay` 等 Meta 扩展字段在 CMFA / FLClash 的实际表现（官方文档支持，真机验证）。
+11. **Surge 引用行的 `no-resolve` 槽位**：§2 记录的官方语法是 `RULE-SET,<URL>,<policy>[,pre-matching][,extended-matching]`，**未列出 `no-resolve`**；而 `build_profile.py` 的 `IP_NO_RESOLVE_CLIENTS` 包含 surge。行内 `no-resolve` 有官方依据，引用行第 4 字段是否同样生效尚无本仓库证据。若不生效，后果是 Surge 的 IP 段静默丢失 no-resolve（即 F1 要修的同一个问题）。需真机或官方文档确认。
 10. `keep-alive-interval: 15`（移动端省电建议值）与 `dns.enhanced-mode: fake-ip` 在真机上的功耗与 DNS 表现（官方建议，真机验证）。
 
 ## 11. 测试策略（实现阶段）

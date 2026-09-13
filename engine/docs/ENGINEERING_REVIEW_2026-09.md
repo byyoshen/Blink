@@ -11,6 +11,8 @@
 > - 2026-09-13 —— F9 由推断改为实证，O2 关闭。审查结论本身未变。
 > - 2026-09-13 —— portal 覆盖度由 37% 提到 54%（`Nav.tsx` / `hooks.ts` 逐行审完），
 >   新增 F14。盲区结论本身被证实，未变。
+> - 2026-09-13（收尾）—— portal 剩余 433 行审完，**覆盖度 100%**，新增 F15；
+>   O1 关闭，新开 O8。
 
 ## 审查范围
 
@@ -26,15 +28,19 @@
 | `engine/sources/apps.yaml`、`profile/intent.yaml` | 全部 |
 | `AGENTS.md`、`README.md`、`MACHINE_GATES.md`、`PHASE_OPTIMIZATION_PLAN.md`、`STATUS.md` | 全部 |
 | `MULTI_CLIENT_AUDIT.md` | 按主题检索，未逐行 |
-| **`engine/portal/src/`（1941 行）** | **约 54%** —— 读了 `data.ts`(372) / `Nav.tsx`(189) / `Usage.tsx`(160) / `hooks.ts`(140) / `Hero.tsx`(91) / `App.tsx`(87)；`Rulesets.tsx`(469) / `Profiles.tsx`(128) / `About.tsx`(100) / `Footer.tsx`(61) / `Reveal.tsx`(49) / `CodeBlock.tsx`(44) / `types.ts`(41) / `main.tsx`(10) 未审 |
+| `engine/portal/src/`（1992 行） | **100%** —— 全部逐行审完（2026-09-13 分三次：37% → 54% → 100%）。该盲区已关闭 |
 | **`engine/SOURCE_AUDITS.md`（310 行）** | **0** —— 选源判断全部来自 `apps.yaml` 的 `note` 字段，未核对档案本身与 apps.yaml 是否一致 |
 | **`engine/sources/profile/templates/`（7 个）** | **部分** —— 只读了 `loon.conf` 头部与全部生成结果，未逐个审模板的 General / DNS 段 |
 
 **盲区结论**：portal 是最可能仍藏有问题的区域。TypeScript 占仓库 26.9%，审查密度远低于 Python；30 App × 7 客户端的接入片段生成逻辑只验证了 `behavior: domain` 一条分支。
 
-> **该预测已被检验（2026-09-13）**：首次逐行审 `Nav.tsx` + `hooks.ts` 共 329 行，
-> 当场出了 F14（一个使功能永久失效的时序缺陷）。这是支持而非推翻本表：
-> 盲区被宣布为高风险，它确实是。剩下 46%（尤其 `Rulesets.tsx` 469 行）仍未审。
+> **该预测已被完整检验（2026-09-13）**：portal 分三次审完，两次都出了真缺陷 ——
+> `Nav.tsx` + `hooks.ts` 给出 F14（功能永久失效的时序缺陷），最后 433 行给出 F15
+> （线上 404）。盲区被宣布为高风险，两次坐实。
+>
+> 同时要记住这是**循环论证的反面**：盲区关闭不等于 portal 干净，只等于
+> 「人读过一遍」。F15 那类问题能活到今天，正是因为人眼审阅不可靠；真正的收尾
+> 是那道新门禁（`RepoDocLinkTests`），而不是覆盖度数字。
 
 ## 结论登记表
 
@@ -136,6 +142,28 @@ inline 规则被收进 `local_rules` 统一追加到 IP 段之后，改为就地
 **取样偏差提醒**：这是补审 329 行就撞到的第一个缺陷，不能据此推算剩余 portal
 代码的缺陷密度 —— `Nav.tsx` 正好是当时在改的文件，看得比其他部分仔。
 
+#### F15 · 页脚「审计档案」是线上 404 · 实证 · 收尾批
+
+`Footer.tsx` 把「审计档案」指向仓库**根目录**的 `SOURCE_AUDITS.md`，而该文件实际在 `engine/SOURCE_AUDITS.md`。
+已在生产站点上 404。
+
+**为什么所有现有门禁都没拦住**：slug 是对的（`test_repo_identity` 只查 owner/repo），
+URL 形式是合法的，`secret_scan` / `verify_profiles` 都不管路径存在性 —— 只有 GitHub 知道
+它是 404。这是一个**没有任何机器在看**的缝隙。
+
+修复：改正路径，并新增 `RepoDocLinkTests` —— 扫描所有 `blob|tree/main/<path>` 引用并断言
+路径在仓库中存在，同样带匹配数下限。变异测试已确认有效：重新注入旧路径即精确报出
+`engine/portal/src/components/Footer.tsx -> SOURCE_AUDITS.md`。
+
+**该门禁的已知局限**：它扫的是文本，分不清「活链接」与「被引用举例的坏链接」。
+本条 F15 初稿就因为原样转录了那个坏路径而把新门禁打红。结论是：**登记表描述坏链接，
+不复现坏链接**。不为此加白名单 —— 白名单会同时放过真的坏链接。
+
+同批顺带（不单独立条，均为一致性问题）：`Footer.tsx` 的吉祥物交叉淡入仍从 `scale-0`
+开始（Nav 已改为 `scale-50`，页脚那份是第四份手抄副本，漏改）—— 已提成共享组件
+`MascotSwap.tsx`；`About.tsx` 的两个文档链接是全站仅有的无样式 `<a>`，深色主题下几乎
+不可读。
+
 ## 验证结果（2026-09-12）
 
 ```text
@@ -154,8 +182,10 @@ CI（PR #1，4 个 job）          全部 pass
 
 ## 未闭环
 
-**O1 · 真机证据未回写 `MULTI_CLIENT_AUDIT.md`**（F1）
-Shadowrocket / Stash 的引用行 `no-resolve` 已由维护者真机确认，但审计文档未更新。当前状态是「代码依赖了一条比文档更强的结论」，与 `AGENTS.md`「实现若与本文件冲突，先回改本文件再改代码」冲突。
+**O1 · 真机证据未回写 `MULTI_CLIENT_AUDIT.md`**（F1）—— **已于 2026-09-13 闭环**
+Shadowrocket 与 Stash 章节各新增「引用行 no-resolve」条目（维护者真机确认 2026-09-12），
+§4 新增「引用行 no-resolve 槽位」行，并显式区分行内与引用行两种形式 —— 把两者当成
+同一件事正是 O1 的成因。回写过程中发现 Surge 存在同类缺口，见 O8。
 
 **O2 · `pages.yml` 的 `workflow_run` 尚无本仓库实证**（F9）—— **已于 2026-09-13 闭环**
 2026-09-12 18:12Z 的每日更新成功后，18:13Z 出现 `event=workflow_run` 的 Pages 部署并成功。详见 F9。
@@ -172,6 +202,14 @@ batch 2 那次真实 `--write` 在 batch 3 / 4 的改动之前；之后只跑过
 
 **O6 · `secret_scan.py` 扫文件系统而非 git tracked 集合**
 任何未跟踪的本机文件都能让它假红。改为扫 tracked + staged 会缩小「提交前自检」的覆盖面，是取舍问题，未擅自改动安全门禁的 scope。
+
+**O8 · Surge 引用行的 `no-resolve` 槽位无依据**（回写 O1 时发现）
+`MULTI_CLIENT_AUDIT.md` §2 记录的 Surge 官方引用语法是
+`RULE-SET,<URL>,<policy>[,pre-matching][,extended-matching]`，**未列出 `no-resolve`**；
+而 `IP_NO_RESOLVE_CLIENTS` 包含 surge，每条 Surge IP 段引用行都带着该字段。
+行内 `no-resolve` 有官方依据，引用行第 4 字段是否同样生效尚无本仓库证据。
+若不生效，后果恰好是 F1 要修的那个问题（IP 段静默丢失 no-resolve）。
+**需真机或官方文档确认，属维护者行动项。**
 
 **O7 · `overlap_check` 的 `removed_since_baseline` 只报不管**
 基线会残留已消失的交集；若某交集消失后重现将不被拦截。「发现减少即失败」会重造 F5 那类自锁，正确做法是定期人工 `--write-baseline`，属流程而非代码。
