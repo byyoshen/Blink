@@ -678,7 +678,7 @@ def _render_mihomo(intent: dict) -> dict[str, str]:
                 suffix = _no_resolve_suffix("mihomo") if view_name == "ip" else ""
                 rules.append(f"  - RULE-SET,{key},{app['policy']}{suffix}")
             continue
-        # Blink 的 App 规则经 Clash/ 目录分发（classical 已去除 USER-AGENT）；
+        # Blink 的 App 规则经 mihomo/ 目录分发（classical 已去除 USER-AGENT）；
         # 显式指定外部 source 的 App（如 AppleMusic）按上游原样引用。
         source = app.get("source") or f"{BLINK_RAW_MIHOMO}/{app_name}.list"
         key = provider_name(app_name)
