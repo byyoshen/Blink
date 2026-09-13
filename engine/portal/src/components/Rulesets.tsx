@@ -17,8 +17,17 @@ import {
   typeChips,
 } from "../data";
 import Reveal from "./Reveal";
+import { useMediaQuery } from "../hooks";
 
 const MENU_WIDTH = 168;
+
+/* How many cards survive the fold, by how many fit per row.
+   The card grid is auto-fill over a 175px minimum, so a phone gets one or two
+   columns and a desktop gets four or five. A single limit cannot serve both:
+   ten cards is two tidy rows on a desktop and roughly ten screens of scrolling
+   on a phone, which buries the next section entirely. */
+const COLLAPSED_NARROW = 3;
+const COLLAPSED_WIDE = 10;
 
 type CopyOption = {
   label: string;
@@ -281,14 +290,30 @@ export default function Rulesets({
   const [client, setClient] = useState<ClientKey>("surge");
   const [filter, setFilter] = useState("all");
   const [expanded, setExpanded] = useState(false);
+  const wide = useMediaQuery("(min-width: 640px)");
+  const gridRef = useRef<HTMLDivElement>(null);
   const apps = useMemo(() => sortedApps(data.apps), [data.apps]);
   const present = useMemo(() => new Set(apps.map((app) => app.category)), [apps]);
   const filters = ["all", ...CATEGORY_ORDER.filter((category) => present.has(category))];
   const categoryApps = filter === "all" ? apps : apps.filter((app) => app.category === filter);
   const results = categoryApps.filter((app) => appMatchesQuery(app, query));
   const activeNote = CLIENT_TABS.find((tab) => tab.key === client)?.note ?? "";
-  const shown = expanded ? results : results.slice(0, 10);
-  const collapsible = results.length > 10;
+  const collapsedCount = wide ? COLLAPSED_WIDE : COLLAPSED_NARROW;
+  const shown = expanded ? results : results.slice(0, collapsedCount);
+  const collapsible = results.length > collapsedCount;
+
+  const toggleExpanded = () => {
+    // Collapsing deletes every row above the button, so whatever sits at the
+    // reader's scroll offset afterwards is no longer what they were reading --
+    // on a phone the drop is long enough to land them in the next section.
+    // Put the top of the grid back in view instead. No explicit behavior, so
+    // the CSS scroll-behavior governs and the reduced-motion override in
+    // index.css still applies.
+    if (expanded) {
+      requestAnimationFrame(() => gridRef.current?.scrollIntoView({ block: "start" }));
+    }
+    setExpanded(!expanded);
+  };
 
   return (
     <section
@@ -434,7 +459,10 @@ export default function Rulesets({
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(175px,1fr))] gap-3">
+          <div
+            ref={gridRef}
+            className="grid scroll-mt-24 grid-cols-[repeat(auto-fill,minmax(175px,1fr))] gap-3"
+          >
             {shown.map((app, index) => (
               <AppCard
                 key={app.name}
@@ -451,7 +479,7 @@ export default function Rulesets({
           <div className="mt-7 flex justify-center">
             <button
               type="button"
-              onClick={() => setExpanded((value) => !value)}
+              onClick={toggleExpanded}
               className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-6 py-2.5 text-sm text-ink transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-line-strong hover:shadow-sm active:translate-y-0 active:scale-[0.96]"
             >
               {expanded ? "收起" : `展开全部 ${results.length} 个 App`}

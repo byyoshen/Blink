@@ -138,3 +138,23 @@ export function useActiveSection(ids: readonly string[], mounted: boolean): stri
 
   return active;
 }
+
+/** Live media-query match.
+ *
+ * Reads synchronously on first render -- the portal is a client-only SPA, so
+ * there is no server pass to disagree with, and initialising from a effect
+ * instead would render one frame of the wrong layout.
+ */
+export function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
+
+  useEffect(() => {
+    const list = window.matchMedia(query);
+    const onChange = () => setMatches(list.matches);
+    onChange();
+    list.addEventListener("change", onChange);
+    return () => list.removeEventListener("change", onChange);
+  }, [query]);
+
+  return matches;
+}
