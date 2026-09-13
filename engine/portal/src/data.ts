@@ -36,49 +36,49 @@ export const CLIENT_TABS: ClientTab[] = [
     label: "Surge",
     badge: "INI · RULE-SET",
     fileLabel: "Surge 主配置 · [Rule]",
-    note: "规则文件不带策略名：RULE-SET 的最后一个字段由主配置决定。带域名/IP 区分的 App 会用 DOMAIN-SET（域名段）+ RULE-SET,no-resolve（IP 段）两条引用，域名恒在 IP 之前。",
+    note: "规则文件不带策略名，RULE-SET 的最后一个字段由主配置决定。分段的 App 用 DOMAIN-SET + RULE-SET,no-resolve 两条引用。",
   },
   {
     key: "shadowrocket",
     label: "Shadowrocket",
     badge: "INI · RULE-SET",
     fileLabel: "Shadowrocket 配置 · [Rule]",
-    note: "与 Surge 同语法；策略在引用处指定。带域名/IP 区分的 App 同样拆成 DOMAIN-SET（域名段）+ RULE-SET（IP 段）两条引用。",
+    note: "与 Surge 同语法，策略在引用处指定；分段的 App 同样用 DOMAIN-SET + RULE-SET 两条引用。",
   },
   {
     key: "loon",
     label: "Loon",
     badge: "INI · [Remote Rule]",
     fileLabel: "Loon 配置 · [Remote Rule]",
-    note: "规则文件不带策略名：policy 与 tag 在引用行指定。带域名/IP 区分的 App 会拆成两条 Remote Rule（域名段 + IP 段）。",
+    note: "规则文件不带策略名，policy 与 tag 在引用行指定；分段的 App 拆成两条 Remote Rule。",
   },
   {
     key: "stash",
     label: "Stash",
     badge: "YAML · rule-providers",
     fileLabel: "Stash 配置 · rule-providers",
-    note: "classical text 规则集复用与 Surge 相同的语法。带域名/IP 区分的 App 会为域名段用 behavior:domain、IP 段用 behavior:classical 各注册一个 provider。",
+    note: "classical text 规则集与 Surge 同语法；分段的 App 域名段用 behavior:domain、IP 段用 behavior:classical，各注册一个 provider。",
   },
   {
     key: "clash",
     label: "Clash",
     badge: "YAML · rule-providers",
     fileLabel: "Clash 配置 · rule-providers",
-    note: "Mihomo 内核（Clash Meta for Android / FLClash）通用；规则经 Clash/ 目录分发。带域名/IP 区分的 App 用 behavior:domain（域名段）+ behavior:classical（IP 段）各一个 provider。",
+    note: "Mihomo 内核（Clash Meta for Android / FLClash）通用，规则经 Clash/ 目录分发、已去 USER-AGENT；分段写法同 Stash。",
   },
   {
     key: "egern",
     label: "Egern",
     badge: "YAML · rule_set",
     fileLabel: "Egern 配置 · rules",
-    note: "使用本仓库渲染的规则集；带域名/IP 区分的 App 会在 rules 里列出多条 rule_set（域名段 + IP 段）。",
+    note: "使用本仓库渲染的规则集；分段的 App 在 rules 里列出多条 rule_set。",
   },
   {
     key: "quantumultx",
     label: "Quantumult X",
     badge: "INI · [filter_remote]",
     fileLabel: "Quantumult X 配置 · [filter_remote]",
-    note: "filter 行尾的 policy 为占位符，实际策略由引用行的 force-policy 指定；带域名/IP 区分的 App 会在 filter_remote 列出域名段与 IP 段两条引用。",
+    note: "filter 行尾的 policy 是占位符，实际策略由引用行的 force-policy 指定；分段的 App 在 filter_remote 列两条引用。",
   },
 ];
 
@@ -369,4 +369,31 @@ export function allSnippets(data: PortalData, client: ClientKey, query = ""): st
     out.push("");
   }
   return out.join("\n").replace(/\n+$/, "");
+}
+
+export interface CopyOption {
+  /** Short label, e.g. "域名段规则". */
+  label: string;
+  /** File stem and rule count, shown as secondary text. */
+  detail?: string;
+  snippet: string;
+}
+
+/** The copy actions for one app on one client.
+ *
+ * Shared by the desktop card's dropdown and the mobile sheet so the two cannot
+ * disagree about how many segments an app has or what they are called.
+ */
+export function copyOptionsFor(rawBase: string, app: AppEntry, client: ClientKey): CopyOption[] {
+  const views = appViews(app, client);
+  if (views.length === 0) {
+    return [{ label: "规则", snippet: clientSnippet(rawBase, app, client) }];
+  }
+  return views.map((view) => ({
+    label: `${VIEW_LABELS[view]}段规则`,
+    detail: `${(app.views[client][view].file.split("/").pop() ?? "").replace(/\.conf$/, "")} · ${
+      app.views[client][view].rules
+    } 条`,
+    snippet: clientViewSnippet(rawBase, app, client, view),
+  }));
 }
