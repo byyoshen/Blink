@@ -34,6 +34,8 @@
 - **no-resolve**：官方文档明确，防止对域名目标做无效 DNS 解析。
 - Rule-Set 文件：官方明确"一行一条规则，**不写策略**"（policy-free classical text）。
 - 引用：主配置 `[Rule]` 段 `RULE-SET,<URL>,<policy>[,pre-matching][,extended-matching]`，policy 在引用处。
+- **引用行 no-resolve**：`RULE-SET,<URL>,<policy>,no-resolve` 生效 —— **维护者真机确认（2026-09-13）**。官方语法列表只列了 `pre-matching` / `extended-matching` 两个可选项，未提及 `no-resolve`；真机结果表明该列表并非穷举。
+  这与上面的行内 `no-resolve` 是两件事：Blink 的规则集文件是 policy-free 的，选项只能挂在引用处。
 - 注释：官方 profile format 文档：`#`、`;`、`//` 行注释，`//` 支持行内注释。
 - 更新/缓存：App 管理，规则集文件内无 TTL。
 - 无损性：Blink 现行 7 种类型全支持（含 USER-AGENT、PROCESS-NAME，Repcz Surge 文件携带二者生产验证）。
@@ -156,7 +158,7 @@
 | 需要 YAML wrapper/payload | ❌ | ❌ | ❌ | ❌（可选 yaml/mrs 优化） | ❌（可选自有 YAML schema） | ❌ | ❌ |
 | 更新/缓存 | App 管理 | App 管理 | App 管理 | `interval: 86400` | App 管理（字段 Needs Verification） | `update-interval=172800` | `interval: 86400` |
 | 主配置格式 | INI | INI | INI | YAML（Clash 系） | YAML（自有 schema） | INI | YAML（Clash 系） |
-| 引用行 no-resolve 槽位 | ⚠️ 官方语法只列了 pre-matching / extended-matching（见 Needs Verification 11） | ✅ 真机 2026-09-12 | ❌ 无槽位（故 ADAPTED） | ✅ 真机 2026-09-12 | n/a（set 级 `no_resolve`） | ❌ 无生产实证槽位 | ✅ 官方（`rules:` 段尾随） |
+| 引用行 no-resolve 槽位 | ✅ 真机 2026-09-13（官方语法未列出，非穷举） | ✅ 真机 2026-09-12 | ❌ 无槽位（故 ADAPTED） | ✅ 真机 2026-09-12 | n/a（set 级 `no_resolve`） | ❌ 无生产实证槽位 | ✅ 官方（`rules:` 段尾随） |
 
 > §3 的「no-resolve 语义」行记的是**行内**形式（`IP-CIDR,net,no-resolve`）。Blink 的规则集文件是 policy-free 的，选项只能挂在引用处，因此实际依赖的是上表这一行。两者曾被当成同一件事，是 `ENGINEERING_REVIEW_2026-09.md` 中 O1 的成因。
 
@@ -217,7 +219,6 @@ QuantumultX/<App>.list   # QX filter 行（行尾占位符 policy，force-policy
 7. `;` 注释在非 Surge 客户端的支持（本仓库只依赖 `#`，风险可规避）。
 8. CFA（Clash Premium 内核）对 mihomo `format` / `mrs` / `size-limit` 等 Meta 扩展字段的行为（忽略 vs 报错）——本仓库 target 为 mihomo 内核，CFA 标注 partial / legacy。
 9. Clash 端 `keep-alive-interval` / `unified-delay` 等 Meta 扩展字段在 CMFA / FLClash 的实际表现（官方文档支持，真机验证）。
-11. **Surge 引用行的 `no-resolve` 槽位**：§2 记录的官方语法是 `RULE-SET,<URL>,<policy>[,pre-matching][,extended-matching]`，**未列出 `no-resolve`**；而 `build_profile.py` 的 `IP_NO_RESOLVE_CLIENTS` 包含 surge。行内 `no-resolve` 有官方依据，引用行第 4 字段是否同样生效尚无本仓库证据。若不生效，后果是 Surge 的 IP 段静默丢失 no-resolve（即 F1 要修的同一个问题）。需真机或官方文档确认。
 10. `keep-alive-interval: 15`（移动端省电建议值）与 `dns.enhanced-mode: fake-ip` 在真机上的功耗与 DNS 表现（官方建议，真机验证）。
 
 ## 11. 测试策略（实现阶段）
