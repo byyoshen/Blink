@@ -89,7 +89,7 @@ jobs:
         id: generated
         shell: bash
         run: |
-          if [ -n "$(git status --porcelain -- Surge Loon Shadowrocket Stash Clash Egern QuantumultX engine/portal/public/data manifest.json)" ]; then
+          if [ -n "$(git status --porcelain -- Surge Loon Shadowrocket Stash mihomo Egern QuantumultX engine/portal/public/data manifest.json)" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
           else
             echo "changed=false" >> "$GITHUB_OUTPUT"
@@ -101,7 +101,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- Surge Loon Shadowrocket Stash Clash Egern QuantumultX engine/portal/public/data manifest.json
+          git add -- Surge Loon Shadowrocket Stash mihomo Egern QuantumultX engine/portal/public/data manifest.json
           git commit -m "chore: update generated rule-sets and portal data · $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
           # Never rebase after validation. A concurrent main update must make
           # this push fail so the next run rebuilds and revalidates from HEAD.

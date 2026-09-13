@@ -190,7 +190,7 @@ function AppCard({
   const viewNames = VIEW_ORDER.filter((view) => view in (app.views?.[client] ?? {}));
   const copyOptions = copyOptionsFor(rawBase, app, client);
   const dropped =
-    client === "egern" || client === "quantumultx" || client === "clash" ? (stat.dropped ?? 0) : 0;
+    client === "egern" || client === "quantumultx" || client === "mihomo" ? (stat.dropped ?? 0) : 0;
   return (
     <Reveal className="h-full" delay={Math.min(index, 6) * 40}>
       <article
@@ -246,8 +246,8 @@ function AppCard({
         )}
         {dropped > 0 && (
           <p className="rounded-lg border border-line bg-paper px-1.5 py-1 text-[10px] leading-relaxed text-mute">
-            ⚠️ {dropped} 条 {client === "clash" ? "USER-AGENT" : "PROCESS-NAME"} 无法在{" "}
-            {client === "egern" ? "Egern" : client === "clash" ? "Clash" : "Quantumult X"}{" "}
+            ⚠️ {dropped} 条 {client === "mihomo" ? "USER-AGENT" : "PROCESS-NAME"} 无法在{" "}
+            {client === "egern" ? "Egern" : client === "mihomo" ? "mihomo" : "Quantumult X"}{" "}
             无损表达， 构建器已显式丢弃。
           </p>
         )}

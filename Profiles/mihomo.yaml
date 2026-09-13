@@ -1,11 +1,11 @@
 # ============================================================
-# Blink 配置文件 · Clash（Mihomo 内核 / Android 通用）
+# Blink 配置文件 · mihomo 内核（Clash Meta for Android / FLClash 通用）
 # 单订阅池（Sub）：导入前把 https://YOUR-SUBSCRIPTION-URL 替换为你的订阅链接。
 # 策略组与规则引用由 Blink 统一维护；本文件为人工维护层，不随规则每日自动更新。
 # 目标客户端：Clash Meta for Android / FLClash（Mihomo 内核，完整兼容）。
 # CFA（Clash Premium 内核，已停更）部分兼容：不支持 format / mrs / size-limit
 # 等 Meta 扩展字段，导入时可能被忽略。
-# Blink 规则经 Clash/ 目录分发：classical 已显式去除 USER-AGENT（内核无此类型），
+# Blink 规则经 mihomo/ 目录分发：classical 已显式去除 USER-AGENT（内核无此类型），
 # 构建报告计数，绝不让内核静默跳过。
 # ADAPTED：always-real-ip / always-raw-tcp-hosts / proxy-test-udp / http-api 为 Surge 专属，
 #   本文件用 fake-ip + IP rule 兜底。
@@ -90,55 +90,55 @@ rule-providers:
     type: http
     behavior: domain
     format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/Telegram-domainset.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Telegram-domainset.conf
     interval: 86400
   Telegram_ip:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/Telegram-ip.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Telegram-ip.conf
     interval: 86400
   X_domainset:
     type: http
     behavior: domain
     format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/X-domainset.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/X-domainset.conf
     interval: 86400
   X_ip:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/X-ip.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/X-ip.conf
     interval: 86400
   YouTube_nonip:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/YouTube-nonip.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/YouTube-nonip.conf
     interval: 86400
   Instagram_domainset:
     type: http
     behavior: domain
     format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/Instagram-domainset.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Instagram-domainset.conf
     interval: 86400
   Google_nonip:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/Google-nonip.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Google-nonip.conf
     interval: 86400
   Google_ip:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/Google-ip.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Google-ip.conf
     interval: 86400
   GitHub_domainset:
     type: http
     behavior: domain
     format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/GitHub-domainset.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/GitHub-domainset.conf
     interval: 86400
   china_ip:
     type: http

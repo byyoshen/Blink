@@ -5,7 +5,7 @@
 
 ## 项目目标
 
-自动生成个人使用的多客户端 App Rule-Sets：一份 source definition 与 canonical 规则，渲染为 Surge / Shadowrocket / Loon / Stash / Clash / Egern / Quantumult X 七个客户端的输出（格式事实与架构决策见 `engine/docs/MULTI_CLIENT_AUDIT.md`）。
+自动生成个人使用的多客户端 App Rule-Sets：一份 source definition 与 canonical 规则，渲染为 Surge / Shadowrocket / Loon / Stash / mihomo / Egern / Quantumult X 七个客户端的输出（格式事实与架构决策见 `engine/docs/MULTI_CLIENT_AUDIT.md`）。
 
 ## 规则与来源规范
 
@@ -13,14 +13,14 @@
 - 补充规则只能放在 `engine/sources/supplement/`。`supplement` 只存放上游规则未覆盖、且通过 Surge 日志或实际使用确认需要补充的规则。
 - 不允许将上游已存在的规则重复放进 `supplement`；应先与选定上游比较，只加入真正缺失的规则。
 - `supplement` 文件按需创建；没有补充规则的 App 不需要空文件。
-- Generated `Surge/*.list`、`Loon/*.list`、`Shadowrocket/*.list`、`Stash/*.list`、`Clash/*.list`、`Egern/*.yaml`、`QuantumultX/*.list` 不允许手工维护或修改；Surge / Loon / Shadowrocket / Stash 四个 classical 目录必须保持逐字节相同；`Clash/*.list` = 对应 Surge 文件去掉 `USER-AGENT,` 行（Clash 内核无此类型，构建器显式丢弃并计数，CI 有 golden-byte 断言）。
+- Generated `Surge/*.list`、`Loon/*.list`、`Shadowrocket/*.list`、`Stash/*.list`、`mihomo/*.list`、`Egern/*.yaml`、`QuantumultX/*.list` 不允许手工维护或修改；Surge / Loon / Shadowrocket / Stash 四个 classical 目录必须保持逐字节相同；`mihomo/*.list` = 对应 Surge 文件去掉 `USER-AGENT,` 行（Clash 系内核无此类型，构建器显式丢弃并计数，CI 有 golden-byte 断言）。
 - 根目录 `manifest.json` 同样是 generated file，不允许手工维护；它必须确定性记录 source definition、实际上游输入、supplement、canonical 规则与七端产物 SHA256，且通过 `engine/scripts/verify_manifest.py` 校验。
 - 每个 App 默认使用 1 个 primary source，最多 1 个 supplemental source，除非有明确理由。
 - 不追求规则数量最大化，避免无意义吞入共享 CDN。
 - Reject / Domestic / China IP / CDN / LAN 等基础设施规则不纳入本仓库，继续直接引用成熟上游。
-- 输出规则不带策略名：Surge / Shadowrocket 由主配置 `RULE-SET`、Loon 由 `[Remote Rule]`、Stash 由 `rule-providers` + `RULE-SET`、Clash 由 `rule-providers`（`behavior: classical, format: text`）+ `RULE-SET`、Egern 由 `rule_set.match` 在引用处指定策略。Quantumult X 例外：filter 行尾必有策略字段，本仓库用字面占位符 `policy`，实际策略由 `[filter_remote]` 引用行的 `force-policy` 指定（QX 的 no-resolve 槽位无生产实证，渲染时统一省略并已记入 `engine/docs/MULTI_CLIENT_AUDIT.md`）。
+- 输出规则不带策略名：Surge / Shadowrocket 由主配置 `RULE-SET`、Loon 由 `[Remote Rule]`、Stash 由 `rule-providers` + `RULE-SET`、mihomo 由 `rule-providers`（`behavior: classical, format: text`）+ `RULE-SET`、Egern 由 `rule_set.match` 在引用处指定策略。Quantumult X 例外：filter 行尾必有策略字段，本仓库用字面占位符 `policy`，实际策略由 `[filter_remote]` 引用行的 `force-policy` 指定（QX 的 no-resolve 槽位无生产实证，渲染时统一省略并已记入 `engine/docs/MULTI_CLIENT_AUDIT.md`）。
 - `exclude` 的丢弃同样必须可审计：type-level exclude 记入 `skipped_excluded`，domain 级 exclude 记入 `manifest.json` 的 `canonical.excluded_domains`（每条声明的命中数）。某条 exclude 命中数归零意味着它可能已因上游改写而失效，需要复核上游是否仍携带该规则，或删掉这条 exclude。
-- 每个客户端渲染器只允许序列化该客户端可无损表达的规则；无法表达时必须显式丢弃并在构建报告计数（降级项：PROCESS-NAME 对 Egern / Quantumult X 显式丢弃并计数，USER-AGENT 对 Clash 显式丢弃并计数；classical 输出保持 Surge / Loon / Shadowrocket / Stash 四端逐字节相同、保留 PROCESS-NAME 行——Loon / Shadowrocket 无此类型，客户端直接忽略），禁止静默转换。
+- 每个客户端渲染器只允许序列化该客户端可无损表达的规则；无法表达时必须显式丢弃并在构建报告计数（降级项：PROCESS-NAME 对 Egern / Quantumult X 显式丢弃并计数，USER-AGENT 对 mihomo 显式丢弃并计数；classical 输出保持 Surge / Loon / Shadowrocket / Stash 四端逐字节相同、保留 PROCESS-NAME 行——Loon / Shadowrocket 无此类型，客户端直接忽略），禁止静默转换。
 
 ## Upstream Source Selection Policy
 

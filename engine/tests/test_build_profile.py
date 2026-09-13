@@ -103,13 +103,13 @@ class ProfileEngineTests(unittest.TestCase):
 
     def test_yaml_clients_parse_as_valid_yaml(self) -> None:
         outputs = self.render(sample_intent())
-        for client in ("stash", "egern", "clash"):
+        for client in ("stash", "egern", "mihomo"):
             document = yaml.safe_load(outputs[client])
             self.assertIsInstance(document, dict)
 
     def test_clash_uses_text_format_drops_sub_and_ends_with_match(self) -> None:
         outputs = self.render(sample_intent())
-        text = outputs["clash"]
+        text = outputs["mihomo"]
         document = yaml.safe_load(text)
         # format: text is mandatory for classical providers (default is yaml).
         self.assertGreater(text.count("format: text"), 0)
@@ -195,7 +195,7 @@ class ProfileEngineTests(unittest.TestCase):
             outputs["shadowrocket"],
         )
         self.assertIn("  - RULE-SET,china_ip,DIRECT,no-resolve", outputs["stash"])
-        self.assertIn("  - RULE-SET,china_ip,DIRECT,no-resolve", outputs["clash"])
+        self.assertIn("  - RULE-SET,china_ip,DIRECT,no-resolve", outputs["mihomo"])
 
     def test_ip_view_reference_keeps_no_resolve_where_supported(self) -> None:
         intent = ip_sample_intent()
@@ -203,7 +203,7 @@ class ProfileEngineTests(unittest.TestCase):
         self.assertIn("YouTube-ip.conf,Proxy,no-resolve", outputs["surge"])
         self.assertIn("YouTube-ip.conf,Proxy,no-resolve", outputs["shadowrocket"])
         self.assertIn("  - RULE-SET,YouTube_ip,Proxy,no-resolve", outputs["stash"])
-        self.assertIn("  - RULE-SET,YouTube_ip,Proxy,no-resolve", outputs["clash"])
+        self.assertIn("  - RULE-SET,YouTube_ip,Proxy,no-resolve", outputs["mihomo"])
         # Clients without a reference-level slot must not invent one.
         for client in set(build_profile.CLIENTS) - set(build_profile.IP_NO_RESOLVE_CLIENTS):
             self.assertNotIn("-ip.conf, policy = Proxy, no-resolve", outputs[client])
@@ -238,7 +238,7 @@ class ProfileEngineTests(unittest.TestCase):
                 stripped = line.strip()
                 if stripped.startswith("#") or "RULE-SET," not in stripped:
                     continue
-                if client in {"stash", "clash"}:
+                if client in {"stash", "mihomo"}:
                     key = stripped.split("RULE-SET,", 1)[1].split(",")[0]
                     if key not in mihomo_keys:
                         continue

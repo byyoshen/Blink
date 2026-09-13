@@ -167,10 +167,10 @@ def check(root: Path) -> dict:
                 raise ParityError(f"{path}: header metadata does not match its body")
             client_counts[path.parent.name.lower()] = count
 
-        clash_path = root / "Clash" / surge_path.name
-        clash = parse_classical(clash_path, app_name)
-        clash_expected = [rule for rule in surge if rule[0] != "USER-AGENT"]
-        assert_multiset(app_name, "clash", clash, clash_expected)
+        mihomo_path = root / "mihomo" / surge_path.name
+        mihomo = parse_classical(mihomo_path, app_name)
+        mihomo_expected = [rule for rule in surge if rule[0] != "USER-AGENT"]
+        assert_multiset(app_name, "mihomo", mihomo, mihomo_expected)
 
         egern_path = root / "Egern" / f"{surge_path.stem}.yaml"
         egern = parse_egern(egern_path)
@@ -185,7 +185,7 @@ def check(root: Path) -> dict:
         assert_multiset(app_name, "quantumultx", qx, qx_expected)
 
         for key, path, rules in (
-            ("clash", clash_path, clash),
+            ("mihomo", mihomo_path, mihomo),
             ("egern", egern_path, egern),
             ("quantumultx", qx_path, qx),
         ):

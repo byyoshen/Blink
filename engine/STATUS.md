@@ -21,7 +21,7 @@
   per-client 语义视图（domainset / nonip / ip）。
 - **规则层 multi-view**：`build.py` 的 `semantic_views()` 从 canonical 派生 `-domainset.conf`（纯域名）、
   `-nonip.conf`（含 keyword / UA / PROCESS）、`-ip.conf`（IP 段）视图，IP 段恒置于域名段之后；
-  Surge / Shadowrocket 为域名清单、Stash / Clash 为 `behavior:domain`、Loon / Egern 为 classical、
+  Surge / Shadowrocket 为域名清单、Stash / mihomo 为 `behavior:domain`、Loon / Egern 为 classical、
   QX 为 `HOST*` filter；`validate_views.py` 门禁已接入 `checks.yml` 与每日 `update.yml`。
 - **Profile 层**：`intent.yaml` 收敛为普适八组（单一订阅池 + 地区组 / Auto + Proxy / Final + 6 个 App 路由），
   7 端模板能力矩阵 FULL / ADAPTED(注释) / UNSUPPORTED(注释) 标注；`Profiles/` 为生成产物，
@@ -42,7 +42,7 @@ Surge/                      # classical .list（原 Surge 入口，路径与字�
 Loon/                       # 与 Surge 逐字节相同的 classical .list
 Shadowrocket/               # 与 Surge 逐字节相同的 classical .list
 Stash/                      # 与 Surge 逐字节相同的 classical .list
-Clash/                      # classical 去掉 USER-AGENT 行（其余逐行同 Surge）
+mihomo/                     # classical 去掉 USER-AGENT 行（其余逐行同 Surge）
 Egern/                      # Egern 自有 YAML Rule-Set schema
 QuantumultX/                # QX filter 行（行尾占位符 policy，由 force-policy 覆盖）
 Profiles/                   # 七客户端完整配置文件（人工维护层，订阅占位符）
@@ -82,7 +82,7 @@ engine/
 - exclude 是 manifest 的显式决策（类型级 `ip-asn:*` / `url-regex:*` 等），不能以猜测替代 source audit。
 - 上游完全缺失的 App 可声明 `sources: []`（supplement-only），全部规则来自
   `engine/sources/supplement/<App>.list`；最终输出仍必须非空。
-- 渲染器：`classical`（Surge / Loon / Shadowrocket / Stash 四端逐字节相同）、`classical-clash`
+- 渲染器：`classical`（Surge / Loon / Shadowrocket / Stash 四端逐字节相同）、`classical-mihomo`
   （去 USER-AGENT，显式丢弃并计数）、`egern-yaml`（PROCESS-NAME 显式丢弃并计数）、`quantumultx`
   （`HOST*` / `IP-CIDR` / `IP6-CIDR` / `USER-AGENT`，行尾占位符 `policy`，no-resolve 统一省略）；
   所有显式丢弃均计入构建报告，禁止静默转换。
@@ -101,7 +101,7 @@ engine/
 | Netflix / ParamountPlus / Hulu / Twitch | blackmatrix7 `rule/Surge/` | 保留 IP 覆盖与 no-resolve 语义；部分为全网唯一专项源（需定期复核新鲜度） |
 | ZABank / NBA / Suno / Starryblu / APTV | supplement-only（`sources: []`） | 无可用上游；APTV 为个人维护的直播清单（迁自私有保存，不属第三方上游） |
 
-各端显式降级计数（PROCESS-NAME → Egern / Quantumult X；USER-AGENT → Clash）体现在构建报告与
+各端显式降级计数（PROCESS-NAME → Egern / Quantumult X；USER-AGENT → mihomo）体现在构建报告与
 `manifest.json`，portal 卡片同步展示。
 
 ## 无人值守与人工介入时机

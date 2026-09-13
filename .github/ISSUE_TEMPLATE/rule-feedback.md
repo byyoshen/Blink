@@ -13,7 +13,7 @@ body:
     id: client
     attributes:
       label: 你使用的客户端
-      placeholder: Surge / Shadowrocket / Loon / Stash / Clash / Egern / Quantumult X
+      placeholder: Surge / Shadowrocket / Loon / Stash / mihomo / Egern / Quantumult X
     validations:
       required: true
   - type: input

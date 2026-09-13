@@ -16,7 +16,7 @@
 
 个人使用的**多客户端规则与配置文件**仓库，分两层：
 
-- **规则层（自动维护）**：把经过审计的上游规则转换为一份 Canonical Rule Model，渲染为 **Surge / Shadowrocket / Loon / Stash / Clash / Egern / Quantumult X** 七种客户端格式，每日更新，不是为每个客户端维护一套独立规则。
+- **规则层（自动维护）**：把经过审计的上游规则转换为一份 Canonical Rule Model，渲染为 **Surge / Shadowrocket / Loon / Stash / mihomo / Egern / Quantumult X** 七种客户端格式，每日更新，不是为每个客户端维护一套独立规则。
 - **配置层（人工维护）**：把同一份配置意图（策略组 / 规则引用 / 通用设置）迁移为七客户端**完整配置文件**，单一订阅池组织、占位符已内置，替换一条订阅即可复用。
 
 生成目录由构建器自动维护、绝不手工修改；仓库不含任何订阅 URL、token、密码或证书等敏感信息。
@@ -51,7 +51,7 @@
 | Shadowrocket | `[Rule]` | `RULE-SET,<URL>,<策略>` | `Shadowrocket/` |
 | Loon | `[Remote Rule]` | `URL, policy=<策略>, tag=<App>, enabled=true` | `Loon/` |
 | Stash | `rule-providers` + `rules` | `RULE-SET,<App>,<策略>` | `Stash/` |
-| Clash（Mihomo） | `rule-providers` + `rules` | `RULE-SET,<App>,<策略>` | `Clash/`（已去 USER-AGENT） |
+| mihomo | `rule-providers` + `rules` | `RULE-SET,<App>,<策略>` | `mihomo/`（已去 USER-AGENT） |
 | Egern | `rules` | `rule_set: {match: <URL>, policy: <策略>}` | `Egern/` |
 | Quantumult X | `[filter_remote]` | `URL, tag=<App>, force-policy=<策略>, …` | `QuantumultX/` |
 
@@ -82,7 +82,7 @@
 >
 > 引用方式写反后 Surge **不会报错**，只是该规则集不生效、流量悄悄落到 `FINAL`——如果发现分流没有按预期走，请先检查这一项。
 > 一句话口诀：**`-domainset.conf` 配 `DOMAIN-SET`，`-nonip.conf` / `-ip.conf` 配 `RULE-SET`，IP 段记得加 `no-resolve`**。
-> 门户的规则集卡片复制出来的是 raw 地址（Stash / Clash 例外，给的是完整 `rule-providers` 片段）；
+> 门户的规则集卡片复制出来的是 raw 地址（Stash / mihomo 例外，给的是完整 `rule-providers` 片段）；
 > **引用类型由文件后缀决定，按上表套用即可**，不要自行改写。
 
 规则文件**不带策略名**，policy 由引用处指定。各客户端引用写法如下。
@@ -121,9 +121,14 @@ rules:
   - RULE-SET,<App>,<你的策略>
 ```
 
-### Clash（Android）
+### mihomo（Clash Meta for Android / FLClash）
 
-Mihomo 内核通用（Clash Meta for Android / FLClash）。在 `rule-providers` 注册 classical text 规则集，在 `rules` 里用 `RULE-SET` 引用；Blink 规则经 `Clash/` 目录分发（USER-AGENT 已由构建器显式去除并计数）：
+> [!IMPORTANT]
+> **2026-09-13 目录重命名**：`Clash/` 已改为 `mihomo/`，`Profiles/Clash.yaml` 已改为
+> `Profiles/mihomo.yaml`。本仓库 target 一直是 mihomo 内核，「Clash」只是遗留的显示名。
+> **旧路径不再可用**，请把引用行里的 `/Clash/` 改成 `/mihomo/`。
+
+mihomo 内核通用（Clash Meta for Android / FLClash）。在 `rule-providers` 注册 classical text 规则集，在 `rules` 里用 `RULE-SET` 引用；Blink 规则经 `mihomo/` 目录分发（USER-AGENT 已由构建器显式去除并计数）：
 
 ```yaml
 rule-providers:
@@ -131,7 +136,7 @@ rule-providers:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Clash/<App>.list
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/<App>.list
     interval: 86400
 rules:
   - RULE-SET,<App>,<你的策略>
@@ -156,7 +161,7 @@ rules:
 https://raw.githubusercontent.com/byyoshen/Blink/main/QuantumultX/<App>.list, tag=<App>, force-policy=<你的策略>, update-interval=172800, opt-parser=false, enabled=true
 ```
 
-<sub>raw 直连不稳时，可改用 jsDelivr 加速地址（缓存最长 12 小时，规则更新会相应延迟）：`https://cdn.jsdelivr.net/gh/byyoshen/Blink@main/Surge/<App>.list`（其余客户端同理替换目录，如 `Clash/`、`QuantumultX/`）。</sub>
+<sub>raw 直连不稳时，可改用 jsDelivr 加速地址（缓存最长 12 小时，规则更新会相应延迟）：`https://cdn.jsdelivr.net/gh/byyoshen/Blink@main/Surge/<App>.list`（其余客户端同理替换目录，如 `mihomo/`、`QuantumultX/`）。</sub>
 
 ---
 
@@ -164,7 +169,7 @@ https://raw.githubusercontent.com/byyoshen/Blink/main/QuantumultX/<App>.list, ta
 
 ## 配置文件快速开始
 
-七客户端**完整配置文件**位于 [`Profiles/`](Profiles/)：`Surge.conf`、`Shadowrocket.conf`、`Loon.conf`、`Stash.yaml`、`Clash.yaml`（Android）、`Egern.yaml`、`QuantumultX.conf`。
+七客户端**完整配置文件**位于 [`Profiles/`](Profiles/)：`Surge.conf`、`Shadowrocket.conf`、`Loon.conf`、`Stash.yaml`、`mihomo.yaml`、`Egern.yaml`、`QuantumultX.conf`。
 
 1. 下载对应客户端的配置文件（或在[门户](https://byyoshen.github.io/Blink/)「配置文件」板块用 **iOS 一键导入**）。
 2. 用文本编辑器把 `https://YOUR-SUBSCRIPTION-URL` 替换成你的订阅链接。
@@ -182,7 +187,7 @@ https://raw.githubusercontent.com/byyoshen/Blink/main/QuantumultX/<App>.list, ta
 
 - **规则集**：切换七客户端标签查看每个 App 的规则数与接入方式，一键复制；
 - **接入你的客户端**：七客户端全量接入片段，一键复制；
-- **配置文件**：七客户端配置文件的下载 / 复制 / **iOS 一键导入**（支持 URL Scheme 的客户端；Clash 为 Android，手动导入）与导入指引；
+- **配置文件**：七客户端配置文件的下载 / 复制 / **iOS 一键导入**（支持 URL Scheme 的客户端；mihomo 客户端为 Android，手动导入）与导入指引；
 - **构建与来源**：构建管线与选源原则。
 
 <div align="center">
@@ -224,11 +229,11 @@ https://raw.githubusercontent.com/byyoshen/Blink/main/QuantumultX/<App>.list, ta
 
 **为什么我的客户端比其他端少几条规则？**
 
-显式降级，不是缺漏：Egern / Quantumult X 丢弃 `PROCESS-NAME`，Clash 丢弃 `USER-AGENT`（内核无此类型），数量见门户卡片与构建报告。
+显式降级，不是缺漏：Egern / Quantumult X 丢弃 `PROCESS-NAME`，mihomo 丢弃 `USER-AGENT`（Clash 系内核无此类型），数量见门户卡片与构建报告。
 
 **规则多久更新？**
 
-每日自动更新（约 00:01，北京时间），有变化才提交。刷新节奏由引用行的 `interval` 决定：Stash / Clash 1 天、Quantumult X 2 天、其余由 App 自动更新。
+每日自动更新（约 00:01，北京时间），有变化才提交。刷新节奏由引用行的 `interval` 决定：Stash / mihomo 1 天、Quantumult X 2 天、其余由 App 自动更新。
 
 **出问题了，怎么反馈？**
 
@@ -246,7 +251,7 @@ https://raw.githubusercontent.com/byyoshen/Blink/main/QuantumultX/<App>.list, ta
 
 感谢 Repcz、SukkaW、blackmatrix7、v2fly 等上游作者对规则集的长期维护（各 App 的来源明细与许可见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)）。
 
-本仓库为个人规则分发与学习维护而设，无任何担保；请结合自己的代理客户端策略与日志自行验证，并遵守适用法律、服务条款与上游许可。**原创部分（构建代码、测试、工作流、门户源码与文档）以 [MIT License](LICENSE) 授权**；`Surge/`、`Loon/`、`Shadowrocket/`、`Stash/`、`Clash/`、`Egern/`、`QuantumultX/` 与 `Profiles/` 等生成产物**不在 MIT 覆盖范围内**，逐文件遵循 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) 记载的上游许可。
+本仓库为个人规则分发与学习维护而设，无任何担保；请结合自己的代理客户端策略与日志自行验证，并遵守适用法律、服务条款与上游许可。**原创部分（构建代码、测试、工作流、门户源码与文档）以 [MIT License](LICENSE) 授权**；`Surge/`、`Loon/`、`Shadowrocket/`、`Stash/`、`mihomo/`、`Egern/`、`QuantumultX/` 与 `Profiles/` 等生成产物**不在 MIT 覆盖范围内**，逐文件遵循 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) 记载的上游许可。
 
 > [!WARNING]
 > 任何以任何方式查看此项目的人或直接或间接使用该项目的使用者都应仔细阅读此声明。

@@ -85,7 +85,7 @@ class RepoIdentityTests(unittest.TestCase):
 
     def test_generated_references_derive_from_the_constants(self) -> None:
         self.assertTrue(build_profile.BLINK_RAW.startswith(repo_identity.RAW_BASE))
-        self.assertTrue(build_profile.BLINK_RAW_CLASH.startswith(repo_identity.RAW_BASE))
+        self.assertTrue(build_profile.BLINK_RAW_MIHOMO.startswith(repo_identity.RAW_BASE))
         self.assertTrue(build_profile.BLINK_RAW_QX.startswith(repo_identity.RAW_BASE))
         self.assertEqual(build_profile.BLINK_RAW_VIEW, repo_identity.RAW_BASE)
         self.assertEqual(

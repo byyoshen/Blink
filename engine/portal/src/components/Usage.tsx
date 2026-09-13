@@ -32,14 +32,14 @@ const STEPS: Record<ClientKey, ReactNode[]> = {
       策略名换成你自己的；<code>interval: 86400</code> 控制规则集更新周期。
     </>,
   ],
-  clash: [
+  mihomo: [
     <>
-      打开 Clash 配置（Clash Meta for Android / FLClash，Mihomo 内核），把下面整段复制进{" "}
+      打开 mihomo 内核客户端的配置（Clash Meta for Android / FLClash），把下面整段复制进{" "}
       <code>rule-providers</code> 与 <code>rules</code>。
     </>,
     <>
       把每个 <code>RULE-SET</code> 行放在 <code>MATCH</code> 之前合适的位置，域名段排在 IP 段之前；
-      规则经 Clash/ 目录分发（USER-AGENT 已显式去除）。
+      规则经 mihomo/ 目录分发（USER-AGENT 已显式去除）。
     </>,
     <>
       策略名换成你自己的；<code>interval: 86400</code> 控制规则集更新周期。
@@ -76,7 +76,7 @@ export default function Usage({ data, query }: { data: PortalData; query: string
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">接入你的客户端</h2>
             <p className="mt-2.5 text-mute">
               同一套规则，七种客户端各自的接入方式：非 Mihomo 客户端复制规则链接去前端导入， Stash /
-              Clash 复制配置文件写法。
+              mihomo 复制配置文件写法。
             </p>
             {query.trim() && (
               <p className="mt-3 inline-block rounded-full border border-accent-soft bg-accent-soft px-3.5 py-1 text-[12.5px] text-accent">

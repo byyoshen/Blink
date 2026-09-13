@@ -85,18 +85,18 @@ jobs:
             if [ "$mismatch" = "1" ]; then exit 1; fi
             echo "ok: Surge == $d (main .list outputs)"
           done
-      - name: Assert Clash equals Surge minus USER-AGENT
+      - name: Assert mihomo equals Surge minus USER-AGENT
         shell: bash
         run: |
           set -euo pipefail
-          for f in Clash/*.list; do
+          for f in mihomo/*.list; do
             base="$(basename "$f")"
             if ! diff <(grep -v '^#' "Surge/$base" | grep -v '^USER-AGENT,') <(grep -v '^#' "$f") > /dev/null; then
               echo "::error::$f is not Surge/$base minus USER-AGENT lines"
               exit 1
             fi
           done
-          echo "ok: Clash == Surge minus USER-AGENT"
+          echo "ok: mihomo == Surge minus USER-AGENT"
 
   lint-python:
     runs-on: ubuntu-latest

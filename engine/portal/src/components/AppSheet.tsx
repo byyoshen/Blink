@@ -48,7 +48,7 @@ export default function AppSheet({ app, client, rawBase, onClose }: AppSheetProp
   const options = copyOptionsFor(rawBase, app, client);
   const chips = typeChips(app, client);
   const dropped =
-    client === "egern" || client === "quantumultx" || client === "clash"
+    client === "egern" || client === "quantumultx" || client === "mihomo"
       ? (app.clients[client].dropped ?? 0)
       : 0;
 
@@ -229,8 +229,8 @@ export default function AppSheet({ app, client, rawBase, onClose }: AppSheetProp
           )}
           {dropped > 0 && (
             <p className="mb-2 rounded-xl border border-line bg-paper px-3 py-2 text-[12px] leading-relaxed text-mute">
-              ⚠️ {dropped} 条 {client === "clash" ? "USER-AGENT" : "PROCESS-NAME"} 无法在{" "}
-              {client === "egern" ? "Egern" : client === "clash" ? "Clash" : "Quantumult X"}{" "}
+              ⚠️ {dropped} 条 {client === "mihomo" ? "USER-AGENT" : "PROCESS-NAME"} 无法在{" "}
+              {client === "egern" ? "Egern" : client === "mihomo" ? "mihomo" : "Quantumult X"}{" "}
               无损表达，构建器已显式丢弃。
             </p>
           )}
