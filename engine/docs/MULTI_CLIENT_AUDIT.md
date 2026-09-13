@@ -221,6 +221,17 @@ QuantumultX/<App>.list   # QX filter 行（行尾占位符 policy，force-policy
 9. Clash 端 `keep-alive-interval` / `unified-delay` 等 Meta 扩展字段在 CMFA / FLClash 的实际表现（官方文档支持，真机验证）。
 10. `keep-alive-interval: 15`（移动端省电建议值）与 `dns.enhanced-mode: fake-ip` 在真机上的功耗与 DNS 表现（官方建议，真机验证）。
 
+以下来自 §13 的 sing-box 审计（候选目标，尚未实现）：
+
+11. **sing-box 对 IPv6 CIDR 的写法**：headless rule 只列出 `ip_cidr`，未明说 IPv6 是否同字段。
+    本仓库现有 10 条 `IP-CIDR6`，映射错会静默漏匹配。
+12. **`no-resolve` 的结构等价性**（阻塞项）：sing-box 无逐规则解析开关。
+    需证实「域名段与 IP 段各自独立 rule-set、由先后两条 route rule 引用」
+    是否等价于 Surge 的 `no-resolve`（即域名目标不因 IP 规则而触发本地解析）。
+    **未决则不应开工** —— 若不等价，sing-box 输出会重演 F1。
+13. **待支持客户端的最低 rule-set `version`**：所需字段自 v1 即存在，
+    但取值需根据实际目标客户端的最低支持版本决定。
+
 ## 11. 测试策略（实现阶段）
 
 - **A · Smoke**：OKX（v2fly 转换路径）→ canonical → classical ×4 + Egern YAML + QX filter，人工核对结构。
@@ -236,3 +247,76 @@ QuantumultX/<App>.list   # QX filter 行（行尾占位符 policy，force-policy
 
 - 2026-08：第 7 客户端 **Clash（Mihomo 内核 / Android 通用）**审计落地（见 §2.8，内核源码级证据）；`Clash/` 目录（去 USER-AGENT 显式丢弃）与 portal / Profiles / 文档同步扩展中。
 - 2026-08-21+：**语义多视图落地**（SukkaW 式 domainset / non_ip / ip 拆分，见 `build.py` 的 `semantic_views` / `phase_of` 与 `engine/scripts/validate_views.py` 门禁）：每个 App 按语义派生出 `-domainset.conf`（纯域名，Surge/Shadowrocket 域名清单、Stash/Clash behavior:domain）/ `-nonip.conf`（含 keyword/UA/PROCESS，classical）/ `-ip.conf`（IP 段，classical/QX filter）七端视图，IP 段恒置于域名段之后；主输出 `.list`/`.yaml` 与各客户端格式事实保持本文件所述不变。
+
+## 13. sing-box（候选目标 · 尚未实现）
+
+> **状态：仅审计。** 本仓库当前**不产出** sing-box 规则集。§3 / §4 的能力矩阵与 §5 的兼容性结论（A–E）均**不含** sing-box —— 那几处描述的是已发布目标，把候选写进去会让文档谎报支持范围。实现前请勿据此对外承诺。
+>
+> 审计日期 2026-09-13。证据层级同 §1：**官方**＝ sing-box 官方文档站正文；**实测**＝对本仓库当前产物的计算；**Needs Verification**＝尚无证据。
+
+### 13.1 为什么另立目标，而不是替换 Clash
+
+维护者最初的提议是用 sing-box 顶替 Clash 那一格，理由是「mihomo 内核的配置文件通用」。前半句成立 —— mihomo YAML 在 CMFA / FLClash 上确实通吃；但**规则集文件不在此列**。
+
+`Clash/` 目录独立存在的唯一理由（见 §5 D/E）是：**Clash 系内核没有 `USER-AGENT` 规则类型**，classical 加载器遇到会 warning 后静默跳过，所以该目录 = classical 去 UA。删掉它，mihomo 用户只能改用 `Stash/` 的文件，而那里**带着他们内核看不懂的规则行** —— 这不是少了便利，是引入静默失效，与 F1 / F15 同类。
+
+外加 `Clash/` 是 68 个已发布的稳定 raw URL，移除会直接打断现有引用。
+
+**结论**：sing-box 若实现，作为**新增目标**，不替换任何现有目标。
+
+### 13.2 规则集格式（官方）
+
+- **source（JSON）**：`{"version": <1..5>, "rules": [ … ]}`。版本递增仅增字段：v2 优化内存、v3 增网络类规则、v4 增接口地址、v5 增正则包名。
+- **binary（`.srs`）**：由 `sing-box rule-set compile [--output <name>.srs] <name>.json` 产出。
+- **远程可直接消费 JSON**：`format` 取 `"source"` 或 `"binary"`；当 URL 以 `.json` / `.srs` 结尾时该字段可省略。
+
+> **这一条决定了实现成本**：`.srs` **不是必需项**，只是优化。因此**不必把 sing-box 二进制引入 CI**，渲染器输出 JSON 即可被远程引用 —— 与本仓库现有「纯文本产物 + 稳定 raw URL」的架构一致，无需新增工具链依赖。
+
+### 13.3 引用形式（官方）
+
+声明在 `route.rule_set[]`，字段：
+
+| 字段 | 说明 |
+| --- | --- |
+| `type` | `"remote"` |
+| `tag` | 标识符（v1.14.0 起可为字符串列表） |
+| `format` | `"source"` / `"binary"`；URL 带 `.json` / `.srs` 后缀时可省 |
+| `url` | 下载地址 |
+| `update_interval` | 默认 `"1d"` |
+| `initial_path` | 启动时的本地内容（v1.14.0+） |
+| `http_client` | HTTP 客户端配置（v1.14.0+） |
+| `download_detour` | **v1.14.0 起弃用**，改用 `http_client` |
+
+路由规则以 `"rule_set": ["<tag>", …]`（字符串数组）引用。
+
+与现有七端的根本差异：**sing-box 完全不消费 classical 文本**。这是一个全新 renderer，不是任何现有渲染器的变体。
+
+### 13.4 Canonical 类型映射
+
+| Canonical | sing-box headless rule | 证据 |
+| --- | --- | --- |
+| `DOMAIN` | `domain` | 官方 |
+| `DOMAIN-SUFFIX` | `domain_suffix` | 官方 |
+| `DOMAIN-KEYWORD` | `domain_keyword` | 官方 |
+| `IP-CIDR` | `ip_cidr` | 官方 |
+| `IP-CIDR6` | `ip_cidr`（同字段，IPv6 记法） | Needs Verification 11 |
+| `PROCESS-NAME` | `process_name`（另有 `package_name` 对应 Android） | 官方 |
+| `USER-AGENT` | **无对应字段** | 官方（headless rule 字段表无此项） |
+
+### 13.5 能力降级结论
+
+- **USER-AGENT → 显式丢弃 + 计数**，与 Clash / Egern / QX 同一处置方式，绝不静默。
+  实测影响：**4 条 / 2781（0.14%）**，分布为 PayPal 1、Netflix 1、Spotify 1、ParamountPlus 1。
+- **PROCESS-NAME → 保留**。这是 sing-box 与 Egern / QX 的关键差异（后两者无对应 key，必须丢弃 7 条）。
+  **因此 sing-box 是 classical 四端之外丢失最少的目标**：唯一损失是上述 4 条 UA。
+- **no-resolve → 无逐规则等价物**。官方 headless rule 与 route rule 文档均未提供「本条不触发 DNS 解析」的开关；`rule_set_ip_cidr_match_source` 控制的是 `ip_cidr` 匹配源地址还是目标地址，**与解析行为无关**。
+
+> **这不必然是缺陷**。本仓库的域名先于 IP 的不变量，在 sing-box 上应当由**结构**承载而非选项承载：域名段与 IP 段各自是独立 rule-set，由各自的 route rule 按先后顺序引用。这与既有的 `-domainset` / `-nonip` / `-ip` 三视图天然吻合 —— 三视图本身就是这个不变量的物化。
+>
+> 但「结构上分开是否等价于 `no-resolve`」尚未证实，见 Needs Verification 12。**这是实现前必须先解决的问题**，不是实现细节：若不等价，sing-box 输出会重演 F1（IP 段静默触发本地解析）。
+
+### 13.6 实现前置条件
+
+1. 先解决 Needs Verification 12（no-resolve 等价性）——**未决则不应开工**。
+2. 确定 `version` 取值：所需字段自 v1 即存在，取低版本可最大化客户端兼容，但需确认目标客户端的最低支持版本（Needs Verification 13）。
+3. 新增 renderer（JSON）、`SingBox/` 产物目录、Profile 模板（JSON，不同于现有七端的 INI / YAML）、门户 7→8、`parity_check` / `validate_views` / `verify_profiles` 三道门禁扩展。
