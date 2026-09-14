@@ -2,48 +2,40 @@
 
 # <img src="engine/docs/images/avatar.png" width="36" height="36" alt="" style="vertical-align:middle;border-radius:50%" /> Blink
 
-**多客户端规则与配置 · 自动构建 · 稳定分发**
-
 [![Update Rule-Sets](https://github.com/byyoshen/Blink/actions/workflows/update.yml/badge.svg?branch=main)](https://github.com/byyoshen/Blink/actions/workflows/update.yml)
-[![Stars](https://img.shields.io/github/stars/byyoshen/Blink?style=flat-square&label=Stars&color=ffcb2e)](https://github.com/byyoshen/Blink/stargazers)
-[![Updated](https://img.shields.io/github/last-commit/byyoshen/Blink/main?style=flat-square&label=Updated&color=3178c6)](https://github.com/byyoshen/Blink/commits/main)
 [![Portal](https://img.shields.io/badge/Portal-网页入口-4d6bfe?style=flat-square)](https://byyoshen.github.io/Blink/)
 [![License: MIT](https://img.shields.io/github/license/byyoshen/Blink?style=flat-square)](LICENSE)
 
 </div>
 
-<br>
-
 个人使用的**多客户端规则与配置文件**仓库，分两层：
 
-- **规则层（自动维护）**：把经过审计的上游规则转换为一份 Canonical Rule Model，渲染为 **Surge / Shadowrocket / Loon / Stash / mihomo / Egern / Quantumult X** 七种客户端格式，每日更新，不是为每个客户端维护一套独立规则。
-- **配置层（人工维护）**：把同一份配置意图（策略组 / 规则引用 / 通用设置）迁移为七客户端**完整配置文件**，单一订阅池组织、占位符已内置，替换一条订阅即可复用。
+- **规则层（自动维护）** —— 把经过审计的上游规则编译为一份 canonical 规则，渲染成
+  **Surge / Shadowrocket / Loon / Stash / mihomo / Egern / Quantumult X** 七种客户端格式，
+  每日更新。不是为每个客户端各维护一套规则。
+- **配置层（人工维护）** —— 把同一份配置意图（策略组 / 规则引用 / 通用设置）迁移为七客户端
+  **完整配置文件**，单一订阅池、订阅占位符已内置。
 
-生成目录由构建器自动维护、绝不手工修改；仓库不含任何订阅 URL、token、密码或证书等敏感信息。
-
-> [!NOTE]
-> 配置文件是**人工维护层**，不随规则每日更新；导入前把 `https://YOUR-SUBSCRIPTION-URL` 替换为你的订阅链接，并真机验证策略组与分流效果。
+生成目录由构建器维护，**不允许手工修改**；仓库不含任何订阅 URL、token、密码或证书。
 
 > [!IMPORTANT]
-> 本仓库仅供个人学习研究使用；使用前请阅读 [DISCLAIMER.md](DISCLAIMER.md) 与 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。**禁止任何形式的转载或发布至国内平台**。
-
----
+> 仅供个人学习研究使用。使用前请阅读 [DISCLAIMER.md](DISCLAIMER.md) 与
+> [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)；**禁止以任何形式转载或发布至国内平台**。
 
 ## 目录
 
-- [规则集快速开始](#rules-quickstart)
-- [配置文件快速开始](#profiles-quickstart)
-- [网页入口](#portal)
-- [完整性校验](#integrity)
-- [来源政策](#sources)
-- [常见问题](#faq)
-- [使用与许可](#license)
+- [规则集](#规则集)
+- [语义分段视图](#语义分段视图)
+- [配置文件](#配置文件)
+- [网页入口](#网页入口)
+- [完整性校验](#完整性校验)
+- [来源政策](#来源政策)
+- [常见问题](#常见问题)
+- [使用与许可](#使用与许可)
 
----
+## 规则集
 
-<a id="rules-quickstart"></a>
-
-## 规则集快速开始
+规则集文件**不带策略名**，policy 由引用处指定。七端引用方式：
 
 | 客户端 | 配置段 | 引用方式 | 分发目录 |
 | --- | --- | --- | --- |
@@ -51,63 +43,17 @@
 | Shadowrocket | `[Rule]` | `RULE-SET,<URL>,<策略>` | `Shadowrocket/` |
 | Loon | `[Remote Rule]` | `URL, policy=<策略>, tag=<App>, enabled=true` | `Loon/` |
 | Stash | `rule-providers` + `rules` | `RULE-SET,<App>,<策略>` | `Stash/` |
-| mihomo | `rule-providers` + `rules` | `RULE-SET,<App>,<策略>` | `mihomo/`（已去 USER-AGENT） |
+| mihomo | `rule-providers` + `rules` | `RULE-SET,<App>,<策略>` | `mihomo/` |
 | Egern | `rules` | `rule_set: {match: <URL>, policy: <策略>}` | `Egern/` |
 | Quantumult X | `[filter_remote]` | `URL, tag=<App>, force-policy=<策略>, …` | `QuantumultX/` |
 
-其中 `Surge/`、`Loon/`、`Shadowrocket/`、`Stash/` 四份内容**逐字节相同**，按需取自己客户端的目录即可。以下按客户端给出完整示例。
+`Surge/`、`Loon/`、`Shadowrocket/`、`Stash/` 四份内容**逐字节相同**，取自己客户端的目录即可。
+`mihomo/` 是同一份内容去掉 `USER-AGENT` 行（Clash 系内核无此类型）—— 构建器显式丢弃并计数，
+不静默转换。
 
-每个 App 默认提供完整 `.list`；需要 domain-first / IP-last 时另有**语义分段**视图：
+需要多行配置的三个客户端：
 
-- `<App>-domainset.conf` — 纯域名段（`DOMAIN` / `DOMAIN-SUFFIX`，**不触发 DNS**）；
-- `<App>-nonip.conf` — 非 IP 段（含 `DOMAIN-KEYWORD` / `USER-AGENT` / `PROCESS-NAME`，**不触发 DNS**）；
-- `<App>-ip.conf` — IP 段（`IP-CIDR` / `IP-CIDR6`，**触发 DNS**，需置于规则末尾）。
-
-> **设计理念**：规则类型即 DNS 语义 —— `domainset` / `non_ip` 段命中时不触发本地解析，只有走到
-> `ip` 段（或 `FINAL` / direct）才解析域名；因此所有域名段必须置于所有 IP 段**之前，没有例外**
-> （domain-first / IP-last），否则待代理域名会被本地提前解析，失去 DNS 防污染保护。
-> 这个分类与不变式借鉴自 [SukkaW / Surge](https://github.com/SukkaW/Surge) 及其博客：
-> [I have my unique Surge setup](https://blog.skk.moe/post/i-have-my-unique-surge-setup/) ·
-> [DNS 泄漏、CDN 访问优化与 Fake IP](https://blog.skk.moe/post/lets-talk-about-dns-cdn-fake-ip/) ·
-> [生活在字典树上](https://blog.skk.moe/post/how-to-store-way-too-many-domains-and-ips-101/)。
-
-> [!WARNING]
-> **复制前必读：文件后缀名就是引用方式的答案，写反了会"静默失效"**
->
-> | 你要引用的文件 | 正确写法（Surge / Shadowrocket） |
-> | --- | --- |
-> | `<App>-domainset.conf`（内容为 `.example.com` 这类裸域名清单） | `DOMAIN-SET,<URL>,<策略>,extended-matching` |
-> | `<App>-nonip.conf`（内容为 `DOMAIN,` / `DOMAIN-SUFFIX,` 等完整规则行） | `RULE-SET,<URL>,<策略>` |
-> | `<App>-ip.conf`（内容为 `IP-CIDR,` / `IP-CIDR6,` 规则行） | `RULE-SET,<URL>,<策略>,no-resolve` |
->
-> 引用方式写反后 Surge **不会报错**，只是该规则集不生效、流量悄悄落到 `FINAL`——如果发现分流没有按预期走，请先检查这一项。
-> 一句话口诀：**`-domainset.conf` 配 `DOMAIN-SET`，`-nonip.conf` / `-ip.conf` 配 `RULE-SET`，IP 段记得加 `no-resolve`**。
-> 门户的规则集卡片复制出来的是 raw 地址（Stash / mihomo 例外，给的是完整 `rule-providers` 片段）；
-> **引用类型由文件后缀决定，按上表套用即可**，不要自行改写。
-
-规则文件**不带策略名**，policy 由引用处指定。各客户端引用写法如下。
-
-### Surge / Shadowrocket
-
-在 `[Rule]` 段、`FINAL` 之前加一行：
-
-```ini
-RULE-SET,https://raw.githubusercontent.com/byyoshen/Blink/main/Surge/<App>.list,<你的策略>
-```
-
-Shadowrocket 语法与 Surge 相同，也可直接用 `Shadowrocket/` 目录 URL。
-
-### Loon
-
-在 `[Remote Rule]` 段添加一行：
-
-```ini
-https://raw.githubusercontent.com/byyoshen/Blink/main/Loon/<App>.list, policy=<你的策略>, tag=<App>, enabled=true
-```
-
-### Stash
-
-在 `rule-providers` 注册 classical text 规则集，在 `rules` 里用 `RULE-SET` 引用：
+**Stash**
 
 ```yaml
 rule-providers:
@@ -121,14 +67,7 @@ rules:
   - RULE-SET,<App>,<你的策略>
 ```
 
-### mihomo（Clash Meta for Android / FLClash）
-
-> [!IMPORTANT]
-> **2026-09-13 目录重命名**：`Clash/` 已改为 `mihomo/`，`Profiles/Clash.yaml` 已改为
-> `Profiles/mihomo.yaml`。本仓库 target 一直是 mihomo 内核，「Clash」只是遗留的显示名。
-> **旧路径不再可用**，请把引用行里的 `/Clash/` 改成 `/mihomo/`。
-
-mihomo 内核通用（Clash Meta for Android / FLClash）。在 `rule-providers` 注册 classical text 规则集，在 `rules` 里用 `RULE-SET` 引用；Blink 规则经 `mihomo/` 目录分发（USER-AGENT 已由构建器显式去除并计数）：
+**mihomo**（Clash Meta for Android / FLClash）
 
 ```yaml
 rule-providers:
@@ -142,7 +81,7 @@ rules:
   - RULE-SET,<App>,<你的策略>
 ```
 
-### Egern
+**Egern**
 
 ```yaml
 rules:
@@ -151,111 +90,121 @@ rules:
       policy: <你的策略>
 ```
 
-（Egern 也可以直接用 `rule_set.match` 消费 `Surge/` 目录的 classical `.list` URL。）
+其余四端各加一行。**下面每段属于一个客户端，不要混进同一份配置。**
 
-### Quantumult X
+**Surge / Shadowrocket** —— `[Rule]` 段，`FINAL` 之前：
 
-在 `[filter_remote]` 段添加一行；行尾的 `policy` 是占位符，实际策略由 `force-policy` 指定：
+```ini
+RULE-SET,https://raw.githubusercontent.com/byyoshen/Blink/main/Surge/<App>.list,<你的策略>
+```
+
+**Loon** —— `[Remote Rule]` 段：
+
+```ini
+https://raw.githubusercontent.com/byyoshen/Blink/main/Loon/<App>.list, policy=<你的策略>, tag=<App>, enabled=true
+```
+
+**Quantumult X** —— `[filter_remote]` 段：
 
 ```ini
 https://raw.githubusercontent.com/byyoshen/Blink/main/QuantumultX/<App>.list, tag=<App>, force-policy=<你的策略>, update-interval=172800, opt-parser=false, enabled=true
 ```
 
-<sub>raw 直连不稳时，可改用 jsDelivr 加速地址（缓存最长 12 小时，规则更新会相应延迟）：`https://cdn.jsdelivr.net/gh/byyoshen/Blink@main/Surge/<App>.list`（其余客户端同理替换目录，如 `mihomo/`、`QuantumultX/`）。</sub>
+> raw 直连不稳时可改用 jsDelivr（缓存最长 12 小时，规则更新相应延迟）：
+> `https://cdn.jsdelivr.net/gh/byyoshen/Blink@main/Surge/<App>.list`，其余目录同理替换。
 
----
+> **路径变更（2026-09-13）**：`Clash/` 已改为 `mihomo/`，`Profiles/Clash.yaml` 已改为
+> `Profiles/mihomo.yaml`。旧 `/Clash/` raw URL 不再可用。
 
-<a id="profiles-quickstart"></a>
+## 语义分段视图
 
-## 配置文件快速开始
+除完整 `.list` 外，每个 App 按语义派生 domain-first / IP-last 的分段视图，供需要控制解析
+时机与顺序的场景引用：
 
-七客户端**完整配置文件**位于 [`Profiles/`](Profiles/)：`Surge.conf`、`Shadowrocket.conf`、`Loon.conf`、`Stash.yaml`、`mihomo.yaml`、`Egern.yaml`、`QuantumultX.conf`。
+| 视图 | 内容 | 引用方式（Surge / Shadowrocket） | 触发 DNS |
+| --- | --- | --- | --- |
+| `<App>-domainset.conf` | 纯域名裸清单（`DOMAIN` / `DOMAIN-SUFFIX`） | `DOMAIN-SET,<URL>,<策略>,extended-matching` | 否 |
+| `<App>-nonip.conf` | 非 IP 规则行（`DOMAIN,` / `DOMAIN-SUFFIX,` / `DOMAIN-KEYWORD,` / `USER-AGENT,` / `PROCESS-NAME,`） | `RULE-SET,<URL>,<策略>` | 否 |
+| `<App>-ip.conf` | IP 规则行（`IP-CIDR,` / `IP-CIDR6,`） | `RULE-SET,<URL>,<策略>,no-resolve` | **是** |
 
-1. 下载对应客户端的配置文件（或在[门户](https://byyoshen.github.io/Blink/)「配置文件」板块用 **iOS 一键导入**）。
-2. 用文本编辑器把 `https://YOUR-SUBSCRIPTION-URL` 替换成你的订阅链接。
+两点必须记住：
+
+1. **`domainset` 与 `nonip` 互斥** —— 非 IP 部分全部是域名时产出 `-domainset.conf`，含
+   keyword / UA / PROCESS 时产出 `-nonip.conf`，同一 App 只会得到其中之一。空视图不产出，
+   纯域名 App 没有 `-ip.conf`。
+2. **引用类型由文件后缀决定** —— `-domainset.conf` 配 `DOMAIN-SET`，`-nonip.conf` 与
+   `-ip.conf` 配 `RULE-SET`。写反后 Surge **不会报错**，该规则集只是不生效、流量悄悄落到
+   `FINAL`；分流不符预期时先查这一项。
+
+**顺序不变式：所有域名段必须置于所有 IP 段之前，没有例外。** 客户端匹配 IP 规则前必须先解析
+域名，顺序写反会让待代理域名被本地提前解析，失去 DNS 防污染保护。理由、后果与守它的门禁见
+[`engine/docs/DNS_SEMANTICS.md`](engine/docs/DNS_SEMANTICS.md)。
+
+门户复制出来的是 raw 地址（Stash / mihomo 例外，给的是完整 `rule-providers` 片段），
+不要自行改写引用类型。
+
+## 配置文件
+
+七客户端**完整配置文件**位于 [`Profiles/`](Profiles/)：`Surge.conf`、`Shadowrocket.conf`、
+`Loon.conf`、`Stash.yaml`、`mihomo.yaml`、`Egern.yaml`、`QuantumultX.conf`。
+
+1. 下载对应客户端的配置文件，或在[门户](https://byyoshen.github.io/Blink/)「配置文件」板块用
+   **iOS 一键导入**（mihomo 是 Android 客户端，手动导入）。
+2. 把 `https://YOUR-SUBSCRIPTION-URL` 替换成你的订阅链接。
 3. 导入客户端，真机验证策略组与分流效果。
 
-配置采用**单一订阅池**组织：全部策略组与地区筛选只依赖一条订阅；规则全部通过远程 URL 引用（本仓库规则 + 成熟上游基础设施），不复制规则内容。配置文件**人工维护、人工审核后发布**，不随规则每日更新。
-
----
-
-<a id="portal"></a>
+**人工维护层**：配置文件不随规则每日更新。唯一入口是
+[`engine/sources/profile/intent.yaml`](engine/sources/profile/intent.yaml) 与 templates，
+改后运行 `engine/scripts/build_profile.py --write` 重建，人工确认后提交。
 
 ## 网页入口
 
-无需域名即可访问：[`https://byyoshen.github.io/Blink/`](https://byyoshen.github.io/Blink/)，页面板块：
-
-- **规则集**：切换七客户端标签查看每个 App 的规则数与接入方式，一键复制；
-- **接入你的客户端**：七客户端全量接入片段，一键复制；
-- **配置文件**：七客户端配置文件的下载 / 复制 / **iOS 一键导入**（支持 URL Scheme 的客户端；mihomo 客户端为 Android，手动导入）与导入指引；
-- **构建与来源**：构建管线与选源原则。
-
-<div align="center">
-  <a href="https://byyoshen.github.io/Blink/">
-    <img src="engine/docs/images/portal-preview.png" alt="Blink 门户预览" width="720" />
-  </a>
-</div>
-
----
-
-<a id="integrity"></a>
+[`https://byyoshen.github.io/Blink/`](https://byyoshen.github.io/Blink/) —— 规则集、接入片段、
+配置文件（含 iOS 一键导入）与构建来源四个板块，七客户端可切换，规则数与接入片段一键复制。
 
 ## 完整性校验
 
-根目录 [`manifest.json`](manifest.json) 为 30 个 App 的 **210 个主产物与 266 个语义视图**记录 SHA256、上游内容指纹、canonical 规则指纹，以及显式降级与 exclude 命中统计。push / PR 与每日更新会自动执行七端等价性、重复/空集/排序、语义视图一致性、跨 App overlap、Profile 引用、门户数据同步、仓库身份一致性及敏感模式门禁；完整命令与设计边界见 [`engine/docs/MACHINE_GATES.md`](engine/docs/MACHINE_GATES.md)。
+根目录 [`manifest.json`](manifest.json) 为 30 个 App 的 **210 个主产物与 266 个语义视图**记录
+SHA256、上游内容指纹、canonical 规则指纹，以及显式降级与 exclude 命中统计。
 
----
-
-<a id="sources"></a>
+push / PR 与每日更新自动执行门禁：单元与回归、七端等价性、产物健康度、语义视图一致性、
+跨 App overlap、产物溯源、Profile 完整性、门户数据同步、仓库身份一致性与敏感模式。
+完整命令与设计边界见 [`engine/docs/MACHINE_GATES.md`](engine/docs/MACHINE_GATES.md)。
 
 ## 来源政策
 
-- 每个 App 独立审计选源：以更新活跃度、覆盖、范围、格式与维护质量为证据，作者偏好只在候选规范化后等价时作 tie-breaker（顺序：SukkaW > Repcz > 其他长期验证的成熟作者）；每 App 恰好 1 个 primary、至多 1 个 supplemental。完整的候选、证据与结论档案见 [`engine/SOURCE_AUDITS.md`](engine/SOURCE_AUDITS.md)。
+- 每个 App 独立审计选源，以更新活跃度、覆盖完整度、范围精准度、格式适合度与维护质量为证据；
+  作者偏好（SukkaW > Repcz > 其他长期验证的成熟作者）只在候选规范化后等价时作 tie-breaker。
+  每 App 恰好 1 个 primary、至多 1 个 supplemental。完整候选、证据与结论见
+  [`engine/SOURCE_AUDITS.md`](engine/SOURCE_AUDITS.md)。
 - Reject / Domestic / China IP / CDN / LAN 等基础设施**不复制进本仓库**，继续直接引用成熟上游。
-
----
-
-<a id="faq"></a>
 
 ## 常见问题
 
-**这是什么？**
+**这是什么？** 一份 canonical 规则渲染成七种客户端格式的规则集，外加人工维护的完整配置文件。
+不是代理客户端，不负责你的策略。
 
-一份 canonical 规则自动渲染成七种客户端格式的规则集；另有人工维护的完整配置文件（`Profiles/`）。不是代理客户端，不负责你的策略。
+**为什么各客户端规则数不一样？** 显式降级，不是缺漏：Egern / Quantumult X 丢弃
+`PROCESS-NAME`，mihomo 丢弃 `USER-AGENT`。计数见门户卡片与构建报告。
 
-**为什么规则文件里没有策略名？**
+**规则多久更新？** 每日自动更新（约北京时间 00:01），有变化才提交。客户端侧的刷新节奏由引用行
+的 `interval` 决定：Stash / mihomo 1 天、Quantumult X 2 天、其余由客户端自行更新。
 
-策略由引用处指定（`RULE-SET,URL,policy` / Loon `policy=` / Egern `rule_set.policy` / QX `force-policy`），规则集只描述"命中什么"。QX 行尾 `policy` 是占位符。
+**出问题了怎么反馈？** 先自检引用类型与顺序（见[语义分段视图](#语义分段视图)），以及目标是否属
+基建类（Reject / Domestic / CDN / China IP / LAN，有意不收录）。确属漏网请附客户端 + 日志确认的
+域名 + 与上游比较的结果，或按[规则反馈模板](.github/ISSUE_TEMPLATE/rule-feedback.md)提交。
+个人仓库无响应承诺 —— 带证据的反馈最快修复。
 
-**为什么我的客户端比其他端少几条规则？**
-
-显式降级，不是缺漏：Egern / Quantumult X 丢弃 `PROCESS-NAME`，mihomo 丢弃 `USER-AGENT`（Clash 系内核无此类型），数量见门户卡片与构建报告。
-
-**规则多久更新？**
-
-每日自动更新（约 00:01，北京时间），有变化才提交。刷新节奏由引用行的 `interval` 决定：Stash / mihomo 1 天、Quantumult X 2 天、其余由 App 自动更新。
-
-**出问题了，怎么反馈？**
-
-先自检：① 策略与顺序；② 目标是否属基建类（Reject / Domestic / CDN / China IP / LAN，有意不收录）。确属漏网请附：客户端 + 日志确认的域名 + 与上游比较结果（或直接按 [规则反馈模板](.github/ISSUE_TEMPLATE/rule-feedback.md) 提交）。个人仓库无响应承诺——带证据的反馈最快修复。
-
-**我能参与维护吗？**
-
-规则由作者本人维护，修改权不在别处——建议与反馈永远欢迎。若你提交 Pull Request，被我看到的话我会 Review——是否采纳、何时响应，由我决定。
-
----
-
-<a id="license"></a>
+**我能参与维护吗？** 规则由作者本人维护。带证据的建议与反馈永远欢迎；Pull Request 是否采纳、
+何时响应，由作者决定。
 
 ## 使用与许可
 
-感谢 Repcz、SukkaW、blackmatrix7、v2fly 等上游作者对规则集的长期维护（各 App 的来源明细与许可见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)）。
+感谢 Repcz、SukkaW、blackmatrix7、v2fly 等上游作者对规则集的长期维护（各 App 的来源明细与
+许可见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)）。
 
-本仓库为个人规则分发与学习维护而设，无任何担保；请结合自己的代理客户端策略与日志自行验证，并遵守适用法律、服务条款与上游许可。**原创部分（构建代码、测试、工作流、门户源码与文档）以 [MIT License](LICENSE) 授权**；`Surge/`、`Loon/`、`Shadowrocket/`、`Stash/`、`mihomo/`、`Egern/`、`QuantumultX/` 与 `Profiles/` 等生成产物**不在 MIT 覆盖范围内**，逐文件遵循 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) 记载的上游许可。
-
-> [!WARNING]
-> 任何以任何方式查看此项目的人或直接或间接使用该项目的使用者都应仔细阅读此声明。
->
-> 保留随时更改或补充此免责声明的权利。
->
-> 一旦使用并复制了该项目的任何文件，则视为您已接受此免责声明。
+本仓库为个人规则分发与学习维护而设，无任何担保；请结合自己的客户端策略与日志自行验证，并遵守
+适用法律、服务条款与上游许可。原创部分（构建代码、测试、工作流、门户源码与文档）以
+[MIT License](LICENSE) 授权；`Surge/`、`Loon/`、`Shadowrocket/`、`Stash/`、`mihomo/`、`Egern/`、
+`QuantumultX/` 与 `Profiles/` 等生成产物**不在 MIT 覆盖范围内**，逐文件遵循
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) 记载的上游许可。
