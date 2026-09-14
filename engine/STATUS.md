@@ -2,8 +2,8 @@
 
 > 本文是仓库当前状态的维护者侧摘要，不重复 README 的对外说明。规则与来源规范见
 > [AGENTS.md](../AGENTS.md)，七端格式事实见 [docs/MULTI_CLIENT_AUDIT.md](docs/MULTI_CLIENT_AUDIT.md)，
-> 机器门禁见 [docs/MACHINE_GATES.md](docs/MACHINE_GATES.md)，完整选源档案见
-> [SOURCE_AUDITS.md](SOURCE_AUDITS.md)。
+> 机器门禁见 [docs/MACHINE_GATES.md](docs/MACHINE_GATES.md)，规则模型的 DNS 语义与顺序不变式见
+> [docs/DNS_SEMANTICS.md](docs/DNS_SEMANTICS.md)，完整选源档案见 [SOURCE_AUDITS.md](SOURCE_AUDITS.md)。
 >
 > 本文档不包含任何订阅 URL、token、凭据或本地路径。
 
@@ -19,8 +19,12 @@
 - **数据面**：30 个 App、27 个实际读取的上游输入、210 个七端主产物；`manifest.json` 确定性记录
   每 App 的 source definition、上游输入指纹、supplement、canonical 规则与七端产物 SHA256，并额外记录
   per-client 语义视图（domainset / nonip / ip）。
-- **规则层 multi-view**：`build.py` 的 `semantic_views()` 从 canonical 派生 `-domainset.conf`（纯域名）、
-  `-nonip.conf`（含 keyword / UA / PROCESS）、`-ip.conf`（IP 段）视图，IP 段恒置于域名段之后；
+- **规则层 multi-view**：`build.py` 的 `semantic_views()` 把 canonical 按「非 IP 段在前、IP 段在后」
+  派生为至多两个视图 —— 非 IP 段整体只有 `DOMAIN` / `DOMAIN-SUFFIX` 时产出 `-domainset.conf`
+  （裸域名清单），一旦含 `DOMAIN-KEYWORD` / `USER-AGENT` / `PROCESS-NAME` 就改为产出 `-nonip.conf`
+  （classical 规则行）；**两者互斥**，同一 App 只产出其中之一，空视图不产出。有 IP 规则时另有
+  `-ip.conf`。实测当前 30 个 App 为 17 个 `-domainset.conf` + 13 个 `-nonip.conf`，无一同时具备；
+  权威定义见 `engine/scripts/validate_views.py` 的 `VIEW_KINDS`。
   Surge / Shadowrocket 为域名清单、Stash / mihomo 为 `behavior:domain`、Loon / Egern 为 classical、
   QX 为 `HOST*` filter；`validate_views.py` 门禁已接入 `checks.yml` 与每日 `update.yml`。
 - **Profile 层**：`intent.yaml` 收敛为普适八组（单一订阅池 + 地区组 / Auto + Proxy / Final + 6 个 App 路由），

@@ -201,6 +201,7 @@ QuantumultX/<App>.list   # QX filter 行（行尾占位符 policy，force-policy
 
 - 采纳 Repcz/Tool 生态惯例：每客户端独立目录，各客户端用户直接取本客户端目录 URL；git 对相同内容只存一份 blob，仓库体积几乎不增。
 - 采纳 SukkaW/Surge 思想：内容（canonical）与每客户端序列化严格分离；README 提供每客户端引用片段。SukkaW 的 domainset/non_ip/ip 拆分与 mihomo `domain/ipcidr` 行为优化对当前规模（≤1158 条/App）无必要，列为未来可选优化。
+  > 前一句的规模判断**已被后续实现取代**：语义多视图于 2026-08-21 落地（见 §12）。该拆分背后的 DNS 语义与 domain-first / IP-last 不变式现由 `DNS_SEMANTICS.md` 单独立文。
 
 ## 9. Surge Backward Compatibility Plan
 
