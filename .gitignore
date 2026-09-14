@@ -17,3 +17,5 @@ engine/reports/build_report.json
 engine/portal/node_modules/
 engine/portal/dist/
 engine/portal/.npm-cache/
+# Local-only brand masters: kept for review, never published (see issue #10).
+/assets/brand/
