@@ -14,7 +14,7 @@
   现已迁移为 `wendy1a1a`，2026-09-11 迁移为 `byyoshen`——GitHub 对旧账户路径（含 raw / Pages）提供 301 重定向，
   仓库内不再引用旧名称。
 
-## 当前状态（2026-09-01 更新）
+## 当前状态（2026-09-14 更新）
 
 - **数据面**：30 个 App、27 个实际读取的上游输入、210 个七端主产物；`manifest.json` 确定性记录
   每 App 的 source definition、上游输入指纹、supplement、canonical 规则与七端产物 SHA256，并额外记录
@@ -71,8 +71,10 @@ engine/
 1. 当前 Git 工作区、`git status`、Git 历史与已生成文件；
 2. `engine/sources/apps.yaml`、`engine/scripts/*.py`、测试与 workflow；
 3. `AGENTS.md`、README 与合规文档（DISCLAIMER / THIRD_PARTY_NOTICES）；
-4. 本文件；
-5. 历史文档中可能残留的废弃设计或临时推测，仅作追溯，不作依据。
+4. `engine/docs/` 下的规范文档：`MULTI_CLIENT_AUDIT.md`（七端格式事实）、
+   `DNS_SEMANTICS.md`（规则模型的不变式）、`MACHINE_GATES.md`（门禁机制）；
+5. 本文件；
+6. 历史文档中可能残留的废弃设计或临时推测，仅作追溯，不作依据。
 
 ## 构建器关键语义
 

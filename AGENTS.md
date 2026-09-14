@@ -21,6 +21,7 @@
 - 输出规则不带策略名：Surge / Shadowrocket 由主配置 `RULE-SET`、Loon 由 `[Remote Rule]`、Stash 由 `rule-providers` + `RULE-SET`、mihomo 由 `rule-providers`（`behavior: classical, format: text`）+ `RULE-SET`、Egern 由 `rule_set.match` 在引用处指定策略。Quantumult X 例外：filter 行尾必有策略字段，本仓库用字面占位符 `policy`，实际策略由 `[filter_remote]` 引用行的 `force-policy` 指定（QX 的 no-resolve 槽位无生产实证，渲染时统一省略并已记入 `engine/docs/MULTI_CLIENT_AUDIT.md`）。
 - `exclude` 的丢弃同样必须可审计：type-level exclude 记入 `skipped_excluded`，domain 级 exclude 记入 `manifest.json` 的 `canonical.excluded_domains`（每条声明的命中数）。某条 exclude 命中数归零意味着它可能已因上游改写而失效，需要复核上游是否仍携带该规则，或删掉这条 exclude。
 - 每个客户端渲染器只允许序列化该客户端可无损表达的规则；无法表达时必须显式丢弃并在构建报告计数（降级项：PROCESS-NAME 对 Egern / Quantumult X 显式丢弃并计数，USER-AGENT 对 mihomo 显式丢弃并计数；classical 输出保持 Surge / Loon / Shadowrocket / Stash 四端逐字节相同、保留 PROCESS-NAME 行——Loon / Shadowrocket 无此类型，客户端直接忽略），禁止静默转换。
+- 语义分段视图（`-domainset.conf` / `-nonip.conf` / `-ip.conf`）由 `build.py` 的 `semantic_views()` 从 canonical 派生：`domainset` 与 `nonip` 是**同一非 IP 段的两种命名**（整段只有 `DOMAIN` / `DOMAIN-SUFFIX` 产出 `domainset`，出现 `DOMAIN-KEYWORD` / `USER-AGENT` / `PROCESS-NAME` 则产出 `nonip`），互斥，同一 App 只产出其中之一；空视图不产出。**所有域名段必须置于所有 IP 段之前，没有例外**——客户端匹配 IP 规则前必须先解析域名，顺序写反会让待代理域名被本地提前解析，失去 DNS 防污染保护，且 Surge 不报错。引用类型由后缀决定（`domainset` 配 `DOMAIN-SET`，`nonip` / `ip` 配 `RULE-SET`），写反同样静默失效。依据、后果与守它的门禁见 `engine/docs/DNS_SEMANTICS.md`。
 
 ## Upstream Source Selection Policy
 

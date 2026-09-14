@@ -595,6 +595,41 @@ class BuildTests(unittest.TestCase):
             removed = build.prune_stale_views([compilation], manifest, root)
             self.assertEqual(len(removed), len(build.CLIENTS))
 
+    def test_semantic_views_name_the_non_ip_portion_by_its_content(self) -> None:
+        # The non-IP portion is emitted once, under one of two names: a pure
+        # domain portion becomes `domainset`, anything carrying keyword / UA /
+        # PROCESS becomes `nonip`. Never both -- the two need different
+        # reference types (DOMAIN-SET vs RULE-SET), so an app publishing both
+        # would invite referencing the wrong one, which Surge does not report.
+        location = build.SourceLocation("test", 1, ("Test",))
+        domain_only = [
+            build.Rule("DOMAIN", "api.example.com", (), location),
+            build.Rule("DOMAIN-SUFFIX", "example.com", (), location),
+        ]
+        self.assertEqual([name for name, _ in build.semantic_views(domain_only)], ["domainset"])
+
+        for extra_kind, value in (
+            ("DOMAIN-KEYWORD", "example"),
+            ("USER-AGENT", "Example App*"),
+            ("PROCESS-NAME", "com.example.app"),
+        ):
+            with self.subTest(extra=extra_kind):
+                names = [
+                    name
+                    for name, _ in build.semantic_views(
+                        [*domain_only, build.Rule(extra_kind, value, (), location)]
+                    )
+                ]
+                self.assertEqual(names, ["nonip"])
+
+        # IP always comes last, and a domain-only app gets no empty ip view.
+        with_ip = [
+            *domain_only,
+            build.Rule("IP-CIDR", "192.0.2.0/24", ("no-resolve",), location),
+        ]
+        self.assertEqual([name for name, _ in build.semantic_views(with_ip)], ["domainset", "ip"])
+        self.assertEqual(build.semantic_views([]), [])
+
     def test_canonicalized_ip_rules_are_reported_not_silent(self) -> None:
         source_url = "https://example.invalid/Surge/Test.list"
         config = app_config(source_format="surge-rule-set", url=source_url)

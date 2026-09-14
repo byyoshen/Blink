@@ -17,6 +17,8 @@
 >   `Profiles/Clash.yaml` → `Profiles/mihomo.yaml`）。**本文件下文保留旧名不改** ——
 >   这是一份有日期的可证伪登记表，改写已记录的证据等于伪造当时的观测。
 >   读到 F1 / F13 里的「Clash」时，指的就是现在的 mihomo。
+> - 2026-09-14（补审）—— 补审文档层，新增 F16（语义视图被写成三个并列视图）与 O9
+>   （该漂移没有任何门禁在看）。**F1–F15 的观测与结论均未改动。**
 
 ## 审查范围
 
@@ -168,6 +170,39 @@ URL 形式是合法的，`secret_scan` / `verify_profiles` 都不管路径存在
 `MascotSwap.tsx`；`About.tsx` 的两个文档链接是全站仅有的无样式 `<a>`，深色主题下几乎
 不可读。
 
+### 文档与代码的语义漂移（2026-09-14 补审）
+
+#### F16 · 语义视图被写成三个并列视图，构建器只产出两个且互斥 · 实证 · `b5da23f`
+
+`README.md` 与 `engine/STATUS.md` 把 `-domainset.conf` / `-nonip.conf` / `-ip.conf` 列为三个
+并列视图，读起来像每个 App 都产出三个。实际 `build.py` 的 `semantic_views()` 里只有**一次**
+`views.append`，`domainset` 与 `nonip` 是同一个非 IP 段的两种命名，由内容决定：
+
+```python
+views.append(("domainset" if pure_domain else "nonip", nonip))
+```
+
+整段只有 `DOMAIN` / `DOMAIN-SUFFIX` 才叫 `domainset`；只要出现 `DOMAIN-KEYWORD` /
+`USER-AGENT` / `PROCESS-NAME` 就改叫 `nonip`。两者互斥，同一 App 只产出一个。
+
+**危害**：两者的引用类型不同（`domainset` 配 `DOMAIN-SET`，`nonip` 配 `RULE-SET`），写反后
+Surge 不报错、规则集静默失效。文档让人以为它们并存，正好把人引向「两个都引用」或「引用不
+存在的那个」—— 与 F1 同类的静默失效，只是入口在文档而不是代码。
+
+**同时暴露的漏写**：原文把 `nonip` 的内容写成「keyword / UA / PROCESS」，漏掉了普通的
+`DOMAIN,` / `DOMAIN-SUFFIX,` 行，而那才是它的主体 —— PayPal 的 `nonip` 248 条里 246 条是
+`DOMAIN-SUFFIX`。
+
+实证：`validate_views.py` 的门禁输出显示当前 30 个 App 为 **17 个 `-domainset.conf` +
+13 个 `-nonip.conf`，无一同时具备**。
+
+修复：`README.md` 按互斥重写并补全 `nonip` 的内容；`STATUS.md` 同步修正；该不变式归入新文档
+`engine/docs/DNS_SEMANTICS.md` 并进入文档优先级链条；`AGENTS.md` 增补该条并交叉引用；
+`semantic_views()` 的命名与互斥规则由新增测试
+`test_semantic_views_name_the_non_ip_portion_by_its_content` 锁定。
+
+**没有任何门禁能拦这类漂移** —— 见 O9。
+
 ## 验证结果（2026-09-12）
 
 ```text
@@ -215,6 +250,16 @@ batch 2 那次真实 `--write` 在 batch 3 / 4 的改动之前；之后只跑过
 代码（`IP_NO_RESOLVE_CLIENTS` 包含 surge）无需改动，已回写 `MULTI_CLIENT_AUDIT.md` §2 与 §4。
 结论：官方语法列表的 `[,pre-matching][,extended-matching]` **不是穷举** ——
 这本身是值得记的一条：以后不能把该文档的可选项列表当作完整集合来反推「不支持」。
+
+**O9 · 文档对语义视图的描述与构建器之间无门禁**（F16 的成因）
+F16 完全靠人工比对发现：现有门禁要么作用于**产物**（parity / health / validate_views /
+manifest），要么只看**链接存在性**（`RepoDocLinkTests`），没有一条把「文档里写的视图语义」与
+代码对上。
+
+代码侧现已由 `test_semantic_views_name_the_non_ip_portion_by_its_content` 锁定互斥与命名规则，
+但**散文侧的漂移无法机械校验** —— 与 F15 的结论同一性质：上得了机器的是不变量，不是叙述。
+
+本条保留为未闭环项，而不是拿「加了个测试」宣称闭环。
 
 ## 明确不做
 
