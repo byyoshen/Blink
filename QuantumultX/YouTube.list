@@ -1,0 +1,17 @@
+# 规则名称: YouTube
+# 规则统计: 14
+
+HOST,youtubei.googleapis.com,policy
+HOST,yt3.ggpht.com,policy
+HOST-SUFFIX,googlevideo.com,policy
+HOST-SUFFIX,gvt2.com,policy
+HOST-SUFFIX,withyoutube.com,policy
+HOST-SUFFIX,youtu.be,policy
+HOST-SUFFIX,youtube-nocookie.com,policy
+HOST-SUFFIX,youtube.com,policy
+HOST-SUFFIX,youtubeeducation.com,policy
+HOST-SUFFIX,youtubegaming.com,policy
+HOST-SUFFIX,youtubekids.com,policy
+HOST-SUFFIX,yt.be,policy
+HOST-SUFFIX,ytimg.com,policy
+HOST-KEYWORD,youtube,policy

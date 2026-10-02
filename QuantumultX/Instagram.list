@@ -1,0 +1,6 @@
+# 规则名称: Instagram
+# 规则统计: 3
+
+HOST-SUFFIX,cdninstagram.com,policy
+HOST-SUFFIX,instagr.am,policy
+HOST-SUFFIX,instagram.com,policy

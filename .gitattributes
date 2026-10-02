@@ -1,0 +1,25 @@
+# Line endings are part of this repository's contract.
+#
+# manifest.json records the SHA256 of every generated artifact, and
+# engine/scripts/verify_manifest.py / build.py --verify-only compare raw bytes.
+# Without an explicit eol, a Windows checkout with core.autocrlf=true produces
+# CRLF working-tree files whose hashes never match, so the maintainer cannot run
+# the repository's own provenance gates locally; conversely a CRLF commit would
+# fail verify_manifest in CI while the text-based gates (parity_check, the
+# golden-byte job) still pass, pointing diagnosis in the wrong direction.
+#
+# Pin LF for every text file: the builders already write newline="\n".
+* text=auto eol=lf
+
+# Never line-ending convert binary assets.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.mmdb binary

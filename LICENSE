@@ -1,0 +1,39 @@
+Blink public distribution terms
+Copyright (c) 2026 Yoshen
+
+These terms apply prospectively from the commit introducing this notice.
+This repository does not have a single license covering all of its contents.
+
+1. Upstream and third-party material
+Rule files and third-party portions of Profiles retain their applicable upstream
+licenses. See THIRD_PARTY_NOTICES.md for provenance and license notices. Nothing
+in this notice replaces those terms, removes their conditions, or applies a
+noncommercial restriction to material licensed by someone else.
+
+2. Original rules and original portions of Profiles
+To the extent Yoshen owns the copyright and may license these portions separately,
+Yoshen licenses original rules and original portions of Profiles under Creative
+Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0).
+License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+Legal code: https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.en
+Attribution: Yoshen / Blink, https://github.com/byyoshen/Blink
+Retain attribution, link the license, indicate changes, use noncommercially,
+and distribute adaptations under the same license as required by its terms.
+This grant does not relicense upstream-derived portions, including GPL/AGPL material.
+
+3. Explanatory text and other original material
+All rights reserved for original README and other explanatory text, except where
+an earlier license, a third-party license, or applicable law grants permission.
+No permission to redistribute these texts is granted by the CC license in section 2.
+Third-party notices and license texts retain their respective applicable terms.
+
+4. Earlier releases and history
+Previously published commits remain available with the licenses applicable when
+they were published. Material previously released under MIT remains available
+under MIT; this notice does not revoke that grant. The earlier MIT notice excluded
+generated Rule-Sets and derived Profiles, so it must not be read as an MIT grant
+for all historical files. Upstream licenses continue to apply to upstream material.
+
+5. Warranty
+Materials are provided without warranties to the extent permitted by applicable
+law and the applicable licenses. See DISCLAIMER.md and the full license texts.

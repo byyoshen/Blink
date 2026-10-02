@@ -1,0 +1,7 @@
+# 规则名称: ZABank
+# 规则统计: 3
+
+domain_suffix_set:
+- za.group
+- zainvest.group
+- zajourney.com

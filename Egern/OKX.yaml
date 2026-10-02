@@ -1,0 +1,13 @@
+# 规则名称: OKX
+# 规则统计: 9
+
+domain_suffix_set:
+- okex.com
+- okx-dns.com
+- okx-dns1.com
+- okx-dns2.com
+- okx.ac
+- okx.cab
+- okx.com
+- okx.com.cdn.cloudflare.net
+- xlayer.tech

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 反馈前先自检
+    url: https://github.com/byyoshen/Blink#常见问题
+    about: 先确认引用类型与顺序，以及目标是否属于有意不收录的基础设施规则。

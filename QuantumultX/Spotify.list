@@ -1,0 +1,23 @@
+# 规则名称: Spotify
+# 规则统计: 20
+
+HOST-SUFFIX,audio-ak-spotify-com.akamaized.net,policy
+HOST-SUFFIX,byspotify.com,policy
+HOST-SUFFIX,heads4-ak-spotify-com.akamaized.net,policy
+HOST-SUFFIX,pscdn.co,policy
+HOST-SUFFIX,scdn.co,policy
+HOST-SUFFIX,spoti.fi,policy
+HOST-SUFFIX,spotify-com.akamaized.net,policy
+HOST-SUFFIX,spotify-everywhere.com,policy
+HOST-SUFFIX,spotify.app.link,policy
+HOST-SUFFIX,spotify.com,policy
+HOST-SUFFIX,spotify.design,policy
+HOST-SUFFIX,spotifycdn.com,policy
+HOST-SUFFIX,spotifycdn.net,policy
+HOST-SUFFIX,spotifycharts.com,policy
+HOST-SUFFIX,spotifycodes.com,policy
+HOST-SUFFIX,spotifyforbrands.com,policy
+HOST-SUFFIX,spotifyjobs.com,policy
+HOST-KEYWORD,-spotify-com,policy
+USER-AGENT,Spotify*,policy
+IP-CIDR,35.186.224.47/32,policy

@@ -1,0 +1,23 @@
+# 规则名称: Steam
+# 规则统计: 20
+
+HOST-SUFFIX,fanatical.com,policy
+HOST-SUFFIX,humblebundle.com,policy
+HOST-SUFFIX,playartifact.com,policy
+HOST-SUFFIX,s.team,policy
+HOST-SUFFIX,steam-api.com,policy
+HOST-SUFFIX,steam-chat.com,policy
+HOST-SUFFIX,steam.tv,policy
+HOST-SUFFIX,steamcommunity.com,policy
+HOST-SUFFIX,steamconnecttest.com,policy
+HOST-SUFFIX,steamcontent.com,policy
+HOST-SUFFIX,steamcontent.tnkjmec.com,policy
+HOST-SUFFIX,steamdeck.com,policy
+HOST-SUFFIX,steamgames.com,policy
+HOST-SUFFIX,steampowered.com,policy
+HOST-SUFFIX,steamserver.net,policy
+HOST-SUFFIX,steamstat.us,policy
+HOST-SUFFIX,steamstatic.com,policy
+HOST-SUFFIX,steamusercontent.com,policy
+HOST-SUFFIX,underlords.com,policy
+HOST-SUFFIX,valvesoftware.com,policy

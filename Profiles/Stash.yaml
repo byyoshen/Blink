@@ -1,0 +1,185 @@
+# ============================================================
+# Blink 配置文件 · Stash
+# 单订阅池（Sub）：导入前把 https://YOUR-SUBSCRIPTION-URL 替换为你的订阅链接。
+# 策略组与规则引用由 Blink 统一维护；本文件为人工维护层，不随规则每日自动更新。
+# 公开模板只保留核心策略组与 App 规则，其余个性化场景请按需自行扩展。
+# ADAPTED：always-real-ip / always-raw-tcp-hosts / proxy-test-udp / http-api 为 Surge 专属，
+#   本文件无对应字段，IP 分流经 fake-ip 与 IP rule 兜底实现。
+# UNSUPPORTED：extended-matching / pre-matching / DOMAIN-SET 为 Surge 专属，本文件省略。
+# UNSUPPORTED：hijack-dns / skip-proxy 无对应键（Stash 在 App 内接管 DNS 与本地网段）；
+#   internet-test-url 无对应键，代理测试地址写在订阅 health-check 与 url-test 组里。
+# ============================================================
+
+mode: rule
+log-level: info
+ipv6: false
+
+dns:
+  enable: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  fake-ip-filter:
+    - '+.lan'
+    - '+.local'
+    - '+.direct'
+
+proxy-providers:
+  Sub:
+    type: http
+    url: https://YOUR-SUBSCRIPTION-URL
+    interval: 86400
+    health-check:
+      enable: true
+      url: http://latency-test.skk.moe/endpoint
+      interval: 1800
+      timeout: 5000
+
+proxy-groups:
+  - {name: HK, type: select, use: [Sub], filter: '(?i)(香港|🇭🇰|Hong\s*Kong|HongKong|HKG|(?:^|[^A-Za-z])HK(?:G)?(?:[^A-Za-z]|$))', include-all: true}
+  - {name: TW, type: select, use: [Sub], filter: '(?i)(台湾|台灣|🇹🇼|Taiwan|Taipei|TWN|(?:^|[^A-Za-z])TW(?:N)?(?:[^A-Za-z]|$))', include-all: true}
+  - {name: JP, type: select, use: [Sub], filter: '(?i)(日本|🇯🇵|Japan|Tokyo|Osaka|Sakura|SoftBank|JPN|(?:^|[^A-Za-z])JP(?:N)?(?:[^A-Za-z]|$))', include-all: true}
+  - {name: US, type: select, use: [Sub], filter: '(?i)(美国|美國|🇺🇸|United\s*States|America|USA|US\s*Premium|(?:^|[^A-Za-z])US(?:A)?(?:[^A-Za-z]|$))', include-all: true}
+  - {name: SG, type: select, use: [Sub], filter: '(?i)(新加坡|狮城|獅城|🇸🇬|Singapore|SGP|SGGS|(?:^|[^A-Za-z])SG(?:P)?(?:[^A-Za-z]|$))', include-all: true}
+  - {name: Auto, type: url-test, proxies: [HK,TW,JP,US,SG], url: http://latency-test.skk.moe/endpoint, interval: 600, tolerance: 80}
+  - {name: Proxy, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: Final, type: select, proxies: [HK,TW,JP,US,SG,Auto,Sub,DIRECT]}
+  - {name: Telegram, type: select, proxies: [Proxy,Final,DIRECT]}
+  - {name: X, type: select, proxies: [Proxy,Final,DIRECT]}
+  - {name: YouTube, type: select, proxies: [Proxy,Final,DIRECT]}
+  - {name: Instagram, type: select, proxies: [Proxy,Final,DIRECT]}
+  - {name: Google, type: select, proxies: [Proxy,Final,DIRECT]}
+  - {name: GitHub, type: select, proxies: [Proxy,Final,DIRECT]}
+
+rule-providers:
+  reject:
+    type: http
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/List/non_ip/reject.conf
+    interval: 86400
+  tracking:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ConnersHua/RuleGo/master/Surge/Ruleset/Extra/Reject/Tracking.list
+    interval: 86400
+  lan:
+    type: http
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/List/non_ip/lan.conf
+    interval: 86400
+  domestic:
+    type: http
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/List/non_ip/domestic.conf
+    interval: 86400
+  cdn:
+    type: http
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/List/non_ip/cdn.conf
+    interval: 86400
+  Telegram_domainset:
+    type: http
+    behavior: domain
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/Telegram-domainset.conf
+    interval: 86400
+  Telegram_ip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/Telegram-ip.conf
+    interval: 86400
+  X_domainset:
+    type: http
+    behavior: domain
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/X-domainset.conf
+    interval: 86400
+  X_ip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/X-ip.conf
+    interval: 86400
+  YouTube_nonip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/YouTube-nonip.conf
+    interval: 86400
+  Instagram_domainset:
+    type: http
+    behavior: domain
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/Instagram-domainset.conf
+    interval: 86400
+  Google_nonip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/Google-nonip.conf
+    interval: 86400
+  Google_ip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/Google-ip.conf
+    interval: 86400
+  GitHub_domainset:
+    type: http
+    behavior: domain
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/GitHub-domainset.conf
+    interval: 86400
+  lan_ip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/List/ip/lan.conf
+    interval: 86400
+  china_ip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/List/ip/domestic.conf
+    interval: 86400
+  china_ip2:
+    type: http
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/List/ip/china_ip.conf
+    interval: 86400
+
+rules:
+  - RULE-SET,reject,REJECT
+  - RULE-SET,tracking,REJECT
+  - DST-PORT,123,DIRECT
+  - RULE-SET,lan,DIRECT
+  - RULE-SET,domestic,DIRECT
+  - RULE-SET,cdn,Proxy
+  # UNSUPPORTED: reject-drop（Surge pre-matching 专属）本文件省略
+  # UNSUPPORTED: reject-domainset（Surge DOMAIN-SET 专属）本文件省略
+  # UNSUPPORTED: cdn-domainset（Surge DOMAIN-SET 专属）本文件省略
+  - RULE-SET,Telegram_domainset,Telegram
+  - RULE-SET,Telegram_ip,Telegram,no-resolve
+  - RULE-SET,X_domainset,X
+  - RULE-SET,X_ip,X,no-resolve
+  - RULE-SET,YouTube_nonip,YouTube
+  - RULE-SET,Instagram_domainset,Instagram
+  - RULE-SET,Google_nonip,Google
+  - RULE-SET,Google_ip,Google,no-resolve
+  - RULE-SET,GitHub_domainset,GitHub
+  - RULE-SET,lan_ip,DIRECT,no-resolve
+  - RULE-SET,china_ip,DIRECT,no-resolve
+  - RULE-SET,china_ip2,DIRECT,no-resolve
+  - MATCH,Final
