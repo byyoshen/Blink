@@ -3,9 +3,9 @@
     "AI": {
       "canonical": {
         "denied_includes": [],
-        "input_rules": 51,
-        "rules": 51,
-        "sha256": "a244b8daaf8db675a581f78393a20079117ee5c06d37ff88370095b6c70e7a66",
+        "input_rules": 52,
+        "rules": 52,
+        "sha256": "dd478294c2eac63b6267e27959c380d3c8a145e7854fe05ccae99bad9db781b6",
         "skipped_attributes": 0,
         "skipped_excluded": [
           "URL-REGEX,https://www\\.google\\.com/.*continue=https://gemini\\.google\\.com.+"
@@ -13,7 +13,7 @@
         "views": [
           {
             "name": "nonip",
-            "rules": 51
+            "rules": 52
           }
         ]
       },
@@ -21,61 +21,61 @@
         "egern": {
           "dropped": [],
           "path": "Egern/AI.yaml",
-          "rules": 51,
-          "sha256": "c75fe15d999abfa4cc72d93775357b4bcef72ef973008b4ad189dc148796c8b2"
+          "rules": 52,
+          "sha256": "99ee9c2f4c5b5e1d1fee0df428ded090286688523a1ce93de8e6691aaa346f3d"
         },
         "loon": {
           "dropped": [],
           "path": "Loon/AI.list",
-          "rules": 51,
-          "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
+          "rules": 52,
+          "sha256": "80826d63ca727596f64ccefba6323e98a166524e5d0f4cccc930c8504b2e9496"
         },
         "mihomo": {
           "dropped": [],
           "path": "mihomo/AI.list",
-          "rules": 51,
-          "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
+          "rules": 52,
+          "sha256": "80826d63ca727596f64ccefba6323e98a166524e5d0f4cccc930c8504b2e9496"
         },
         "quantumultx": {
           "dropped": [],
           "path": "QuantumultX/AI.list",
-          "rules": 51,
-          "sha256": "b2628967a4020c6963a8025e6199306d34e6900c1f83fd20e9ab8b9beeef3087"
+          "rules": 52,
+          "sha256": "3565266174cac8c2a5f7b2a2de47fae5362f897377b4e6de6d2af43fd8940c72"
         },
         "shadowrocket": {
           "dropped": [],
           "path": "Shadowrocket/AI.list",
-          "rules": 51,
-          "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
+          "rules": 52,
+          "sha256": "80826d63ca727596f64ccefba6323e98a166524e5d0f4cccc930c8504b2e9496"
         },
         "singbox": {
           "dropped": [],
           "path": "SingBox/AI.json",
-          "rules": 51,
-          "sha256": "872d71a1fae6cbc8c9f74117584a58e17ecd081119ead924d85a08f6f54e0b27"
+          "rules": 52,
+          "sha256": "f4e9a4b58ec849953eaa6f814cce3cef654016ea075c08215f4962ffff14ce42"
         },
         "stash": {
           "dropped": [],
           "path": "Stash/AI.list",
-          "rules": 51,
-          "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
+          "rules": 52,
+          "sha256": "80826d63ca727596f64ccefba6323e98a166524e5d0f4cccc930c8504b2e9496"
         },
         "surge": {
           "dropped": [],
           "path": "Surge/AI.list",
-          "rules": 51,
-          "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
+          "rules": 52,
+          "sha256": "80826d63ca727596f64ccefba6323e98a166524e5d0f4cccc930c8504b2e9496"
         }
       },
       "sources": [
         {
           "author": "Repcz",
-          "bytes": 1608,
+          "bytes": 1630,
           "format": "surge-rule-set",
-          "lines": 55,
+          "lines": 56,
           "name": "Repcz-Tool",
           "role": "primary",
-          "text_sha256": "781477a7c231909a12ef3e86c98bf61b84a85a6c3920e49c3c05ad6f1dffce6a",
+          "text_sha256": "26ebf3b2266a0fe5645eebb76fc82dde326b6678cd1e1b0c7672e1ce051caff5",
           "url": "https://raw.githubusercontent.com/Repcz/Tool/X/Surge/Rules/AI.list"
         }
       ],
@@ -85,64 +85,64 @@
           "nonip": {
             "dropped": [],
             "path": "Egern/AI-nonip.conf",
-            "rules": 51,
-            "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
+            "rules": 52,
+            "sha256": "80826d63ca727596f64ccefba6323e98a166524e5d0f4cccc930c8504b2e9496"
           }
         },
         "loon": {
           "nonip": {
             "dropped": [],
             "path": "Loon/AI-nonip.conf",
-            "rules": 51,
-            "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
+            "rules": 52,
+            "sha256": "80826d63ca727596f64ccefba6323e98a166524e5d0f4cccc930c8504b2e9496"
           }
         },
         "mihomo": {
           "nonip": {
             "dropped": [],
             "path": "mihomo/AI-nonip.conf",
-            "rules": 51,
-            "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
+            "rules": 52,
+            "sha256": "80826d63ca727596f64ccefba6323e98a166524e5d0f4cccc930c8504b2e9496"
           }
         },
         "quantumultx": {
           "nonip": {
             "dropped": [],
             "path": "QuantumultX/AI-nonip.conf",
-            "rules": 51,
-            "sha256": "b2628967a4020c6963a8025e6199306d34e6900c1f83fd20e9ab8b9beeef3087"
+            "rules": 52,
+            "sha256": "3565266174cac8c2a5f7b2a2de47fae5362f897377b4e6de6d2af43fd8940c72"
           }
         },
         "shadowrocket": {
           "nonip": {
             "dropped": [],
             "path": "Shadowrocket/AI-nonip.conf",
-            "rules": 51,
-            "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
+            "rules": 52,
+            "sha256": "80826d63ca727596f64ccefba6323e98a166524e5d0f4cccc930c8504b2e9496"
           }
         },
         "singbox": {
           "nonip": {
             "dropped": [],
             "path": "SingBox/AI-nonip.json",
-            "rules": 51,
-            "sha256": "872d71a1fae6cbc8c9f74117584a58e17ecd081119ead924d85a08f6f54e0b27"
+            "rules": 52,
+            "sha256": "f4e9a4b58ec849953eaa6f814cce3cef654016ea075c08215f4962ffff14ce42"
           }
         },
         "stash": {
           "nonip": {
             "dropped": [],
             "path": "Stash/AI-nonip.conf",
-            "rules": 51,
-            "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
+            "rules": 52,
+            "sha256": "80826d63ca727596f64ccefba6323e98a166524e5d0f4cccc930c8504b2e9496"
           }
         },
         "surge": {
           "nonip": {
             "dropped": [],
             "path": "Surge/AI-nonip.conf",
-            "rules": 51,
-            "sha256": "bf92b739cba1fde13aab49a31b4da819642c69f663aff98d10d7b4eaf5ae8eba"
+            "rules": 52,
+            "sha256": "80826d63ca727596f64ccefba6323e98a166524e5d0f4cccc930c8504b2e9496"
           }
         }
       }
