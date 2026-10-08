@@ -1003,7 +1003,7 @@
         "input_rules": 62,
         "rules": 62,
         "sha256": "2be808eaf8fbb8fcbc0c756a94cd063e59097ff911e1b7706856a68de13f90f8",
-        "skipped_attributes": 3,
+        "skipped_attributes": 4,
         "skipped_excluded": [],
         "views": [
           {
@@ -1065,20 +1065,20 @@
       "sources": [
         {
           "author": "v2fly",
-          "bytes": 1837,
+          "bytes": 1867,
           "format": "v2fly-domain-list",
-          "lines": 65,
+          "lines": 66,
           "name": "v2fly-domain-list-community",
           "role": "primary",
-          "text_sha256": "32c682a5437b3203fc8559cbf033f44ede2abb25f6358ab1a6fdc0decf5f479f",
+          "text_sha256": "549a8bf61fd4a673a59e0a0f8794e66e5228d6a8bc759c6f4888a287e728ccc2",
           "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/github"
         },
         {
-          "bytes": 294,
+          "bytes": 303,
           "format": "v2fly-domain-list",
           "lines": 11,
           "role": "include",
-          "text_sha256": "069a626c3c23ee63f82e26ce11a83477d8dbe9e27f81968e4b073acf496260f3",
+          "text_sha256": "e41465e9e15430bf31d1054d21c0551e8fa3ef24431e317317f409511c64483c",
           "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/github-copilot"
         }
       ],
@@ -4401,7 +4401,7 @@
         "input_rules": 11,
         "rules": 11,
         "sha256": "cf97dd978243bb1000cca47fcec241efeb04e56ae9bbcdb420b36bc30a9fc5a8",
-        "skipped_attributes": 2,
+        "skipped_attributes": 0,
         "skipped_excluded": [],
         "views": [
           {
@@ -4463,12 +4463,12 @@
       "sources": [
         {
           "author": "v2fly",
-          "bytes": 219,
+          "bytes": 303,
           "format": "v2fly-domain-list",
           "lines": 15,
           "name": "v2fly-domain-list-community",
           "role": "primary",
-          "text_sha256": "d23fbe2f886bfbd52c3ae40e1fed05cbc4a721564e7eda76f226824d0b137dca",
+          "text_sha256": "62def09a533350c9e5259d1d498ed1da1689ff174f436f51c065260f21f037d2",
           "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/whatsapp"
         }
       ],
