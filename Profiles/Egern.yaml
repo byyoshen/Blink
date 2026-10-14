@@ -141,27 +141,14 @@ rules:
 - rule_set:
     match: https://ruleset.skk.moe/List/non_ip/lan.conf
     policy: DIRECT
-- rule_set:
-    match: https://ruleset.skk.moe/List/non_ip/domestic.conf
-    policy: DIRECT
-- rule_set:
-    match: https://ruleset.skk.moe/List/non_ip/cdn.conf
-    policy: Proxy
 # UNSUPPORTED: reject-drop（Surge pre-matching 专属）本文件省略
 # UNSUPPORTED: reject-domainset（Surge DOMAIN-SET 专属）本文件省略
 # UNSUPPORTED: ntp-123（当前客户端不支持）本文件省略
-# UNSUPPORTED: cdn-domainset（Surge DOMAIN-SET 专属）本文件省略
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Telegram-domainset.conf
     policy: Telegram
 - rule_set:
-    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Telegram-ip.conf
-    policy: Telegram
-- rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/X-domainset.conf
-    policy: X
-- rule_set:
-    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/X-ip.conf
     policy: X
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/YouTube-nonip.conf
@@ -173,11 +160,24 @@ rules:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Google-nonip.conf
     policy: Google
 - rule_set:
-    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Google-ip.conf
-    policy: Google
-- rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/GitHub-domainset.conf
     policy: GitHub
+- rule_set:
+    match: https://ruleset.skk.moe/List/non_ip/domestic.conf
+    policy: DIRECT
+- rule_set:
+    match: https://ruleset.skk.moe/List/non_ip/cdn.conf
+    policy: Proxy
+# UNSUPPORTED: cdn-domainset（Surge DOMAIN-SET 专属）本文件省略
+- rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Telegram-ip.conf
+    policy: Telegram
+- rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/X-ip.conf
+    policy: X
+- rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Google-ip.conf
+    policy: Google
 - rule_set:
     match: https://ruleset.skk.moe/List/ip/lan.conf
     policy: DIRECT
