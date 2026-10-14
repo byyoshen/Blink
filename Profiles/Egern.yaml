@@ -4,28 +4,49 @@
 # 策略组与规则引用由 Blink 统一维护；本文件为人工维护层，不随规则每日自动更新。
 # 公开模板只保留核心策略组与 App 规则，其余个性化场景请按需自行扩展。
 # ADAPTED：url-test 无生产实证暂以 select 呈现；no-resolve 为 rule-set 级。
-# ADAPTED：通用网络层只驱动 ipv6 与 hijack_dns。没能读到 Egern 官方 DNS 文档，下面的 dns
-#   段保持原值，DNS 服务器、跳过代理、真实 IP 与测试地址待核实官方键名后再接入。
+# ADAPTED：rule_set 引用处没有 no_resolve 字段。skk 的 lan 与 china_ip 行内不带 no-resolve，
+#   所以改写为带 no_resolve: true 的 ip_cidr 段与 geoip CN（geoip_db_url 指向 GeoIP2-CN 库）。
+# ADAPTED：通用网络层键名依据官方文档 egernapp.com/docs/configuration/dns 与 /example
+#   （2026-10-14 核对）。加密 DNS 组只有经 forward 规则才会被用到，所以用一条 '*' 规则把全部
+#   查询交给它；bootstrap 解析加密 DNS 自身的域名，也是退路。跳过代理写入
+#   bypass_tunnel_proxy，测速超时没有对应键。
 # UNSUPPORTED：extended-matching / pre-matching / DOMAIN-SET / always-real-ip /
 #   always-raw-tcp-hosts / proxy-test-udp / http-api 为 Surge 专属，本文件省略或需在 App 内配置。
 # ============================================================
 
+geoip_db_url: https://raw.githubusercontent.com/Masaiki/GeoIP2-CN/release/Country.mmdb
 ipv6: false
 hijack_dns:
 - '*:53'
-geoip_db_url: https://raw.githubusercontent.com/Masaiki/GeoIP2-CN/release/Country.mmdb
+bypass_tunnel_proxy:
+- '127.0.0.0/8'
+- '192.168.0.0/16'
+- '10.0.0.0/8'
+- '172.16.0.0/12'
+- '100.64.0.0/10'
+- '169.254.0.0/16'
+- 'localhost'
+- '*.local'
+- 'captive.apple.com'
+real_ip_domains:
+- '*.lan'
+- '*.local'
+- '*.direct'
+proxy_latency_test_url: http://latency-test.skk.moe/endpoint
+direct_latency_test_url: http://connectivitycheck.platform.hicloud.com/generate_204
 
 dns:
   bootstrap:
   - 223.5.5.5
   - 119.29.29.29
   upstreams:
-    China:
+    encrypted:
+    - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
-    Global:
-    - https://1.1.1.1/dns-query
-  proxy_nameservers:
-  - https://1.1.1.1/dns-query
+  forward:
+  - domain_wildcard:
+      match: '*'
+      value: encrypted
 
 policy_groups:
 - external:
@@ -178,14 +199,56 @@ rules:
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Google-ip.conf
     policy: Google
-- rule_set:
-    match: https://ruleset.skk.moe/List/ip/lan.conf
+- ip_cidr:
+    match: '0.0.0.0/8'
     policy: DIRECT
+    no_resolve: true
+- ip_cidr:
+    match: '10.0.0.0/8'
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr:
+    match: '100.64.0.0/10'
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr:
+    match: '127.0.0.0/8'
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr:
+    match: '169.254.0.0/16'
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr:
+    match: '172.16.0.0/12'
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr:
+    match: '192.168.0.0/16'
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr:
+    match: '224.0.0.0/4'
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr6:
+    match: '::1/128'
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr6:
+    match: 'fc00::/7'
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr6:
+    match: 'fe80::/10'
+    policy: DIRECT
+    no_resolve: true
 - rule_set:
     match: https://ruleset.skk.moe/List/ip/domestic.conf
     policy: DIRECT
-- rule_set:
-    match: https://ruleset.skk.moe/List/ip/china_ip.conf
+- geoip:
+    match: 'CN'
     policy: DIRECT
+    no_resolve: true
 - default:
     policy: Final
