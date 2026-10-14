@@ -56,7 +56,7 @@ references — no rule content is copied into `Profiles/`.
 | `Surge/YouTube.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
 | `Surge/X.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
 | `Surge/Instagram.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
-| `Surge/Telegram.list` | SukkaW/Surge (non-IP rules) + SukkaW ruleset service `List/ip/telegram.conf` (IP segment) | https://github.com/SukkaW/Surge | AGPL-3.0 for these rule sources; see upstream README for exceptions |
+| `Surge/Telegram.list` | v2fly/domain-list-community (`data/telegram`; `ton.org` / `toncenter.com` excluded) + Telegram's own published IP list `core.telegram.org/resources/cidr.txt` (IP segment) + Blink repo-maintained supplement (hosts and IP ranges kept from the earlier source) | https://github.com/v2fly/domain-list-community | MIT License (domains); the IP list is factual network data published by Telegram for network operators, with no licence declared |
 | `Surge/Netflix.list` | Repcz/Tool (`us-west-2.amazonaws.com` excluded) | https://github.com/Repcz/Tool | MIT License |
 | `Surge/TikTok.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
 | `Surge/Spotify.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
@@ -69,9 +69,9 @@ references — no rule content is copied into `Profiles/`.
 | `Surge/HBO.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
 | `Surge/Facebook.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
 | `Surge/Google.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
-| `Surge/ParamountPlus.list` | blackmatrix7/ios_rule_script | https://github.com/blackmatrix7/ios_rule_script | GPL-2.0 |
-| `Surge/Hulu.list` | blackmatrix7/ios_rule_script | https://github.com/blackmatrix7/ios_rule_script | GPL-2.0 |
-| `Surge/Twitch.list` | blackmatrix7/ios_rule_script | https://github.com/blackmatrix7/ios_rule_script | GPL-2.0 |
+| `Surge/ParamountPlus.list` | v2fly/domain-list-community (`data/cbs`; CBS corporate, news and sports domains excluded) + Blink repo-maintained supplement (hosts, process names and IP ranges kept from the earlier source) | https://github.com/v2fly/domain-list-community | MIT License |
+| `Surge/Hulu.list` | v2fly/domain-list-community (`data/hulu`) + Blink repo-maintained supplement (hosts, process names and IP ranges kept from the earlier source) | https://github.com/v2fly/domain-list-community | MIT License |
+| `Surge/Twitch.list` | v2fly/domain-list-community (`data/twitch`) + Blink repo-maintained supplement (hosts, process names and IP ranges kept from the earlier source) | https://github.com/v2fly/domain-list-community | MIT License |
 | `Surge/NBA.list` | Blink repo-maintained supplement | `engine/sources/supplement/NBA.list` | No upstream source; original repo-maintained rules |
 | `Surge/Suno.list` | Blink repo-maintained supplement | `engine/sources/supplement/Suno.list` | No upstream source; original repo-maintained rules |
 | `Surge/Starryblu.list` | Blink repo-maintained supplement | `engine/sources/supplement/Starryblu.list` | No upstream source; original repo-maintained rules |
@@ -122,8 +122,11 @@ to private files, so a full independent rebuild is not possible from the current
 public tree alone. Earlier public source remains available in Git history, but
 must not be assumed to reproduce later outputs.
 
-ParamountPlus, Hulu and Twitch currently retain their GPL-2.0 sources; Telegram
-retains its AGPL-3.0 sources. This repository split does not migrate these sources,
-settle corresponding-source questions, or remove upstream license obligations.
-No claim is made that publishing hashes alone fulfills such obligations. Those
-four Apps require separate follow-up review by the maintainer.
+Since 2026-10-14 no generated file is built from a GPL or AGPL rule source.
+ParamountPlus, Hulu and Twitch moved from blackmatrix7/ios_rule_script (GPL-2.0)
+to v2fly/domain-list-community (MIT); Telegram moved from SukkaW/Surge (AGPL-3.0)
+to v2fly plus Telegram's own published IP list. Hosts, process names and IP ranges
+the earlier sources listed that v2fly lacks are kept as Blink-maintained supplements:
+they record the vendors' own endpoints, which are facts rather than authored content. Outputs published before that
+date, still visible in Git history, were derived from those GPL-2.0 / AGPL-3.0
+sources and stay under their terms; this change does not relicense them.

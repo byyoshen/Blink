@@ -1512,15 +1512,15 @@
     "Hulu": {
       "canonical": {
         "denied_includes": [],
-        "input_rules": 59,
-        "rules": 59,
-        "sha256": "08a861f8b682c6f133d075d8d2e58f629ffe8b867d67d4f7a5cc5f9915e9698f",
+        "input_rules": 60,
+        "rules": 60,
+        "sha256": "fe813550ead796b404198b2c60f43fefb3ea93ed2e0d43acd8e1b2885238904b",
         "skipped_attributes": 0,
         "skipped_excluded": [],
         "views": [
           {
             "name": "nonip",
-            "rules": 59
+            "rules": 60
           }
         ]
       },
@@ -1530,67 +1530,72 @@
             "PROCESS-NAME,com.hulu.plus"
           ],
           "path": "Egern/Hulu.yaml",
-          "rules": 58,
-          "sha256": "48b8ef9cc09e9a0e0c14ddb262b33b896b8d2bd9dc303115f8fb42ecdf1bb370"
+          "rules": 59,
+          "sha256": "c895a6ebefe704d29d398ff3859370be24da793174610ac80372a1bcf598fc1a"
         },
         "loon": {
           "dropped": [],
           "path": "Loon/Hulu.list",
-          "rules": 59,
-          "sha256": "ff3065202da0f8741216cb88d7783256f999e42820067cb2fc453e32419c45c8"
+          "rules": 60,
+          "sha256": "3cb76906db196ddd67253ee451314645999af8670255da06d9730a312bd855d6"
         },
         "mihomo": {
           "dropped": [],
           "path": "mihomo/Hulu.list",
-          "rules": 59,
-          "sha256": "ff3065202da0f8741216cb88d7783256f999e42820067cb2fc453e32419c45c8"
+          "rules": 60,
+          "sha256": "3cb76906db196ddd67253ee451314645999af8670255da06d9730a312bd855d6"
         },
         "quantumultx": {
           "dropped": [
             "PROCESS-NAME,com.hulu.plus"
           ],
           "path": "QuantumultX/Hulu.list",
-          "rules": 58,
-          "sha256": "fe1cec4a5a01dc5e63abdf7a23f140d3ba0417964a989721f9a5a0a16425b0d2"
+          "rules": 59,
+          "sha256": "c1d50d0bef64ce6d80dae5ed912c56257662ca5b4e96872f03bd209cf3653a1b"
         },
         "shadowrocket": {
           "dropped": [],
           "path": "Shadowrocket/Hulu.list",
-          "rules": 59,
-          "sha256": "ff3065202da0f8741216cb88d7783256f999e42820067cb2fc453e32419c45c8"
+          "rules": 60,
+          "sha256": "3cb76906db196ddd67253ee451314645999af8670255da06d9730a312bd855d6"
         },
         "singbox": {
           "dropped": [],
           "path": "SingBox/Hulu.json",
-          "rules": 59,
-          "sha256": "e3dd29d6a4d113c524579ee796cd39db3689679967126f9d080e4afc6db09ce6"
+          "rules": 60,
+          "sha256": "2a0eb436fd10e4953223df86c57edf9fd42f1663d5572786691487549efafa7a"
         },
         "stash": {
           "dropped": [],
           "path": "Stash/Hulu.list",
-          "rules": 59,
-          "sha256": "ff3065202da0f8741216cb88d7783256f999e42820067cb2fc453e32419c45c8"
+          "rules": 60,
+          "sha256": "3cb76906db196ddd67253ee451314645999af8670255da06d9730a312bd855d6"
         },
         "surge": {
           "dropped": [],
           "path": "Surge/Hulu.list",
-          "rules": 59,
-          "sha256": "ff3065202da0f8741216cb88d7783256f999e42820067cb2fc453e32419c45c8"
+          "rules": 60,
+          "sha256": "3cb76906db196ddd67253ee451314645999af8670255da06d9730a312bd855d6"
         }
       },
       "sources": [
         {
-          "author": "blackmatrix7",
-          "bytes": 1869,
-          "format": "surge-rule-set",
-          "lines": 67,
-          "name": "blackmatrix7-ios_rule_script",
+          "author": "v2fly",
+          "bytes": 651,
+          "format": "v2fly-domain-list",
+          "lines": 48,
+          "name": "v2fly-domain-list-community",
           "role": "primary",
-          "text_sha256": "c1efecf92e9b46a0c440471dbcc64a48f29d8d08efbb48a095723ca53d23c2ba",
-          "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Hulu/Hulu.list"
+          "text_sha256": "d4696aed44dfa0440ec910adb027319d73525b3314dd3d6a8445e15a8aaa4315",
+          "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/hulu"
         }
       ],
-      "supplement": null,
+      "supplement": {
+        "bytes": 825,
+        "lines": 16,
+        "path": "engine/sources/supplement/Hulu.list",
+        "sha256": "3aa90c87205f814182aede6ad8c22162e33f538c0f6d21b074dcc434867ce386"
+      },
       "views": {
         "egern": {
           "nonip": {
@@ -1598,24 +1603,24 @@
               "PROCESS-NAME,com.hulu.plus"
             ],
             "path": "Egern/Hulu-nonip.conf",
-            "rules": 58,
-            "sha256": "a6d7b54670bdb660f1352499b0a37b581965d1d02392cf9b82320f1169cf53a6"
+            "rules": 59,
+            "sha256": "e4f73d4c3ffb6c1d21f6a00cf1cd251fefe605028cbe13d383859718e7a12e09"
           }
         },
         "loon": {
           "nonip": {
             "dropped": [],
             "path": "Loon/Hulu-nonip.conf",
-            "rules": 59,
-            "sha256": "ff3065202da0f8741216cb88d7783256f999e42820067cb2fc453e32419c45c8"
+            "rules": 60,
+            "sha256": "3cb76906db196ddd67253ee451314645999af8670255da06d9730a312bd855d6"
           }
         },
         "mihomo": {
           "nonip": {
             "dropped": [],
             "path": "mihomo/Hulu-nonip.conf",
-            "rules": 59,
-            "sha256": "ff3065202da0f8741216cb88d7783256f999e42820067cb2fc453e32419c45c8"
+            "rules": 60,
+            "sha256": "3cb76906db196ddd67253ee451314645999af8670255da06d9730a312bd855d6"
           }
         },
         "quantumultx": {
@@ -1624,40 +1629,40 @@
               "PROCESS-NAME,com.hulu.plus"
             ],
             "path": "QuantumultX/Hulu-nonip.conf",
-            "rules": 58,
-            "sha256": "fe1cec4a5a01dc5e63abdf7a23f140d3ba0417964a989721f9a5a0a16425b0d2"
+            "rules": 59,
+            "sha256": "c1d50d0bef64ce6d80dae5ed912c56257662ca5b4e96872f03bd209cf3653a1b"
           }
         },
         "shadowrocket": {
           "nonip": {
             "dropped": [],
             "path": "Shadowrocket/Hulu-nonip.conf",
-            "rules": 59,
-            "sha256": "ff3065202da0f8741216cb88d7783256f999e42820067cb2fc453e32419c45c8"
+            "rules": 60,
+            "sha256": "3cb76906db196ddd67253ee451314645999af8670255da06d9730a312bd855d6"
           }
         },
         "singbox": {
           "nonip": {
             "dropped": [],
             "path": "SingBox/Hulu-nonip.json",
-            "rules": 59,
-            "sha256": "e3dd29d6a4d113c524579ee796cd39db3689679967126f9d080e4afc6db09ce6"
+            "rules": 60,
+            "sha256": "2a0eb436fd10e4953223df86c57edf9fd42f1663d5572786691487549efafa7a"
           }
         },
         "stash": {
           "nonip": {
             "dropped": [],
             "path": "Stash/Hulu-nonip.conf",
-            "rules": 59,
-            "sha256": "ff3065202da0f8741216cb88d7783256f999e42820067cb2fc453e32419c45c8"
+            "rules": 60,
+            "sha256": "3cb76906db196ddd67253ee451314645999af8670255da06d9730a312bd855d6"
           }
         },
         "surge": {
           "nonip": {
             "dropped": [],
             "path": "Surge/Hulu-nonip.conf",
-            "rules": 59,
-            "sha256": "ff3065202da0f8741216cb88d7783256f999e42820067cb2fc453e32419c45c8"
+            "rules": 60,
+            "sha256": "3cb76906db196ddd67253ee451314645999af8670255da06d9730a312bd855d6"
           }
         }
       }
@@ -2458,15 +2463,27 @@
     "ParamountPlus": {
       "canonical": {
         "denied_includes": [],
-        "input_rules": 10,
-        "rules": 10,
-        "sha256": "98a1f6a5a858d29ef147ae8bd89f69eea490979c07397b1636bbf60d8780b0fe",
+        "excluded_domains": {
+          "domain-suffix:cbscorporation.com": 1,
+          "domain-suffix:cbsinteractive.com": 1,
+          "domain-suffix:cbsnews.com": 1,
+          "domain-suffix:cbspressexpress.com": 1,
+          "domain-suffix:cbssports.com": 1,
+          "domain-suffix:paramount.com": 1,
+          "domain-suffix:viacbs.com": 1,
+          "domain-suffix:viacom.com": 1,
+          "domain-suffix:viacomcbs.com": 1,
+          "domain-suffix:viacomcbspressexpress.com": 1
+        },
+        "input_rules": 30,
+        "rules": 20,
+        "sha256": "8e1fad22932d83d5323606c70b6a4a95daa95497937748dc8976b7b29c518f07",
         "skipped_attributes": 0,
         "skipped_excluded": [],
         "views": [
           {
             "name": "nonip",
-            "rules": 10
+            "rules": 20
           }
         ]
       },
@@ -2474,84 +2491,89 @@
         "egern": {
           "dropped": [],
           "path": "Egern/ParamountPlus.yaml",
-          "rules": 10,
-          "sha256": "d02a3b09d454a4ae0d82149b6be4563c3a9863f0cf4cf23cfb3d49f2e2262635"
+          "rules": 20,
+          "sha256": "ab09a09172f2e5824f2797144649a0bc3a019d10054e160b76b305461f839712"
         },
         "loon": {
           "dropped": [],
           "path": "Loon/ParamountPlus.list",
-          "rules": 10,
-          "sha256": "b8c1b1806a3f2e25155e806e2b64c995eb75aada80ed093be54d0d1c4533ea59"
+          "rules": 20,
+          "sha256": "84e24d4e7f58e021ac8157785c98928a6baee7ff0b944dcd670d0113a72e4883"
         },
         "mihomo": {
           "dropped": [
             "USER-AGENT,PPlus*"
           ],
           "path": "mihomo/ParamountPlus.list",
-          "rules": 9,
-          "sha256": "7b6b9697259f346b2a13a31ddbcad2ea9427608385d02ddc3e5b098031e421d1"
+          "rules": 19,
+          "sha256": "4e00e691c3dd17a8b7d46793b630d9d3d7195fb38950c4c6d13ea497a7f191d5"
         },
         "quantumultx": {
           "dropped": [],
           "path": "QuantumultX/ParamountPlus.list",
-          "rules": 10,
-          "sha256": "998f60c0c4bfab6efe9df26d9d6d1048060ce6b67e40512cb2733cbab5110dd3"
+          "rules": 20,
+          "sha256": "4c04e0cc070304b1ea54e6b73a448e36dca0d91cdb0928cb78879603da69627f"
         },
         "shadowrocket": {
           "dropped": [],
           "path": "Shadowrocket/ParamountPlus.list",
-          "rules": 10,
-          "sha256": "b8c1b1806a3f2e25155e806e2b64c995eb75aada80ed093be54d0d1c4533ea59"
+          "rules": 20,
+          "sha256": "84e24d4e7f58e021ac8157785c98928a6baee7ff0b944dcd670d0113a72e4883"
         },
         "singbox": {
           "dropped": [
             "USER-AGENT,PPlus*"
           ],
           "path": "SingBox/ParamountPlus.json",
-          "rules": 9,
-          "sha256": "9c95cb6728e3153fac56c9ae1376dd203ddf7c0a4aad222143dd97b2784a8ccc"
+          "rules": 19,
+          "sha256": "2e4fcc62e5e019dcb1be7219e77d86c131f2fb7b39f705b07426bfbe5d9e34e0"
         },
         "stash": {
           "dropped": [],
           "path": "Stash/ParamountPlus.list",
-          "rules": 10,
-          "sha256": "b8c1b1806a3f2e25155e806e2b64c995eb75aada80ed093be54d0d1c4533ea59"
+          "rules": 20,
+          "sha256": "84e24d4e7f58e021ac8157785c98928a6baee7ff0b944dcd670d0113a72e4883"
         },
         "surge": {
           "dropped": [],
           "path": "Surge/ParamountPlus.list",
-          "rules": 10,
-          "sha256": "b8c1b1806a3f2e25155e806e2b64c995eb75aada80ed093be54d0d1c4533ea59"
+          "rules": 20,
+          "sha256": "84e24d4e7f58e021ac8157785c98928a6baee7ff0b944dcd670d0113a72e4883"
         }
       },
       "sources": [
         {
-          "author": "blackmatrix7",
-          "bytes": 486,
-          "format": "surge-rule-set",
-          "lines": 18,
-          "name": "blackmatrix7-ios_rule_script",
+          "author": "v2fly",
+          "bytes": 649,
+          "format": "v2fly-domain-list",
+          "lines": 39,
+          "name": "v2fly-domain-list-community",
           "role": "primary",
-          "text_sha256": "cac7d967e7bcb6ccb080451e43b6de264706f749ee1195446ef07d3ccd38e2a3",
-          "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ParamountPlus/ParamountPlus.list"
+          "text_sha256": "1ad486a2de2c693c7292d38ce0019f5f565b55b82304c916830292fa1465bc9a",
+          "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/cbs"
         }
       ],
-      "supplement": null,
+      "supplement": {
+        "bytes": 441,
+        "lines": 5,
+        "path": "engine/sources/supplement/ParamountPlus.list",
+        "sha256": "cf660ca51debce9b5ec17e18c36533da7c812c07ffee43918673ac3ff90a0de5"
+      },
       "views": {
         "egern": {
           "nonip": {
             "dropped": [],
             "path": "Egern/ParamountPlus-nonip.conf",
-            "rules": 10,
-            "sha256": "b8c1b1806a3f2e25155e806e2b64c995eb75aada80ed093be54d0d1c4533ea59"
+            "rules": 20,
+            "sha256": "84e24d4e7f58e021ac8157785c98928a6baee7ff0b944dcd670d0113a72e4883"
           }
         },
         "loon": {
           "nonip": {
             "dropped": [],
             "path": "Loon/ParamountPlus-nonip.conf",
-            "rules": 10,
-            "sha256": "b8c1b1806a3f2e25155e806e2b64c995eb75aada80ed093be54d0d1c4533ea59"
+            "rules": 20,
+            "sha256": "84e24d4e7f58e021ac8157785c98928a6baee7ff0b944dcd670d0113a72e4883"
           }
         },
         "mihomo": {
@@ -2560,24 +2582,24 @@
               "USER-AGENT,PPlus*"
             ],
             "path": "mihomo/ParamountPlus-nonip.conf",
-            "rules": 9,
-            "sha256": "7b6b9697259f346b2a13a31ddbcad2ea9427608385d02ddc3e5b098031e421d1"
+            "rules": 19,
+            "sha256": "4e00e691c3dd17a8b7d46793b630d9d3d7195fb38950c4c6d13ea497a7f191d5"
           }
         },
         "quantumultx": {
           "nonip": {
             "dropped": [],
             "path": "QuantumultX/ParamountPlus-nonip.conf",
-            "rules": 10,
-            "sha256": "998f60c0c4bfab6efe9df26d9d6d1048060ce6b67e40512cb2733cbab5110dd3"
+            "rules": 20,
+            "sha256": "4c04e0cc070304b1ea54e6b73a448e36dca0d91cdb0928cb78879603da69627f"
           }
         },
         "shadowrocket": {
           "nonip": {
             "dropped": [],
             "path": "Shadowrocket/ParamountPlus-nonip.conf",
-            "rules": 10,
-            "sha256": "b8c1b1806a3f2e25155e806e2b64c995eb75aada80ed093be54d0d1c4533ea59"
+            "rules": 20,
+            "sha256": "84e24d4e7f58e021ac8157785c98928a6baee7ff0b944dcd670d0113a72e4883"
           }
         },
         "singbox": {
@@ -2586,24 +2608,24 @@
               "USER-AGENT,PPlus*"
             ],
             "path": "SingBox/ParamountPlus-nonip.json",
-            "rules": 9,
-            "sha256": "9c95cb6728e3153fac56c9ae1376dd203ddf7c0a4aad222143dd97b2784a8ccc"
+            "rules": 19,
+            "sha256": "2e4fcc62e5e019dcb1be7219e77d86c131f2fb7b39f705b07426bfbe5d9e34e0"
           }
         },
         "stash": {
           "nonip": {
             "dropped": [],
             "path": "Stash/ParamountPlus-nonip.conf",
-            "rules": 10,
-            "sha256": "b8c1b1806a3f2e25155e806e2b64c995eb75aada80ed093be54d0d1c4533ea59"
+            "rules": 20,
+            "sha256": "84e24d4e7f58e021ac8157785c98928a6baee7ff0b944dcd670d0113a72e4883"
           }
         },
         "surge": {
           "nonip": {
             "dropped": [],
             "path": "Surge/ParamountPlus-nonip.conf",
-            "rules": 10,
-            "sha256": "b8c1b1806a3f2e25155e806e2b64c995eb75aada80ed093be54d0d1c4533ea59"
+            "rules": 20,
+            "sha256": "84e24d4e7f58e021ac8157785c98928a6baee7ff0b944dcd670d0113a72e4883"
           }
         }
       }
@@ -3690,19 +3712,23 @@
     "Telegram": {
       "canonical": {
         "denied_includes": [],
-        "input_rules": 29,
-        "rules": 29,
-        "sha256": "69cdf43732faa0dbb4f4d884a7def83d951014afc755a2a874b605840ffa72b3",
+        "excluded_domains": {
+          "domain-suffix:ton.org": 1,
+          "domain-suffix:toncenter.com": 1
+        },
+        "input_rules": 38,
+        "rules": 36,
+        "sha256": "782db50f184fec2aee02f73660d721028348d9cd15a8c6fa451d5fa60f199fb7",
         "skipped_attributes": 0,
         "skipped_excluded": [],
         "views": [
           {
             "name": "domainset",
-            "rules": 15
+            "rules": 20
           },
           {
             "name": "ip",
-            "rules": 14
+            "rules": 16
           }
         ]
       },
@@ -3710,186 +3736,191 @@
         "egern": {
           "dropped": [],
           "path": "Egern/Telegram.yaml",
-          "rules": 29,
-          "sha256": "7f8f3c0d42077a1a5f78ab28ccdaf91e2a087a72ce549c42708e46b341a31a66"
+          "rules": 36,
+          "sha256": "a51a4e03f1a86d58859c879f3d466f596d280d8dd41b49f2e805fc432a1c7ca0"
         },
         "loon": {
           "dropped": [],
           "path": "Loon/Telegram.list",
-          "rules": 29,
-          "sha256": "85f188f60b4693093173e20c367f055595c5bcc13979423bc94addd72751dc27"
+          "rules": 36,
+          "sha256": "86f23fb7e30feb7b016e86a1a9f5f4b4f4f37757b3a20ae6125f0ee610644800"
         },
         "mihomo": {
           "dropped": [],
           "path": "mihomo/Telegram.list",
-          "rules": 29,
-          "sha256": "85f188f60b4693093173e20c367f055595c5bcc13979423bc94addd72751dc27"
+          "rules": 36,
+          "sha256": "86f23fb7e30feb7b016e86a1a9f5f4b4f4f37757b3a20ae6125f0ee610644800"
         },
         "quantumultx": {
           "dropped": [],
           "path": "QuantumultX/Telegram.list",
-          "rules": 29,
-          "sha256": "47e116c28454d213905624e1c9bf570ec514ac0a100c2059a1b0506a608ea1bc"
+          "rules": 36,
+          "sha256": "e76e58696b6fc063ba5ab06bc9b03086c43e761fc25987787fdd82a275eb029d"
         },
         "shadowrocket": {
           "dropped": [],
           "path": "Shadowrocket/Telegram.list",
-          "rules": 29,
-          "sha256": "85f188f60b4693093173e20c367f055595c5bcc13979423bc94addd72751dc27"
+          "rules": 36,
+          "sha256": "86f23fb7e30feb7b016e86a1a9f5f4b4f4f37757b3a20ae6125f0ee610644800"
         },
         "singbox": {
           "dropped": [],
           "path": "SingBox/Telegram.json",
-          "rules": 29,
-          "sha256": "59952900bdf8a88c18df28140285d03665650a4bd3238c266e52a1c0101d0931"
+          "rules": 36,
+          "sha256": "63ac4f41ddc1e9f546c534e15bb194f9b9e4285ae641ba36f0eb62cbe1360043"
         },
         "stash": {
           "dropped": [],
           "path": "Stash/Telegram.list",
-          "rules": 29,
-          "sha256": "85f188f60b4693093173e20c367f055595c5bcc13979423bc94addd72751dc27"
+          "rules": 36,
+          "sha256": "86f23fb7e30feb7b016e86a1a9f5f4b4f4f37757b3a20ae6125f0ee610644800"
         },
         "surge": {
           "dropped": [],
           "path": "Surge/Telegram.list",
-          "rules": 29,
-          "sha256": "85f188f60b4693093173e20c367f055595c5bcc13979423bc94addd72751dc27"
+          "rules": 36,
+          "sha256": "86f23fb7e30feb7b016e86a1a9f5f4b4f4f37757b3a20ae6125f0ee610644800"
         }
       },
       "sources": [
         {
-          "author": "SukkaW",
-          "bytes": 476,
-          "format": "surge-rule-set",
-          "lines": 17,
-          "name": "SukkaW-Surge",
-          "role": "primary",
-          "text_sha256": "8eab4b09048a3b0174c413290e0b036035e8a711aa340cda55a88bc260e124be",
-          "url": "https://raw.githubusercontent.com/SukkaW/Surge/master/Source/non_ip/telegram.conf"
+          "author": "Telegram",
+          "bytes": 227,
+          "format": "cidr-list",
+          "lines": 14,
+          "name": "Telegram-official-CIDR",
+          "role": "supplemental",
+          "text_sha256": "3ecd072cedf72eceee6961b18a51e37f905d5ce4a656a5d24cf5fea63e6ec651",
+          "url": "https://core.telegram.org/resources/cidr.txt"
         },
         {
-          "author": "SukkaW",
-          "bytes": 1116,
-          "format": "surge-rule-set",
-          "lines": 31,
-          "name": "SukkaW-Surge-Telegram-IP",
-          "role": "supplemental",
-          "text_sha256": "27f6bab896e98ec9631fd187ff5147fb101260fc7a322c0dc994bbd27ed0a81f",
-          "url": "https://ruleset.skk.moe/List/ip/telegram.conf"
+          "author": "v2fly",
+          "bytes": 252,
+          "format": "v2fly-domain-list",
+          "lines": 21,
+          "name": "v2fly-domain-list-community",
+          "role": "primary",
+          "text_sha256": "24a2d026dbf3a09a8ca893420a40adbad70328978df0100d9c63abecdbf01b5d",
+          "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/telegram"
         }
       ],
-      "supplement": null,
+      "supplement": {
+        "bytes": 799,
+        "lines": 10,
+        "path": "engine/sources/supplement/Telegram.list",
+        "sha256": "46f9cfab6ec75f25432331a3d45e65017a3e6c9e7f40973c66f5a9e4c0733b6b"
+      },
       "views": {
         "egern": {
           "domainset": {
             "dropped": [],
             "path": "Egern/Telegram-domainset.conf",
-            "rules": 15,
-            "sha256": "c56f09c647cf907668913d25b6af5230f81d95eb451d7023d6f027e1447d89d2"
+            "rules": 20,
+            "sha256": "2c81f8d82f8abecd9296ddc0028a4aae429983c49d8761e800689189f2f8dfc6"
           },
           "ip": {
             "dropped": [],
             "path": "Egern/Telegram-ip.conf",
-            "rules": 14,
-            "sha256": "ea9892c4bf0765d578c581951626640fcc347654ef7e74fce17a5c46ab0a04e1"
+            "rules": 16,
+            "sha256": "1109dd9d4e92c72efbb2caa09bd4d7c9381d907367b57a7e88fc6bcfce45421b"
           }
         },
         "loon": {
           "domainset": {
             "dropped": [],
             "path": "Loon/Telegram-domainset.conf",
-            "rules": 15,
-            "sha256": "c56f09c647cf907668913d25b6af5230f81d95eb451d7023d6f027e1447d89d2"
+            "rules": 20,
+            "sha256": "2c81f8d82f8abecd9296ddc0028a4aae429983c49d8761e800689189f2f8dfc6"
           },
           "ip": {
             "dropped": [],
             "path": "Loon/Telegram-ip.conf",
-            "rules": 14,
-            "sha256": "ea9892c4bf0765d578c581951626640fcc347654ef7e74fce17a5c46ab0a04e1"
+            "rules": 16,
+            "sha256": "1109dd9d4e92c72efbb2caa09bd4d7c9381d907367b57a7e88fc6bcfce45421b"
           }
         },
         "mihomo": {
           "domainset": {
             "dropped": [],
             "path": "mihomo/Telegram-domainset.conf",
-            "rules": 15,
-            "sha256": "5a1f563b66057756be7b26cb9ff678751de1018ca8df661b15bc75b64bd364a6"
+            "rules": 20,
+            "sha256": "1add5172fb70d2b2081c339f80104de2a1811a646479a194a5f64d918cbcdc91"
           },
           "ip": {
             "dropped": [],
             "path": "mihomo/Telegram-ip.conf",
-            "rules": 14,
-            "sha256": "ea9892c4bf0765d578c581951626640fcc347654ef7e74fce17a5c46ab0a04e1"
+            "rules": 16,
+            "sha256": "1109dd9d4e92c72efbb2caa09bd4d7c9381d907367b57a7e88fc6bcfce45421b"
           }
         },
         "quantumultx": {
           "domainset": {
             "dropped": [],
             "path": "QuantumultX/Telegram-domainset.conf",
-            "rules": 15,
-            "sha256": "599bc86feaef71ef849b6ab7aaee782f04c62faed8466b93803acae9ded68843"
+            "rules": 20,
+            "sha256": "f04609d3f9032502ab133b788f144790de4dd809abd03b613c2edf3a21162a74"
           },
           "ip": {
             "dropped": [],
             "path": "QuantumultX/Telegram-ip.conf",
-            "rules": 14,
-            "sha256": "eaf69164631a74b69b3a65676ab25dd748a19f1f1e5115ba50e376468def894a"
+            "rules": 16,
+            "sha256": "b285daa0f6e8d9581af8bd69599091aab304479d68516132ff6189c6151bf46f"
           }
         },
         "shadowrocket": {
           "domainset": {
             "dropped": [],
             "path": "Shadowrocket/Telegram-domainset.conf",
-            "rules": 15,
-            "sha256": "b70ea77288058199acb97d42756065bd4a7580983fbe824e2167f17dafb16eb2"
+            "rules": 20,
+            "sha256": "cdbcf6dab0f131f9d65659c503fb69e721b87745c5eb3a7e17dae0bdd7e0690b"
           },
           "ip": {
             "dropped": [],
             "path": "Shadowrocket/Telegram-ip.conf",
-            "rules": 14,
-            "sha256": "ea9892c4bf0765d578c581951626640fcc347654ef7e74fce17a5c46ab0a04e1"
+            "rules": 16,
+            "sha256": "1109dd9d4e92c72efbb2caa09bd4d7c9381d907367b57a7e88fc6bcfce45421b"
           }
         },
         "singbox": {
           "domainset": {
             "dropped": [],
             "path": "SingBox/Telegram-domainset.json",
-            "rules": 15,
-            "sha256": "1e7081d97ee0ee1540642d548a5b48649bcdcea1836f3973ca798696405622d4"
+            "rules": 20,
+            "sha256": "89362a38771793cc0926c637ae7ddccd40efc6839c0510f7e262e26a7a21ab15"
           },
           "ip": {
             "dropped": [],
             "path": "SingBox/Telegram-ip.json",
-            "rules": 14,
-            "sha256": "057c92b12bdcd19b591e69fe2da7acaacaa6e0a2d20525155b706eada085fad9"
+            "rules": 16,
+            "sha256": "7eb3b672bc68856413bb1b30403d7e0e0600218ff532e8253fbdb0d0ec55a29f"
           }
         },
         "stash": {
           "domainset": {
             "dropped": [],
             "path": "Stash/Telegram-domainset.conf",
-            "rules": 15,
-            "sha256": "5a1f563b66057756be7b26cb9ff678751de1018ca8df661b15bc75b64bd364a6"
+            "rules": 20,
+            "sha256": "1add5172fb70d2b2081c339f80104de2a1811a646479a194a5f64d918cbcdc91"
           },
           "ip": {
             "dropped": [],
             "path": "Stash/Telegram-ip.conf",
-            "rules": 14,
-            "sha256": "ea9892c4bf0765d578c581951626640fcc347654ef7e74fce17a5c46ab0a04e1"
+            "rules": 16,
+            "sha256": "1109dd9d4e92c72efbb2caa09bd4d7c9381d907367b57a7e88fc6bcfce45421b"
           }
         },
         "surge": {
           "domainset": {
             "dropped": [],
             "path": "Surge/Telegram-domainset.conf",
-            "rules": 15,
-            "sha256": "b70ea77288058199acb97d42756065bd4a7580983fbe824e2167f17dafb16eb2"
+            "rules": 20,
+            "sha256": "cdbcf6dab0f131f9d65659c503fb69e721b87745c5eb3a7e17dae0bdd7e0690b"
           },
           "ip": {
             "dropped": [],
             "path": "Surge/Telegram-ip.conf",
-            "rules": 14,
-            "sha256": "ea9892c4bf0765d578c581951626640fcc347654ef7e74fce17a5c46ab0a04e1"
+            "rules": 16,
+            "sha256": "1109dd9d4e92c72efbb2caa09bd4d7c9381d907367b57a7e88fc6bcfce45421b"
           }
         }
       }
@@ -4193,15 +4224,15 @@
     "Twitch": {
       "canonical": {
         "denied_includes": [],
-        "input_rules": 22,
-        "rules": 22,
-        "sha256": "6d0e456da6d849a92c556aaf6a7d220a83644b18caa75d20c2239a836f5dd979",
+        "input_rules": 49,
+        "rules": 49,
+        "sha256": "9c48f4a918c3e989900877676378bb2f0be83161e3f9380bd2f59eaf7183a132",
         "skipped_attributes": 0,
         "skipped_excluded": [],
         "views": [
           {
             "name": "nonip",
-            "rules": 10
+            "rules": 37
           },
           {
             "name": "ip",
@@ -4215,67 +4246,72 @@
             "PROCESS-NAME,tv.twitch.android.app"
           ],
           "path": "Egern/Twitch.yaml",
-          "rules": 21,
-          "sha256": "37a8e26b96173056132f374a8fe1ab7ff23f3d502b3df686b197f61f4a95e3fd"
+          "rules": 48,
+          "sha256": "c494674ec64201249079a815dfdcde05bf8b1b30b481730cdbdd10e25272cb59"
         },
         "loon": {
           "dropped": [],
           "path": "Loon/Twitch.list",
-          "rules": 22,
-          "sha256": "35a05e36460c22f625c27ec80b7c310aebca57eedf9196677c467616fba48d62"
+          "rules": 49,
+          "sha256": "7c0830a003a8a40cbb2e5143f400875082268a144c8555a75f5b6511fe39073d"
         },
         "mihomo": {
           "dropped": [],
           "path": "mihomo/Twitch.list",
-          "rules": 22,
-          "sha256": "35a05e36460c22f625c27ec80b7c310aebca57eedf9196677c467616fba48d62"
+          "rules": 49,
+          "sha256": "7c0830a003a8a40cbb2e5143f400875082268a144c8555a75f5b6511fe39073d"
         },
         "quantumultx": {
           "dropped": [
             "PROCESS-NAME,tv.twitch.android.app"
           ],
           "path": "QuantumultX/Twitch.list",
-          "rules": 21,
-          "sha256": "2edc51f0c9d6cabf99c2a059c02eb7aec147f5751e295f0477529efa1276d6b7"
+          "rules": 48,
+          "sha256": "2e343c096310d83abf133a3e85a986e0b4d9e3aa23519c277f741fc55ecd3ebc"
         },
         "shadowrocket": {
           "dropped": [],
           "path": "Shadowrocket/Twitch.list",
-          "rules": 22,
-          "sha256": "35a05e36460c22f625c27ec80b7c310aebca57eedf9196677c467616fba48d62"
+          "rules": 49,
+          "sha256": "7c0830a003a8a40cbb2e5143f400875082268a144c8555a75f5b6511fe39073d"
         },
         "singbox": {
           "dropped": [],
           "path": "SingBox/Twitch.json",
-          "rules": 22,
-          "sha256": "a2054991dfa2cccae7538215270f551f4c2652ab9d7578df5614142f854d4cd9"
+          "rules": 49,
+          "sha256": "115c0f984f29fcdc68f2ef509ab1de04cd4944e1d853be9db7576cac6f0cfbfe"
         },
         "stash": {
           "dropped": [],
           "path": "Stash/Twitch.list",
-          "rules": 22,
-          "sha256": "35a05e36460c22f625c27ec80b7c310aebca57eedf9196677c467616fba48d62"
+          "rules": 49,
+          "sha256": "7c0830a003a8a40cbb2e5143f400875082268a144c8555a75f5b6511fe39073d"
         },
         "surge": {
           "dropped": [],
           "path": "Surge/Twitch.list",
-          "rules": 22,
-          "sha256": "35a05e36460c22f625c27ec80b7c310aebca57eedf9196677c467616fba48d62"
+          "rules": 49,
+          "sha256": "7c0830a003a8a40cbb2e5143f400875082268a144c8555a75f5b6511fe39073d"
         }
       },
       "sources": [
         {
-          "author": "blackmatrix7",
-          "bytes": 917,
-          "format": "surge-rule-set",
-          "lines": 32,
-          "name": "blackmatrix7-ios_rule_script",
+          "author": "v2fly",
+          "bytes": 1004,
+          "format": "v2fly-domain-list",
+          "lines": 35,
+          "name": "v2fly-domain-list-community",
           "role": "primary",
-          "text_sha256": "5f1e5ba766fcef3196ea6f03e05c1859af7d1122338beaceaea2919b6c82f7a8",
-          "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Twitch/Twitch.list"
+          "text_sha256": "638bf245010848b0f1a54e077a81614220dbcaa95a4659a00e937ad2f0ece4c7",
+          "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/twitch"
         }
       ],
-      "supplement": null,
+      "supplement": {
+        "bytes": 926,
+        "lines": 19,
+        "path": "engine/sources/supplement/Twitch.list",
+        "sha256": "8509214c0a1e5158da414f959ad18090c0af8f27d8480f65e2bed3019c375cb1"
+      },
       "views": {
         "egern": {
           "ip": {
@@ -4289,8 +4325,8 @@
               "PROCESS-NAME,tv.twitch.android.app"
             ],
             "path": "Egern/Twitch-nonip.conf",
-            "rules": 9,
-            "sha256": "54e4d739935279814d67fb2d922d5a9c9857420ba9b8231863463b0e767391cc"
+            "rules": 36,
+            "sha256": "7c8ac8c69d5ee0b425376599389d6d672c41ac59c56e38e2c15ab2c0d68fad20"
           }
         },
         "loon": {
@@ -4303,8 +4339,8 @@
           "nonip": {
             "dropped": [],
             "path": "Loon/Twitch-nonip.conf",
-            "rules": 10,
-            "sha256": "62b03ccaace92feb0f011d7cb4c52aba6d7ecdf919f7aa29110366829f3cc94b"
+            "rules": 37,
+            "sha256": "0d40fd3cb757b0fdaa8caf087705b3436fbb0e270c3b50f1f86fbf1898e4f665"
           }
         },
         "mihomo": {
@@ -4317,8 +4353,8 @@
           "nonip": {
             "dropped": [],
             "path": "mihomo/Twitch-nonip.conf",
-            "rules": 10,
-            "sha256": "62b03ccaace92feb0f011d7cb4c52aba6d7ecdf919f7aa29110366829f3cc94b"
+            "rules": 37,
+            "sha256": "0d40fd3cb757b0fdaa8caf087705b3436fbb0e270c3b50f1f86fbf1898e4f665"
           }
         },
         "quantumultx": {
@@ -4333,8 +4369,8 @@
               "PROCESS-NAME,tv.twitch.android.app"
             ],
             "path": "QuantumultX/Twitch-nonip.conf",
-            "rules": 9,
-            "sha256": "05aeab24260d1759a99b4400800aa1d17f7bc13b2b1ced6b33da310abe221200"
+            "rules": 36,
+            "sha256": "6a1be75619f7744c2437795ed3858c5f55161a427e722253976f486f751b7c18"
           }
         },
         "shadowrocket": {
@@ -4347,8 +4383,8 @@
           "nonip": {
             "dropped": [],
             "path": "Shadowrocket/Twitch-nonip.conf",
-            "rules": 10,
-            "sha256": "62b03ccaace92feb0f011d7cb4c52aba6d7ecdf919f7aa29110366829f3cc94b"
+            "rules": 37,
+            "sha256": "0d40fd3cb757b0fdaa8caf087705b3436fbb0e270c3b50f1f86fbf1898e4f665"
           }
         },
         "singbox": {
@@ -4361,8 +4397,8 @@
           "nonip": {
             "dropped": [],
             "path": "SingBox/Twitch-nonip.json",
-            "rules": 10,
-            "sha256": "e1081bc4c281de32e3d96010247dca15f19f20d349025f0c6a7b509632d1918a"
+            "rules": 37,
+            "sha256": "f0b86b53c53eceb2b1906846472fc51378fb5ec47bfc688ce264f6664fb663c9"
           }
         },
         "stash": {
@@ -4375,8 +4411,8 @@
           "nonip": {
             "dropped": [],
             "path": "Stash/Twitch-nonip.conf",
-            "rules": 10,
-            "sha256": "62b03ccaace92feb0f011d7cb4c52aba6d7ecdf919f7aa29110366829f3cc94b"
+            "rules": 37,
+            "sha256": "0d40fd3cb757b0fdaa8caf087705b3436fbb0e270c3b50f1f86fbf1898e4f665"
           }
         },
         "surge": {
@@ -4389,8 +4425,8 @@
           "nonip": {
             "dropped": [],
             "path": "Surge/Twitch-nonip.conf",
-            "rules": 10,
-            "sha256": "62b03ccaace92feb0f011d7cb4c52aba6d7ecdf919f7aa29110366829f3cc94b"
+            "rules": 37,
+            "sha256": "0d40fd3cb757b0fdaa8caf087705b3436fbb0e270c3b50f1f86fbf1898e4f665"
           }
         }
       }
@@ -5024,7 +5060,7 @@
   },
   "builder": {
     "files": {
-      "engine/scripts/build.py": "38f6db1fb6fd8e2b33e5e16034a074a5b03cfba0953b14daf52f3e2727eb52d8",
+      "engine/scripts/build.py": "c618c6a90df3c809405d9097e9da64d7616732d7bdde0ac000490c86817e56cb",
       "engine/scripts/renderers.py": "08d1a071278b82e73760c0f32d2f3ddb3f66e27b39b5ad6523301a2a3fb4599f"
     },
     "version": "2.0.0"
@@ -5032,6 +5068,6 @@
   "schema_version": 1,
   "source_definition": {
     "path": "engine/sources/apps.yaml",
-    "sha256": "b4a2d2a73e2bec91043c656e1cc5a0480c9bab9db82814686fab2d6674b94813"
+    "sha256": "fa7edae6c95bb9e1518f53230e0facde4e0b080391b02e4d787d0106f486bdb0"
   }
 }

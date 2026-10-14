@@ -3,6 +3,7 @@
   "rules": [
     {
       "domain": [
+        "hulu.playback.edge.bamgrid.com",
         "live-mediashield-ava-hulustream-com.akamaized.net"
       ]
     },

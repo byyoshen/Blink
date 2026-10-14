@@ -2,26 +2,27 @@
   "version": 2,
   "rules": [
     {
-      "domain": [
-        "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
-      ]
-    },
-    {
       "domain_suffix": [
         "cdn-telegram.org",
+        "comments.app",
+        "contest.com",
+        "fragment.com",
         "graph.org",
         "legra.ph",
+        "quiz.directory",
         "t.me",
         "tdesktop.com",
         "telega.one",
         "telegra.ph",
+        "telegram-cdn.org",
         "telegram.dog",
         "telegram.me",
         "telegram.org",
         "telegram.space",
         "telesco.pe",
         "tg.dev",
-        "tx.me"
+        "tx.me",
+        "usercontent.dev"
       ]
     },
     {
@@ -30,10 +31,12 @@
         "185.76.151.0/24",
         "194.221.250.50/32",
         "91.105.192.0/23",
-        "91.108.16.0/21",
+        "91.108.12.0/22",
+        "91.108.16.0/22",
+        "91.108.20.0/22",
         "91.108.4.0/22",
         "91.108.56.0/22",
-        "91.108.8.0/21",
+        "91.108.8.0/22",
         "95.161.64.0/20",
         "2001:67c:4e8::/48",
         "2001:b28:f23c::/48",

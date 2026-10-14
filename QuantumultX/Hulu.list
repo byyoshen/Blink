@@ -1,6 +1,7 @@
 # 规则名称: Hulu
-# 规则统计: 58
+# 规则统计: 59
 
+HOST,hulu.playback.edge.bamgrid.com,policy
 HOST,live-mediashield-ava-hulustream-com.akamaized.net,policy
 HOST-SUFFIX,112263.com,policy
 HOST-SUFFIX,assetshuluimcom-a.akamaihd.net,policy

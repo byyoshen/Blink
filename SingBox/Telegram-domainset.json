@@ -2,26 +2,27 @@
   "version": 2,
   "rules": [
     {
-      "domain": [
-        "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
-      ]
-    },
-    {
       "domain_suffix": [
         "cdn-telegram.org",
+        "comments.app",
+        "contest.com",
+        "fragment.com",
         "graph.org",
         "legra.ph",
+        "quiz.directory",
         "t.me",
         "tdesktop.com",
         "telega.one",
         "telegra.ph",
+        "telegram-cdn.org",
         "telegram.dog",
         "telegram.me",
         "telegram.org",
         "telegram.space",
         "telesco.pe",
         "tg.dev",
-        "tx.me"
+        "tx.me",
+        "usercontent.dev"
       ]
     }
   ]

@@ -223,7 +223,7 @@ push / PR 与每日更新自动执行门禁：单元与回归、多端等价性�
 
 ## 使用与许可
 
-感谢上游作者 SukkaW、Repcz、v2fly、blackmatrix7，还有我自己对规则集的长期维护（各 App 的来源明细与
+感谢上游作者 SukkaW、Repcz、v2fly（早期版本也用过 blackmatrix7），还有我自己对规则集的长期维护（各 App 的来源明细与
 许可见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)）。
 
 本仓库为个人规则分发与学习维护而设，无任何担保；请结合自己的客户端策略与日志自行验证。

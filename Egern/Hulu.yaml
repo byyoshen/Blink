@@ -1,7 +1,8 @@
 # 规则名称: Hulu
-# 规则统计: 58
+# 规则统计: 59
 
 domain_set:
+- hulu.playback.edge.bamgrid.com
 - live-mediashield-ava-hulustream-com.akamaized.net
 domain_suffix_set:
 - 112263.com
