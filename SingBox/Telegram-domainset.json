@@ -2,6 +2,12 @@
   "version": 2,
   "rules": [
     {
+      "domain": [
+        "api.imem.app",
+        "api.swiftgram.app"
+      ]
+    },
+    {
       "domain_suffix": [
         "cdn-telegram.org",
         "comments.app",
@@ -9,7 +15,9 @@
         "fragment.com",
         "graph.org",
         "legra.ph",
+        "mbrx.app",
         "quiz.directory",
+        "stel.com",
         "t.me",
         "tdesktop.com",
         "telega.one",
@@ -19,6 +27,7 @@
         "telegram.me",
         "telegram.org",
         "telegram.space",
+        "telegramdownload.com",
         "telesco.pe",
         "tg.dev",
         "tx.me",

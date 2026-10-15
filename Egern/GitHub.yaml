@@ -1,5 +1,5 @@
 # 规则名称: GitHub
-# 规则统计: 62
+# 规则统计: 65
 
 domain_set:
 - copilot-proxy.githubusercontent.com
@@ -43,6 +43,8 @@ domain_suffix_set:
 - ghcr.io
 - ghe.com
 - git.io
+- github-atom-io-herokuapp-com.freetls.fastly.net
+- github-avatars.oss-cn-hongkong.aliyuncs.com
 - github.ai
 - github.blog
 - github.career
@@ -63,5 +65,6 @@ domain_suffix_set:
 - myoctocat.com
 - octocaptcha.com
 - opensource.guide
+- rawgithub.com
 - repo.new
 - thegithubshop.com

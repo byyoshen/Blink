@@ -54,19 +54,19 @@ references — no rule content is copied into `Profiles/`.
 | `Surge/DouYin.list` | v2fly/domain-list-community (`data/douyin`) + Blink repo-maintained supplement | https://github.com/v2fly/domain-list-community | MIT License |
 | `Surge/PayPal.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
 | `Surge/YouTube.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
-| `Surge/X.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
+| `Surge/X.list` | Repcz/Tool + Blink repo-maintained supplement (accepted by the monthly cycle) | https://github.com/Repcz/Tool | MIT License |
 | `Surge/Instagram.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
 | `Surge/Telegram.list` | v2fly/domain-list-community (`data/telegram`; `ton.org` / `toncenter.com` excluded) + Telegram's own published IP list `core.telegram.org/resources/cidr.txt` (IP segment) + Blink repo-maintained supplement (hosts and IP ranges kept from the earlier source) | https://github.com/v2fly/domain-list-community | MIT License (domains); the IP list is factual network data published by Telegram for network operators, with no licence declared |
 | `Surge/Netflix.list` | Repcz/Tool (`us-west-2.amazonaws.com` excluded) | https://github.com/Repcz/Tool | MIT License |
-| `Surge/TikTok.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
-| `Surge/Spotify.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
-| `Surge/AI.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
-| `Surge/Steam.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
+| `Surge/TikTok.list` | Repcz/Tool + Blink repo-maintained supplement (accepted by the monthly cycle) | https://github.com/Repcz/Tool | MIT License |
+| `Surge/Spotify.list` | Repcz/Tool + Blink repo-maintained supplement (accepted by the monthly cycle) | https://github.com/Repcz/Tool | MIT License |
+| `Surge/AI.list` | Repcz/Tool + Blink repo-maintained supplement (accepted by the monthly cycle) | https://github.com/Repcz/Tool | MIT License |
+| `Surge/Steam.list` | Repcz/Tool + Blink repo-maintained supplement (accepted by the monthly cycle) | https://github.com/Repcz/Tool | MIT License |
 | `Surge/ZABank.list` | Blink repo-maintained supplement | `engine/sources/supplement/ZABank.list` | No upstream source; original repo-maintained rules |
 | `Surge/APTV.list` | Blink repo-maintained supplement (personal list) | `engine/sources/supplement/APTV.list` | Rules maintained by the repository owner (originally kept in a private list); no third-party license |
 | `Surge/Disney.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
-| `Surge/PrimeVideo.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
-| `Surge/HBO.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
+| `Surge/PrimeVideo.list` | Repcz/Tool + Blink repo-maintained supplement (accepted by the monthly cycle) | https://github.com/Repcz/Tool | MIT License |
+| `Surge/HBO.list` | Repcz/Tool + Blink repo-maintained supplement (accepted by the monthly cycle) | https://github.com/Repcz/Tool | MIT License |
 | `Surge/Facebook.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
 | `Surge/Google.list` | Repcz/Tool | https://github.com/Repcz/Tool | MIT License |
 | `Surge/ParamountPlus.list` | v2fly/domain-list-community (`data/cbs`; CBS corporate, news and sports domains excluded) + Blink repo-maintained supplement (hosts, process names and IP ranges kept from the earlier source) | https://github.com/v2fly/domain-list-community | MIT License |

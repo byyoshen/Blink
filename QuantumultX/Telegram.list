@@ -1,13 +1,17 @@
 # 规则名称: Telegram
-# 规则统计: 36
+# 规则统计: 42
 
+HOST,api.imem.app,policy
+HOST,api.swiftgram.app,policy
 HOST-SUFFIX,cdn-telegram.org,policy
 HOST-SUFFIX,comments.app,policy
 HOST-SUFFIX,contest.com,policy
 HOST-SUFFIX,fragment.com,policy
 HOST-SUFFIX,graph.org,policy
 HOST-SUFFIX,legra.ph,policy
+HOST-SUFFIX,mbrx.app,policy
 HOST-SUFFIX,quiz.directory,policy
+HOST-SUFFIX,stel.com,policy
 HOST-SUFFIX,t.me,policy
 HOST-SUFFIX,tdesktop.com,policy
 HOST-SUFFIX,telega.one,policy
@@ -17,6 +21,7 @@ HOST-SUFFIX,telegram.dog,policy
 HOST-SUFFIX,telegram.me,policy
 HOST-SUFFIX,telegram.org,policy
 HOST-SUFFIX,telegram.space,policy
+HOST-SUFFIX,telegramdownload.com,policy
 HOST-SUFFIX,telesco.pe,policy
 HOST-SUFFIX,tg.dev,policy
 HOST-SUFFIX,tx.me,policy
@@ -24,6 +29,7 @@ HOST-SUFFIX,usercontent.dev,policy
 IP-CIDR,149.154.160.0/20,policy
 IP-CIDR,185.76.151.0/24,policy
 IP-CIDR,194.221.250.50/32,policy
+IP-CIDR,5.28.192.0/18,policy
 IP-CIDR,91.105.192.0/23,policy
 IP-CIDR,91.108.12.0/22,policy
 IP-CIDR,91.108.16.0/22,policy

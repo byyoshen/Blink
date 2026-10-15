@@ -2,10 +2,19 @@
   "version": 2,
   "rules": [
     {
+      "domain": [
+        "cdn-spotify-experiments.conductrics.com",
+        "spotify.com.edgesuite.net",
+        "spotify.map.fastly.net",
+        "spotify.map.fastlylb.net"
+      ]
+    },
+    {
       "domain_suffix": [
         "audio-ak-spotify-com.akamaized.net",
         "byspotify.com",
         "heads4-ak-spotify-com.akamaized.net",
+        "lifeatspotify.com",
         "pscdn.co",
         "scdn.co",
         "spoti.fi",
@@ -14,12 +23,15 @@
         "spotify.app.link",
         "spotify.com",
         "spotify.design",
+        "spotify.link",
         "spotifycdn.com",
         "spotifycdn.net",
         "spotifycharts.com",
         "spotifycodes.com",
         "spotifyforbrands.com",
-        "spotifyjobs.com"
+        "spotifyforvendors.com",
+        "spotifyjobs.com",
+        "tospotify.com"
       ]
     },
     {

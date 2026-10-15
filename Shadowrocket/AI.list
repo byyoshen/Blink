@@ -1,5 +1,5 @@
 # 规则名称: AI
-# 规则统计: 55
+# 规则统计: 59
 
 DOMAIN,ai.google.dev
 DOMAIN,aida.googleapis.com
@@ -24,6 +24,7 @@ DOMAIN-SUFFIX,anthropic.com
 DOMAIN-SUFFIX,bard.google.com
 DOMAIN-SUFFIX,chat.com
 DOMAIN-SUFFIX,chatgpt.com
+DOMAIN-SUFFIX,chatgpt.livekit.cloud
 DOMAIN-SUFFIX,chatgpt.site
 DOMAIN-SUFFIX,clau.de
 DOMAIN-SUFFIX,claude.ai
@@ -42,17 +43,20 @@ DOMAIN-SUFFIX,generativeai.google
 DOMAIN-SUFFIX,generativelanguage.googleapis.com
 DOMAIN-SUFFIX,grok.com
 DOMAIN-SUFFIX,groq.com
+DOMAIN-SUFFIX,host.livekit.cloud
 DOMAIN-SUFFIX,jasper.ai
 DOMAIN-SUFFIX,makersuite.google.com
 DOMAIN-SUFFIX,meta.ai
 DOMAIN-SUFFIX,notebooklm.google
 DOMAIN-SUFFIX,notebooklm.google.com
 DOMAIN-SUFFIX,oaistatic.com
+DOMAIN-SUFFIX,oaiusercontent.com
 DOMAIN-SUFFIX,openart.ai
 DOMAIN-SUFFIX,perplexity.ai
 DOMAIN-SUFFIX,poe.com
 DOMAIN-SUFFIX,proactivebackend-pa.googleapis.com
 DOMAIN-SUFFIX,sora.com
+DOMAIN-SUFFIX,turn.livekit.cloud
 DOMAIN-SUFFIX,x.ai
 DOMAIN-KEYWORD,alkalimakersuite-pa.clients6.google.com
 DOMAIN-KEYWORD,openai

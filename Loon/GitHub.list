@@ -1,5 +1,5 @@
 # 规则名称: GitHub
-# 规则统计: 62
+# 规则统计: 65
 
 DOMAIN,copilot-proxy.githubusercontent.com
 DOMAIN,copilot-workspace.githubnext.com
@@ -41,6 +41,8 @@ DOMAIN-SUFFIX,gh.io
 DOMAIN-SUFFIX,ghcr.io
 DOMAIN-SUFFIX,ghe.com
 DOMAIN-SUFFIX,git.io
+DOMAIN-SUFFIX,github-atom-io-herokuapp-com.freetls.fastly.net
+DOMAIN-SUFFIX,github-avatars.oss-cn-hongkong.aliyuncs.com
 DOMAIN-SUFFIX,github.ai
 DOMAIN-SUFFIX,github.blog
 DOMAIN-SUFFIX,github.career
@@ -61,5 +63,6 @@ DOMAIN-SUFFIX,githubusercontent.com
 DOMAIN-SUFFIX,myoctocat.com
 DOMAIN-SUFFIX,octocaptcha.com
 DOMAIN-SUFFIX,opensource.guide
+DOMAIN-SUFFIX,rawgithub.com
 DOMAIN-SUFFIX,repo.new
 DOMAIN-SUFFIX,thegithubshop.com

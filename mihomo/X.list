@@ -1,5 +1,5 @@
 # 规则名称: X
-# 规则统计: 34
+# 规则统计: 35
 
 DOMAIN-SUFFIX,ads-twitter.com
 DOMAIN-SUFFIX,cms-twdigitalassets.com
@@ -16,6 +16,7 @@ DOMAIN-SUFFIX,twitpic.com
 DOMAIN-SUFFIX,twitter.biz
 DOMAIN-SUFFIX,twitter.com
 DOMAIN-SUFFIX,twitter.jp
+DOMAIN-SUFFIX,twitter.map.fastly.net
 DOMAIN-SUFFIX,twittercommunity.com
 DOMAIN-SUFFIX,twitterflightschool.com
 DOMAIN-SUFFIX,twitterinc.com

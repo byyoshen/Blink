@@ -1,5 +1,5 @@
 # 规则名称: AI
-# 规则统计: 55
+# 规则统计: 59
 
 HOST,ai.google.dev,policy
 HOST,aida.googleapis.com,policy
@@ -24,6 +24,7 @@ HOST-SUFFIX,anthropic.com,policy
 HOST-SUFFIX,bard.google.com,policy
 HOST-SUFFIX,chat.com,policy
 HOST-SUFFIX,chatgpt.com,policy
+HOST-SUFFIX,chatgpt.livekit.cloud,policy
 HOST-SUFFIX,chatgpt.site,policy
 HOST-SUFFIX,clau.de,policy
 HOST-SUFFIX,claude.ai,policy
@@ -42,17 +43,20 @@ HOST-SUFFIX,generativeai.google,policy
 HOST-SUFFIX,generativelanguage.googleapis.com,policy
 HOST-SUFFIX,grok.com,policy
 HOST-SUFFIX,groq.com,policy
+HOST-SUFFIX,host.livekit.cloud,policy
 HOST-SUFFIX,jasper.ai,policy
 HOST-SUFFIX,makersuite.google.com,policy
 HOST-SUFFIX,meta.ai,policy
 HOST-SUFFIX,notebooklm.google,policy
 HOST-SUFFIX,notebooklm.google.com,policy
 HOST-SUFFIX,oaistatic.com,policy
+HOST-SUFFIX,oaiusercontent.com,policy
 HOST-SUFFIX,openart.ai,policy
 HOST-SUFFIX,perplexity.ai,policy
 HOST-SUFFIX,poe.com,policy
 HOST-SUFFIX,proactivebackend-pa.googleapis.com,policy
 HOST-SUFFIX,sora.com,policy
+HOST-SUFFIX,turn.livekit.cloud,policy
 HOST-SUFFIX,x.ai,policy
 HOST-KEYWORD,alkalimakersuite-pa.clients6.google.com,policy
 HOST-KEYWORD,openai,policy

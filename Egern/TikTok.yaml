@@ -1,5 +1,5 @@
 # 规则名称: TikTok
-# 规则统计: 80
+# 规则统计: 86
 
 domain_set:
 - api.snapkit.com
@@ -55,6 +55,8 @@ domain_suffix_set:
 - sgpstatp.com
 - sgsnssdk.com
 - tik-tokapi.com
+- tiktok-minis.com
+- tiktok-row.net
 - tiktok-usts.net
 - tiktok.com
 - tiktok.in
@@ -65,14 +67,18 @@ domain_suffix_set:
 - tiktokcdn.com
 - tiktokd.net
 - tiktokd.org
+- tiktokeu-cdn.com
 - tiktokglobalshop.com
 - tiktokglobalshopv.com
+- tiktokminis.us
 - tiktokmusic.app
+- tiktokrow-cdn.com
 - tiktokshop.com
 - tiktokstaticb.com
 - tiktokv.com
 - tiktokv.eu
 - tiktokv.us
+- tiktokw.eu
 - tiktokw.us
 - tlivecdn.com
 - tlivepush.com

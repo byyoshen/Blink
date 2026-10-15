@@ -1,10 +1,11 @@
 # 规则名称: HBO
-# 规则统计: 45
+# 规则统计: 46
 
 HOST-SUFFIX,bcbolthboa-a.akamaihd.net,policy
 HOST-SUFFIX,cf-images.ap-southeast-1.prod.boltdns.net,policy
 HOST-SUFFIX,cinemax.com,policy
 HOST-SUFFIX,dai3fd1oh325y.cloudfront.net,policy
+HOST-SUFFIX,discomax.com,policy
 HOST-SUFFIX,forthethrone.com,policy
 HOST-SUFFIX,hbo.com,policy
 HOST-SUFFIX,hbo.com.c.footprint.net,policy
