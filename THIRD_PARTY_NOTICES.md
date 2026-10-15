@@ -4,9 +4,12 @@
 
 The public Blink repository distributes generated Rule-Sets, Profiles, a provenance
 manifest and user-facing documentation. The build engine, portal source and audit
-records are maintained privately. Earlier public Git history remains available.
+records are maintained privately. The public repository was recreated on
+2026-10-02; its Git history before that date was not kept. Rule-Set URLs did not change.
 
-This notice records upstream provenance and applicable licenses. Blink does not
+Blink is the only rule source: it collects third-party lists as raw material and
+decides itself which rules to accept. This notice records upstream provenance and
+applicable licenses. Blink does not
 relicense upstream material or override its copyright, attribution or source
 availability obligations. Rule files retain the applicable upstream terms below.
 Yoshen's separately licensable original rules and original portions of Profiles
@@ -119,8 +122,8 @@ The public manifest records upstream URLs and content fingerprints, canonical
 fingerprints, and generated output hashes. Anyone can compare a downloaded output
 with its recorded SHA256. Builder, source-definition and supplement paths now refer
 to private files, so a full independent rebuild is not possible from the current
-public tree alone. Earlier public source remains available in Git history, but
-must not be assumed to reproduce later outputs.
+public tree alone. Public Git history before 2026-10-02 was not kept when the
+repository was recreated.
 
 Since 2026-10-14 no generated file is built from a GPL or AGPL rule source.
 ParamountPlus, Hulu and Twitch moved from blackmatrix7/ios_rule_script (GPL-2.0)
