@@ -3,7 +3,7 @@
 # 单订阅池（Sub）：导入前把 https://YOUR-SUBSCRIPTION-URL 替换为你的订阅链接。
 # 策略组与规则引用由 Blink 统一维护；本文件为人工维护层，不随规则每日自动更新。
 # 公开模板只保留核心策略组与 App 规则，其余个性化场景请按需自行扩展。
-# ADAPTED：url-test 无生产实证暂以 select 呈现；no-resolve 为 rule-set 级。
+# ADAPTED：no-resolve 为 rule-set 级。
 # ADAPTED：rule_set 引用处没有 no_resolve 字段。skk 的 lan 与 china_ip 行内不带 no-resolve，
 #   所以改写为带 no_resolve: true 的 ip_cidr 段与 geoip CN（geoip_db_url 指向 GeoIP2-CN 库）。
 # ADAPTED：通用网络层键名依据官方文档 egernapp.com/docs/configuration/dns 与 /example
@@ -88,7 +88,7 @@ policy_groups:
     - Sub
     flatten: true
     filter: '(?i)(新加坡|狮城|獅城|🇸🇬|Singapore|SGP|SGGS|(?:^|[^A-Za-z])SG(?:P)?(?:[^A-Za-z]|$))'
-- select:
+- auto_test:
     name: Auto
     policies:
     - HK
@@ -96,7 +96,9 @@ policy_groups:
     - JP
     - US
     - SG
-    # ADAPTED：Egern url-test 待真机验证（Needs Verification），暂以 select 呈现
+    interval: 600
+    tolerance: 80
+    timeout: 5
 - select:
     name: Proxy
     policies:
