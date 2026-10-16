@@ -5103,6 +5103,6 @@
   "schema_version": 1,
   "source_definition": {
     "path": "engine/sources/apps.yaml",
-    "sha256": "fa7edae6c95bb9e1518f53230e0facde4e0b080391b02e4d787d0106f486bdb0"
+    "sha256": "a80a1ffb6dd567c2d9dd1f3bd9b819c127dbf6e0bd0df22b8c5ba34d24a92357"
   }
 }
