@@ -12,6 +12,7 @@
 # UNSUPPORTED：extended-matching / pre-matching / DOMAIN-SET 为 Surge 专属，本文件省略。
 # UNSUPPORTED：hijack-dns 属于 tun.dns-hijack，本模板不开 tun；skip-proxy 无对应键；
 #   internet-test-url 无对应键，代理测试地址写在订阅 health-check 与 url-test 组里。
+# UNSUPPORTED：MITM —— mihomo 主线没有 MITM 配置项，本文件不写。
 # ============================================================
 
 mixed-port: 7890

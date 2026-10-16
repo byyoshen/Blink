@@ -12,6 +12,8 @@
 #   bypass_tunnel_proxy，测速超时没有对应键。
 # UNSUPPORTED：extended-matching / pre-matching / DOMAIN-SET / always-real-ip /
 #   always-raw-tcp-hosts / proxy-test-udp / http-api 为 Surge 专属，本文件省略或需在 App 内配置。
+# ADAPTED：MITM 写在 mitm 段（hostnames、ca_p12、ca_passphrase），本模板不开。要用时在 App 内生成证书；
+#   证书与密码只留在你的设备上，不写进本文件。
 # ============================================================
 
 geoip_db_url: https://raw.githubusercontent.com/Masaiki/GeoIP2-CN/release/Country.mmdb

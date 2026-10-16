@@ -8,6 +8,8 @@
 # UNSUPPORTED：extended-matching / pre-matching / DOMAIN-SET 为 Surge 专属，本文件省略。
 # UNSUPPORTED：hijack-dns / skip-proxy 无对应键（Stash 在 App 内接管 DNS 与本地网段）；
 #   internet-test-url 无对应键，代理测试地址写在订阅 health-check 与 url-test 组里。
+# ADAPTED：MITM 写在 http 段（mitm 主机名列表、ca、ca-passphrase），本模板不开。要用时在 App 内生成证书；
+#   证书与密码只留在你的设备上，不写进本文件（官方建议放进私有覆写 .stoverride）。
 # ============================================================
 
 mode: rule
