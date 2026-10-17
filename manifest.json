@@ -2113,11 +2113,25 @@
       "canonical": {
         "denied_includes": [],
         "excluded_domains": {
-          "domain-suffix:us-west-2.amazonaws.com": 1
+          "domain-suffix:us-west-2.amazonaws.com": 1,
+          "ip-cidr:34.192.0.0/10": 3,
+          "ip-cidr:35.160.0.0/12": 1,
+          "ip-cidr:44.192.0.0/10": 2,
+          "ip-cidr:52.0.0.0/11": 7,
+          "ip-cidr:52.32.0.0/13": 1,
+          "ip-cidr:52.40.0.0/14": 1,
+          "ip-cidr:52.48.0.0/12": 2,
+          "ip-cidr:52.64.0.0/12": 2,
+          "ip-cidr:52.88.0.0/14": 1,
+          "ip-cidr:54.144.0.0/12": 1,
+          "ip-cidr:54.160.0.0/12": 1,
+          "ip-cidr:54.184.0.0/13": 2,
+          "ip-cidr:54.208.0.0/13": 2,
+          "ip-cidr:54.64.0.0/11": 5
         },
         "input_rules": 499,
-        "rules": 498,
-        "sha256": "3c00113ee81a2b1d6d360796834e502b22e1f4cba8a46e42491343e102b78170",
+        "rules": 467,
+        "sha256": "b06b33750c6687d721c93f0d9b76e390d2752fa071ae7476800b1803ecf8a317",
         "skipped_attributes": 0,
         "skipped_excluded": [],
         "views": [
@@ -2127,7 +2141,7 @@
           },
           {
             "name": "ip",
-            "rules": 465
+            "rules": 434
           }
         ]
       },
@@ -2137,56 +2151,56 @@
             "PROCESS-NAME,com.netflix.mediaclient"
           ],
           "path": "Egern/Netflix.yaml",
-          "rules": 497,
-          "sha256": "0469c2b4e685abd40d6f7d0cfe28d60493813957eebdd78809ad312bb38b4fbd"
+          "rules": 466,
+          "sha256": "08e9cc58b5d7d7b5bc4c3d4f46ebe2b6f78fbe12731e8cce11115edf98c858d7"
         },
         "loon": {
           "dropped": [],
           "path": "Loon/Netflix.list",
-          "rules": 498,
-          "sha256": "674fcd129ba14a613b8be902614190402e0823b657538def40678174782c860f"
+          "rules": 467,
+          "sha256": "ce16edf7caabf0612ac681059d9a7eaaa74b52a28e89eee4e6d68de7ca348d09"
         },
         "mihomo": {
           "dropped": [
             "USER-AGENT,Argo*"
           ],
           "path": "mihomo/Netflix.list",
-          "rules": 497,
-          "sha256": "53e79e6545e99c11632a05d23bdf6936645356401ff5f105286602307cd495b0"
+          "rules": 466,
+          "sha256": "a46cec56e5cab092a03bc9dbd55b801cffc0aa2eed10768a3c08d781c8fd7e32"
         },
         "quantumultx": {
           "dropped": [
             "PROCESS-NAME,com.netflix.mediaclient"
           ],
           "path": "QuantumultX/Netflix.list",
-          "rules": 497,
-          "sha256": "20d41e9cfaae800461a4a3041a96a78eee94ff1efefc6f343ec1f6b4b9fcb7df"
+          "rules": 466,
+          "sha256": "0d3f29cb4c3a45b5e02c13feb8909ab647a84b29752756749dfcb87b2f9aa1af"
         },
         "shadowrocket": {
           "dropped": [],
           "path": "Shadowrocket/Netflix.list",
-          "rules": 498,
-          "sha256": "674fcd129ba14a613b8be902614190402e0823b657538def40678174782c860f"
+          "rules": 467,
+          "sha256": "ce16edf7caabf0612ac681059d9a7eaaa74b52a28e89eee4e6d68de7ca348d09"
         },
         "singbox": {
           "dropped": [
             "USER-AGENT,Argo*"
           ],
           "path": "SingBox/Netflix.json",
-          "rules": 497,
-          "sha256": "e1937743cddc94a8eadbcea4a168c9996e7ee160949d919a849fada828301bea"
+          "rules": 466,
+          "sha256": "2453179e9e1e040da9f0419c738ea89f5004c0d506cc38f07703ac48938a14f5"
         },
         "stash": {
           "dropped": [],
           "path": "Stash/Netflix.list",
-          "rules": 498,
-          "sha256": "674fcd129ba14a613b8be902614190402e0823b657538def40678174782c860f"
+          "rules": 467,
+          "sha256": "ce16edf7caabf0612ac681059d9a7eaaa74b52a28e89eee4e6d68de7ca348d09"
         },
         "surge": {
           "dropped": [],
           "path": "Surge/Netflix.list",
-          "rules": 498,
-          "sha256": "674fcd129ba14a613b8be902614190402e0823b657538def40678174782c860f"
+          "rules": 467,
+          "sha256": "ce16edf7caabf0612ac681059d9a7eaaa74b52a28e89eee4e6d68de7ca348d09"
         }
       },
       "sources": [
@@ -2207,8 +2221,8 @@
           "ip": {
             "dropped": [],
             "path": "Egern/Netflix-ip.conf",
-            "rules": 465,
-            "sha256": "d3a39af112cc24b8445053d9fded8598af57f55f8f6869b3330693618f14822f"
+            "rules": 434,
+            "sha256": "3a78a439e60fd35de8d10d4a270c49dce82308aae0f07393578c298b053a489c"
           },
           "nonip": {
             "dropped": [
@@ -2223,8 +2237,8 @@
           "ip": {
             "dropped": [],
             "path": "Loon/Netflix-ip.conf",
-            "rules": 465,
-            "sha256": "d3a39af112cc24b8445053d9fded8598af57f55f8f6869b3330693618f14822f"
+            "rules": 434,
+            "sha256": "3a78a439e60fd35de8d10d4a270c49dce82308aae0f07393578c298b053a489c"
           },
           "nonip": {
             "dropped": [],
@@ -2237,8 +2251,8 @@
           "ip": {
             "dropped": [],
             "path": "mihomo/Netflix-ip.conf",
-            "rules": 465,
-            "sha256": "d3a39af112cc24b8445053d9fded8598af57f55f8f6869b3330693618f14822f"
+            "rules": 434,
+            "sha256": "3a78a439e60fd35de8d10d4a270c49dce82308aae0f07393578c298b053a489c"
           },
           "nonip": {
             "dropped": [
@@ -2253,8 +2267,8 @@
           "ip": {
             "dropped": [],
             "path": "QuantumultX/Netflix-ip.conf",
-            "rules": 465,
-            "sha256": "e65a9deb9d7dca442145037d0807fe27ad7bcb4cf14f03ef9c7991dc0e886fa3"
+            "rules": 434,
+            "sha256": "27da1edc70c7ff11d857ef937fce25aada0279fbfec765022ee0ed7929cb9869"
           },
           "nonip": {
             "dropped": [
@@ -2269,8 +2283,8 @@
           "ip": {
             "dropped": [],
             "path": "Shadowrocket/Netflix-ip.conf",
-            "rules": 465,
-            "sha256": "d3a39af112cc24b8445053d9fded8598af57f55f8f6869b3330693618f14822f"
+            "rules": 434,
+            "sha256": "3a78a439e60fd35de8d10d4a270c49dce82308aae0f07393578c298b053a489c"
           },
           "nonip": {
             "dropped": [],
@@ -2283,8 +2297,8 @@
           "ip": {
             "dropped": [],
             "path": "SingBox/Netflix-ip.json",
-            "rules": 465,
-            "sha256": "8563e90666808ba6f65b951393d2f6cde2dece6141635f1be17e5da896cd3ac4"
+            "rules": 434,
+            "sha256": "217e37353eb681b8a6b52e4a78eb2add66faafa7bb6b7d3299e2b9b0e00f8928"
           },
           "nonip": {
             "dropped": [
@@ -2299,8 +2313,8 @@
           "ip": {
             "dropped": [],
             "path": "Stash/Netflix-ip.conf",
-            "rules": 465,
-            "sha256": "d3a39af112cc24b8445053d9fded8598af57f55f8f6869b3330693618f14822f"
+            "rules": 434,
+            "sha256": "3a78a439e60fd35de8d10d4a270c49dce82308aae0f07393578c298b053a489c"
           },
           "nonip": {
             "dropped": [],
@@ -2313,8 +2327,8 @@
           "ip": {
             "dropped": [],
             "path": "Surge/Netflix-ip.conf",
-            "rules": 465,
-            "sha256": "d3a39af112cc24b8445053d9fded8598af57f55f8f6869b3330693618f14822f"
+            "rules": 434,
+            "sha256": "3a78a439e60fd35de8d10d4a270c49dce82308aae0f07393578c298b053a489c"
           },
           "nonip": {
             "dropped": [],
@@ -5095,7 +5109,7 @@
   },
   "builder": {
     "files": {
-      "engine/scripts/build.py": "c618c6a90df3c809405d9097e9da64d7616732d7bdde0ac000490c86817e56cb",
+      "engine/scripts/build.py": "f9b42516b64500b761b1e374ad06b701d18883b46a724af62fa4837d769a20bd",
       "engine/scripts/renderers.py": "08d1a071278b82e73760c0f32d2f3ddb3f66e27b39b5ad6523301a2a3fb4599f"
     },
     "version": "2.0.0"
@@ -5103,6 +5117,6 @@
   "schema_version": 1,
   "source_definition": {
     "path": "engine/sources/apps.yaml",
-    "sha256": "a80a1ffb6dd567c2d9dd1f3bd9b819c127dbf6e0bd0df22b8c5ba34d24a92357"
+    "sha256": "060e5c19fc417144d9e8821a935986b04092055bde4c41fe3b58d475ee112a20"
   }
 }
