@@ -160,12 +160,16 @@ https://raw.githubusercontent.com/byyoshen/Blink/main/QuantumultX/<App>.list, ta
 
 ## 配置文件
 
-七客户端**可直接导入的基线配置文件**位于 [`Profiles/`](Profiles/)（内置 6 个常用 App 的分流，其余 App 按需自行添加）：`Surge.conf`、`Shadowrocket.conf`、
-`Loon.conf`、`Stash.yaml`、`mihomo.yaml`、`Egern.yaml`、`QuantumultX.conf`。
+八客户端**可直接导入的基线配置文件**位于 [`Profiles/`](Profiles/)（内置 9 个常用 App 的分流，其余 App 按需自行添加）：`Surge.conf`、`Shadowrocket.conf`、
+`Loon.conf`、`Stash.yaml`、`mihomo.yaml`、`Egern.yaml`、`QuantumultX.conf`、`SingBox.json`。
+
+策略组结构一致：`Sub`（全部节点）→ 香港、台湾、日本、美国、新加坡 5 个地区组 → `Auto`（按顺序用第一个可用的地区组）→
+`Proxy`、`Final`（地区组 + Auto + Sub + DIRECT）→ App 组（地区组 + Final）与 `China`（国内流量，默认 DIRECT）。
 
 1. 下载对应客户端的配置文件，或在[门户](https://blink.wendylala.com/)「配置文件」板块用
    **iOS 一键导入**（mihomo 是 Android 客户端，手动导入）。
-2. 把 `https://YOUR-SUBSCRIPTION-URL` 替换成你的订阅链接。
+2. 把 `https://YOUR-SUBSCRIPTION-URL` 替换成你的订阅链接。sing-box 官方核心没有订阅功能：
+   把 `SingBox.json` 里 5 个占位节点（`HK-01` 等）换成你自己的节点。
 3. 导入客户端，真机验证策略组与分流效果。
 
 **人工维护层**：配置文件由维护者在私有引擎仓库中生成并审核发布，不随规则每日自动重建。
@@ -219,7 +223,7 @@ push / PR 与每日更新自动执行门禁：单元与回归、多端等价性�
 
 ## 公开范围
 
-本仓库只分发八客户端规则、七份 Profile、manifest、使用说明与规则反馈表单。
+本仓库只分发八客户端规则、八份 Profile、manifest、使用说明与规则反馈表单。
 构建引擎、门户源码和审计档案在私有仓库维护。本仓库 2026-10-02 重建，此前的公开提交历史没有保留；
 规则与配置的地址不变，继续使用本仓库 `main` 下的原始地址。
 

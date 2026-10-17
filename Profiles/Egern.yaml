@@ -88,7 +88,7 @@ policy_groups:
     - Sub
     flatten: true
     filter: '(?i)(新加坡|狮城|獅城|🇸🇬|Singapore|SGP|SGGS|(?:^|[^A-Za-z])SG(?:P)?(?:[^A-Za-z]|$))'
-- auto_test:
+- fallback:
     name: Auto
     policies:
     - HK
@@ -97,7 +97,6 @@ policy_groups:
     - US
     - SG
     interval: 600
-    tolerance: 80
     timeout: 5
 - select:
     name: Proxy
@@ -107,7 +106,9 @@ policy_groups:
     - JP
     - US
     - SG
-    - Final
+    - Auto
+    - Sub
+    - DIRECT
 - select:
     name: Final
     policies:
@@ -120,41 +121,96 @@ policy_groups:
     - Sub
     - DIRECT
 - select:
+    name: AI
+    policies:
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
+    - Final
+- select:
     name: Telegram
     policies:
-    - Proxy
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
     - Final
-    - DIRECT
 - select:
     name: X
     policies:
-    - Proxy
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
     - Final
-    - DIRECT
 - select:
     name: YouTube
     policies:
-    - Proxy
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
     - Final
-    - DIRECT
 - select:
     name: Instagram
     policies:
-    - Proxy
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
     - Final
-    - DIRECT
+- select:
+    name: Spotify
+    policies:
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
+    - Final
+- select:
+    name: Netflix
+    policies:
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
+    - Final
 - select:
     name: Google
     policies:
-    - Proxy
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
     - Final
-    - DIRECT
 - select:
-    name: GitHub
+    name: TikTok
     policies:
-    - Proxy
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
     - Final
+- select:
+    name: China
+    policies:
     - DIRECT
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
+    - Final
 
 rules:
 - rule_set:
@@ -170,6 +226,9 @@ rules:
 # UNSUPPORTED: reject-domainset（Surge DOMAIN-SET 专属）本文件省略
 # UNSUPPORTED: ntp-123（当前客户端不支持）本文件省略
 - rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/AI-nonip.conf
+    policy: AI
+- rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Telegram-domainset.conf
     policy: Telegram
 - rule_set:
@@ -182,14 +241,20 @@ rules:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Instagram-domainset.conf
     policy: Instagram
 - rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Spotify-nonip.conf
+    policy: Spotify
+- rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Netflix-nonip.conf
+    policy: Netflix
+- rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Google-nonip.conf
     policy: Google
 - rule_set:
-    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/GitHub-domainset.conf
-    policy: GitHub
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/TikTok-nonip.conf
+    policy: TikTok
 - rule_set:
     match: https://ruleset.skk.moe/List/non_ip/domestic.conf
-    policy: DIRECT
+    policy: China
 - rule_set:
     match: https://ruleset.skk.moe/List/non_ip/cdn.conf
     policy: Proxy
@@ -200,6 +265,12 @@ rules:
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/X-ip.conf
     policy: X
+- rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Spotify-ip.conf
+    policy: Spotify
+- rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Netflix-ip.conf
+    policy: Netflix
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Google-ip.conf
     policy: Google
@@ -249,10 +320,10 @@ rules:
     no_resolve: true
 - rule_set:
     match: https://ruleset.skk.moe/List/ip/domestic.conf
-    policy: DIRECT
+    policy: China
 - geoip:
     match: 'CN'
-    policy: DIRECT
+    policy: China
     no_resolve: true
 - default:
     policy: Final

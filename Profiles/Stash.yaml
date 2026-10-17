@@ -43,20 +43,25 @@ proxy-providers:
       timeout: 5000
 
 proxy-groups:
+  - {name: Sub, type: select, use: [Sub]}
   - {name: HK, type: select, use: [Sub], filter: '(?i)(香港|🇭🇰|Hong\s*Kong|HongKong|HKG|(?:^|[^A-Za-z])HK(?:G)?(?:[^A-Za-z]|$))', include-all: true}
   - {name: TW, type: select, use: [Sub], filter: '(?i)(台湾|台灣|臺灣|🇹🇼|台北|臺北|新北|台中|臺中|高雄|Taiwan|Taipei|Kaohsiung|TWN|(?:^|[^A-Za-z])TW(?:N)?(?:[^A-Za-z]|$))', include-all: true}
   - {name: JP, type: select, use: [Sub], filter: '(?i)(日本|🇯🇵|东京|東京|大阪|Japan|Tokyo|Osaka|Sakura|SoftBank|JPN|(?:^|[^A-Za-z])JP(?:N)?(?:[^A-Za-z]|$))', include-all: true}
   - {name: US, type: select, use: [Sub], filter: '(?i)(美国|美國|🇺🇸|洛杉矶|洛杉磯|圣何塞|聖荷西|硅谷|矽谷|西雅图|西雅圖|芝加哥|纽约|紐約|United\s*States|Los\s*Angeles|San\s*Jose|Silicon\s*Valley|Seattle|Chicago|New\s*York|USA|US\s*Premium|(?:^|[^A-Za-z])US(?:A)?(?:[^A-Za-z]|$))', include-all: true}
   - {name: SG, type: select, use: [Sub], filter: '(?i)(新加坡|狮城|獅城|🇸🇬|Singapore|SGP|SGGS|(?:^|[^A-Za-z])SG(?:P)?(?:[^A-Za-z]|$))', include-all: true}
-  - {name: Auto, type: url-test, proxies: [HK,TW,JP,US,SG], url: http://latency-test.skk.moe/endpoint, interval: 600, tolerance: 80}
-  - {name: Proxy, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: Auto, type: fallback, proxies: [HK,TW,JP,US,SG], url: http://latency-test.skk.moe/endpoint, interval: 600}
+  - {name: Proxy, type: select, proxies: [HK,TW,JP,US,SG,Auto,Sub,DIRECT]}
   - {name: Final, type: select, proxies: [HK,TW,JP,US,SG,Auto,Sub,DIRECT]}
-  - {name: Telegram, type: select, proxies: [Proxy,Final,DIRECT]}
-  - {name: X, type: select, proxies: [Proxy,Final,DIRECT]}
-  - {name: YouTube, type: select, proxies: [Proxy,Final,DIRECT]}
-  - {name: Instagram, type: select, proxies: [Proxy,Final,DIRECT]}
-  - {name: Google, type: select, proxies: [Proxy,Final,DIRECT]}
-  - {name: GitHub, type: select, proxies: [Proxy,Final,DIRECT]}
+  - {name: AI, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: Telegram, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: X, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: YouTube, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: Instagram, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: Spotify, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: Netflix, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: Google, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: TikTok, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: China, type: select, proxies: [DIRECT,HK,TW,JP,US,SG,Final]}
 
 rule-providers:
   reject:
@@ -76,6 +81,12 @@ rule-providers:
     behavior: classical
     format: text
     url: https://ruleset.skk.moe/List/non_ip/lan.conf
+    interval: 86400
+  AI_nonip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/AI-nonip.conf
     interval: 86400
   Telegram_domainset:
     type: http
@@ -101,17 +112,29 @@ rule-providers:
     format: text
     url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/Instagram-domainset.conf
     interval: 86400
+  Spotify_nonip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/Spotify-nonip.conf
+    interval: 86400
+  Netflix_nonip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/Netflix-nonip.conf
+    interval: 86400
   Google_nonip:
     type: http
     behavior: classical
     format: text
     url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/Google-nonip.conf
     interval: 86400
-  GitHub_domainset:
+  TikTok_nonip:
     type: http
-    behavior: domain
+    behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/GitHub-domainset.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/TikTok-nonip.conf
     interval: 86400
   domestic:
     type: http
@@ -136,6 +159,18 @@ rule-providers:
     behavior: classical
     format: text
     url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/X-ip.conf
+    interval: 86400
+  Spotify_ip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/Spotify-ip.conf
+    interval: 86400
+  Netflix_ip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/Stash/Netflix-ip.conf
     interval: 86400
   Google_ip:
     type: http
@@ -169,19 +204,24 @@ rules:
   - RULE-SET,lan,DIRECT
   # UNSUPPORTED: reject-drop（Surge pre-matching 专属）本文件省略
   # UNSUPPORTED: reject-domainset（Surge DOMAIN-SET 专属）本文件省略
+  - RULE-SET,AI_nonip,AI
   - RULE-SET,Telegram_domainset,Telegram
   - RULE-SET,X_domainset,X
   - RULE-SET,YouTube_nonip,YouTube
   - RULE-SET,Instagram_domainset,Instagram
+  - RULE-SET,Spotify_nonip,Spotify
+  - RULE-SET,Netflix_nonip,Netflix
   - RULE-SET,Google_nonip,Google
-  - RULE-SET,GitHub_domainset,GitHub
-  - RULE-SET,domestic,DIRECT
+  - RULE-SET,TikTok_nonip,TikTok
+  - RULE-SET,domestic,China
   - RULE-SET,cdn,Proxy
   # UNSUPPORTED: cdn-domainset（Surge DOMAIN-SET 专属）本文件省略
   - RULE-SET,Telegram_ip,Telegram,no-resolve
   - RULE-SET,X_ip,X,no-resolve
+  - RULE-SET,Spotify_ip,Spotify,no-resolve
+  - RULE-SET,Netflix_ip,Netflix,no-resolve
   - RULE-SET,Google_ip,Google,no-resolve
   - RULE-SET,lan_ip,DIRECT,no-resolve
-  - RULE-SET,china_ip,DIRECT,no-resolve
-  - RULE-SET,china_ip2,DIRECT,no-resolve
+  - RULE-SET,china_ip,China,no-resolve
+  - RULE-SET,china_ip2,China,no-resolve
   - MATCH,Final
