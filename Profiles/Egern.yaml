@@ -1,20 +1,6 @@
-# ============================================================
-# Blink 配置文件 · Egern
-# 单订阅池（Sub）：导入前把 https://YOUR-SUBSCRIPTION-URL 替换为你的订阅链接。
-# 策略组与规则引用由 Blink 统一维护；本文件为人工维护层，不随规则每日自动更新。
-# 公开模板只保留核心策略组与 App 规则，其余个性化场景请按需自行扩展。
-# ADAPTED：no-resolve 为 rule-set 级。
-# ADAPTED：rule_set 引用处没有 no_resolve 字段。skk 的 lan 与 china_ip 行内不带 no-resolve，
-#   所以改写为带 no_resolve: true 的 ip_cidr 段与 geoip CN（geoip_db_url 指向 GeoIP2-CN 库）。
-# ADAPTED：通用网络层键名依据官方文档 egernapp.com/docs/configuration/dns 与 /example
-#   （2026-10-14 核对）。加密 DNS 组只有经 forward 规则才会被用到，所以用一条 '*' 规则把全部
-#   查询交给它；bootstrap 解析加密 DNS 自身的域名，也是退路。跳过代理写入
-#   bypass_tunnel_proxy，测速超时没有对应键。
-# UNSUPPORTED：extended-matching / pre-matching / DOMAIN-SET / always-real-ip /
-#   always-raw-tcp-hosts / proxy-test-udp / http-api 为 Surge 专属，本文件省略或需在 App 内配置。
-# ADAPTED：MITM 写在 mitm 段（hostnames、ca_p12、ca_passphrase），本模板不开。要用时在 App 内生成证书；
-#   证书与密码只留在你的设备上，不写进本文件。
-# ============================================================
+# Blink · Egern
+# 导入前：把 https://YOUR-SUBSCRIPTION-URL 换成你的订阅链接。
+# 本端没有：MTProto、REJECT-DROP、广告域名集、Apple CDN 域名集、CDN 域名集（Surge 专属）；NTP 端口规则。
 
 geoip_db_url: https://raw.githubusercontent.com/Masaiki/GeoIP2-CN/release/Country.mmdb
 ipv6: false
@@ -216,10 +202,6 @@ rules:
 - rule_set:
     match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/WeChat.yaml
     policy: DIRECT
-# UNSUPPORTED: reject-drop（Surge pre-matching 专属）本文件省略
-# UNSUPPORTED: reject-domainset（Surge DOMAIN-SET 专属）本文件省略
-# UNSUPPORTED: ntp-123（当前客户端不支持）本文件省略
-# UNSUPPORTED: apple-cdn（Surge DOMAIN-SET 专属）本文件省略
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/DouYin-domainset.conf
     policy: DIRECT
@@ -235,7 +217,6 @@ rules:
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Threads-domainset.conf
     policy: Instagram
-# UNSUPPORTED: Telegram PROTOCOL,MTProto（Surge PROTOCOL 规则专属）本文件省略
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Telegram-domainset.conf
     policy: Telegram
@@ -278,7 +259,6 @@ rules:
 - rule_set:
     match: https://ruleset.skk.moe/List/non_ip/cdn.conf
     policy: Proxy
-# UNSUPPORTED: cdn-domainset（Surge DOMAIN-SET 专属）本文件省略
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/X-ip.conf
     policy: X

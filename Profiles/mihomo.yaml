@@ -1,19 +1,7 @@
-# ============================================================
-# Blink 配置文件 · mihomo 内核（Clash Meta for Android / FLClash 通用）
-# 单订阅池（Sub）：导入前把 https://YOUR-SUBSCRIPTION-URL 替换为你的订阅链接。
-# 策略组与规则引用由 Blink 统一维护；本文件为人工维护层，不随规则每日自动更新。
-# 目标客户端：Clash Meta for Android / FLClash（Mihomo 内核，完整兼容）。
-# CFA（Clash Premium 内核，已停更）部分兼容：不支持 format / mrs / size-limit
-# 等 Meta 扩展字段，导入时可能被忽略。
-# Blink 规则经 mihomo/ 目录分发：classical 已显式去除 USER-AGENT（内核无此类型），
-# 构建报告计数，绝不让内核静默跳过。
-# ADAPTED：always-real-ip / always-raw-tcp-hosts / proxy-test-udp / http-api 为 Surge 专属，
-#   本文件用 fake-ip + IP rule 兜底。
-# UNSUPPORTED：extended-matching / pre-matching / DOMAIN-SET 为 Surge 专属，本文件省略。
-# UNSUPPORTED：hijack-dns 属于 tun.dns-hijack，本模板不开 tun；skip-proxy 无对应键；
-#   internet-test-url 无对应键，代理测试地址写在订阅 health-check 与 url-test 组里。
-# UNSUPPORTED：MITM —— mihomo 主线没有 MITM 配置项，本文件不写。
-# ============================================================
+# Blink · mihomo
+# 适用：Clash Meta for Android、FlClash 等 mihomo 内核客户端。
+# 导入前：把 https://YOUR-SUBSCRIPTION-URL 换成你的订阅链接。
+# 本端没有：MTProto、REJECT-DROP、广告域名集、Apple CDN 域名集、CDN 域名集（Surge 专属）。
 
 mixed-port: 7890
 allow-lan: false
@@ -279,15 +267,11 @@ rules:
   - DOMAIN-SUFFIX,ls.apple.com,DIRECT
   - RULE-SET,apple,DIRECT
   - RULE-SET,wechat,DIRECT
-  # UNSUPPORTED: reject-drop（Surge pre-matching 专属）本文件省略
-  # UNSUPPORTED: reject-domainset（Surge DOMAIN-SET 专属）本文件省略
-  # UNSUPPORTED: apple-cdn（Surge DOMAIN-SET 专属）本文件省略
   - RULE-SET,DouYin_domainset,DIRECT
   - RULE-SET,YouTube_nonip,Youtube
   - RULE-SET,X_domainset,X
   - RULE-SET,Instagram_domainset,Instagram
   - RULE-SET,Threads_domainset,Instagram
-  # UNSUPPORTED: Telegram PROTOCOL,MTProto（Surge PROTOCOL 规则专属）本文件省略
   - RULE-SET,Telegram_domainset,Telegram
   - RULE-SET,Netflix_nonip,JP
   - RULE-SET,TikTok_nonip,JP
@@ -302,7 +286,6 @@ rules:
   - RULE-SET,Google_nonip,Google
   - RULE-SET,domestic,DIRECT
   - RULE-SET,cdn,Proxy
-  # UNSUPPORTED: cdn-domainset（Surge DOMAIN-SET 专属）本文件省略
   - RULE-SET,X_ip,X,no-resolve
   - RULE-SET,Telegram_ip,Telegram,no-resolve
   - RULE-SET,Netflix_ip,JP,no-resolve
