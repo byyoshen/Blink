@@ -88,7 +88,16 @@ policy_groups:
     - SG
     - Final
 - select:
-    name: Daily
+    name: X
+    policies:
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
+    - Final
+- select:
+    name: Instagram
     policies:
     - HK
     - TW
@@ -219,13 +228,13 @@ rules:
     policy: Youtube
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/X-domainset.conf
-    policy: Daily
+    policy: X
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Instagram-domainset.conf
-    policy: Daily
+    policy: Instagram
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Threads-domainset.conf
-    policy: Daily
+    policy: Instagram
 # UNSUPPORTED: Telegram PROTOCOL,MTProto（Surge PROTOCOL 规则专属）本文件省略
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Telegram-domainset.conf
@@ -272,7 +281,7 @@ rules:
 # UNSUPPORTED: cdn-domainset（Surge DOMAIN-SET 专属）本文件省略
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/X-ip.conf
-    policy: Daily
+    policy: X
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Telegram-ip.conf
     policy: Telegram

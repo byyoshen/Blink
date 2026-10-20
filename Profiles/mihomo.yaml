@@ -55,7 +55,8 @@ proxy-groups:
   - {name: Proxy, type: select, proxies: [HK,TW,JP,US,SG,Final]}
   - {name: Final, type: select, proxies: [HK,TW,JP,US,SG,Auto,Sub,DIRECT]}
   - {name: Telegram, type: select, proxies: [HK,TW,JP,US,SG,Final]}
-  - {name: Daily, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: X, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: Instagram, type: select, proxies: [HK,TW,JP,US,SG,Final]}
   - {name: Youtube, type: select, proxies: [HK,TW,JP,US,SG,Final]}
   - {name: AI, type: select, proxies: [HK,TW,JP,US,Final]}
   - {name: Google, type: select, proxies: [HK,TW,JP,US,SG,Final]}
@@ -283,9 +284,9 @@ rules:
   # UNSUPPORTED: apple-cdn（Surge DOMAIN-SET 专属）本文件省略
   - RULE-SET,DouYin_domainset,DIRECT
   - RULE-SET,YouTube_nonip,Youtube
-  - RULE-SET,X_domainset,Daily
-  - RULE-SET,Instagram_domainset,Daily
-  - RULE-SET,Threads_domainset,Daily
+  - RULE-SET,X_domainset,X
+  - RULE-SET,Instagram_domainset,Instagram
+  - RULE-SET,Threads_domainset,Instagram
   # UNSUPPORTED: Telegram PROTOCOL,MTProto（Surge PROTOCOL 规则专属）本文件省略
   - RULE-SET,Telegram_domainset,Telegram
   - RULE-SET,Netflix_nonip,JP
@@ -302,7 +303,7 @@ rules:
   - RULE-SET,domestic,DIRECT
   - RULE-SET,cdn,Proxy
   # UNSUPPORTED: cdn-domainset（Surge DOMAIN-SET 专属）本文件省略
-  - RULE-SET,X_ip,Daily,no-resolve
+  - RULE-SET,X_ip,X,no-resolve
   - RULE-SET,Telegram_ip,Telegram,no-resolve
   - RULE-SET,Netflix_ip,JP,no-resolve
   - RULE-SET,Spotify_ip,HK,no-resolve

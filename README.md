@@ -164,7 +164,7 @@ https://raw.githubusercontent.com/byyoshen/Blink/main/QuantumultX/<App>.list, ta
 `Loon.conf`、`Stash.yaml`、`mihomo.yaml`、`Egern.yaml`、`QuantumultX.conf`、`SingBox.json`。
 
 策略组结构一致：`Sub`（全部节点）→ `Proxy`（地区组 + Final）、`Final`（地区组 + Auto + Sub + DIRECT）→
-App 组 Telegram、Daily、Youtube、AI、Google、GitHub、Finance（地区组 + Final）→ 香港、台湾、日本、美国、新加坡
+App 组 Telegram、X、Instagram（含 Threads）、Youtube、AI、Google、GitHub、Finance（OKX、PayPal）（每个 App 一个组，地区组 + Final）→ 香港、台湾、日本、美国、新加坡
 5 个地区组 → `Auto`（自动选延迟最低的地区组）。Netflix、TikTok 直接走日本组，Spotify 走香港组；国内流量直连。
 
 1. 下载对应客户端的配置文件，或在[门户](https://blink.wendylala.com/)「配置文件」板块用
