@@ -52,24 +52,21 @@ proxy-providers:
 
 proxy-groups:
   - {name: Sub, type: select, use: [Sub]}
+  - {name: Proxy, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: Final, type: select, proxies: [HK,TW,JP,US,SG,Auto,Sub,DIRECT]}
+  - {name: Telegram, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: Daily, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: Youtube, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: AI, type: select, proxies: [HK,TW,JP,US,Final]}
+  - {name: Google, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: GitHub, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: Finance, type: select, proxies: [HK,TW,JP,US,SG,Final]}
   - {name: HK, type: select, use: [Sub], filter: '(?i)(香港|🇭🇰|Hong\s*Kong|HongKong|HKG|(?:^|[^A-Za-z])HK(?:G)?(?:[^A-Za-z]|$))', include-all: true}
   - {name: TW, type: select, use: [Sub], filter: '(?i)(台湾|台灣|臺灣|🇹🇼|台北|臺北|新北|台中|臺中|高雄|Taiwan|Taipei|Kaohsiung|TWN|(?:^|[^A-Za-z])TW(?:N)?(?:[^A-Za-z]|$))', include-all: true}
   - {name: JP, type: select, use: [Sub], filter: '(?i)(日本|🇯🇵|东京|東京|大阪|Japan|Tokyo|Osaka|Sakura|SoftBank|JPN|(?:^|[^A-Za-z])JP(?:N)?(?:[^A-Za-z]|$))', include-all: true}
   - {name: US, type: select, use: [Sub], filter: '(?i)(美国|美國|🇺🇸|洛杉矶|洛杉磯|圣何塞|聖荷西|硅谷|矽谷|西雅图|西雅圖|芝加哥|纽约|紐約|United\s*States|Los\s*Angeles|San\s*Jose|Silicon\s*Valley|Seattle|Chicago|New\s*York|USA|US\s*Premium|(?:^|[^A-Za-z])US(?:A)?(?:[^A-Za-z]|$))', include-all: true}
   - {name: SG, type: select, use: [Sub], filter: '(?i)(新加坡|狮城|獅城|🇸🇬|Singapore|SGP|SGGS|(?:^|[^A-Za-z])SG(?:P)?(?:[^A-Za-z]|$))', include-all: true}
-  - {name: Auto, type: fallback, proxies: [HK,TW,JP,US,SG], url: http://latency-test.skk.moe/endpoint, interval: 600}
-  - {name: Proxy, type: select, proxies: [HK,TW,JP,US,SG,Auto,Sub,DIRECT]}
-  - {name: Final, type: select, proxies: [HK,TW,JP,US,SG,Auto,Sub,DIRECT]}
-  - {name: AI, type: select, proxies: [HK,TW,JP,US,SG,Final]}
-  - {name: Telegram, type: select, proxies: [HK,TW,JP,US,SG,Final]}
-  - {name: X, type: select, proxies: [HK,TW,JP,US,SG,Final]}
-  - {name: YouTube, type: select, proxies: [HK,TW,JP,US,SG,Final]}
-  - {name: Instagram, type: select, proxies: [HK,TW,JP,US,SG,Final]}
-  - {name: Spotify, type: select, proxies: [HK,TW,JP,US,SG,Final]}
-  - {name: Netflix, type: select, proxies: [HK,TW,JP,US,SG,Final]}
-  - {name: Google, type: select, proxies: [HK,TW,JP,US,SG,Final]}
-  - {name: TikTok, type: select, proxies: [HK,TW,JP,US,SG,Final]}
-  - {name: China, type: select, proxies: [DIRECT,HK,TW,JP,US,SG,Final]}
+  - {name: Auto, type: url-test, proxies: [HK,TW,JP,US,SG], url: http://latency-test.skk.moe/endpoint, interval: 600, tolerance: 80}
 
 rule-providers:
   reject:
@@ -84,29 +81,35 @@ rule-providers:
     format: text
     url: https://raw.githubusercontent.com/ConnersHua/RuleGo/master/Surge/Ruleset/Extra/Reject/Tracking.list
     interval: 86400
-  lan:
+  apple_music:
     type: http
     behavior: classical
     format: text
-    url: https://ruleset.skk.moe/List/non_ip/lan.conf
+    url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/AppleMusic.list
     interval: 86400
-  AI_nonip:
+  apple_cn:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/AI-nonip.conf
+    url: https://ruleset.skk.moe/List/non_ip/apple_cn.conf
     interval: 86400
-  Telegram_domainset:
+  apple:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Apple.list
+    interval: 86400
+  wechat:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/WeChat.list
+    interval: 86400
+  DouYin_domainset:
     type: http
     behavior: domain
     format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Telegram-domainset.conf
-    interval: 86400
-  X_domainset:
-    type: http
-    behavior: domain
-    format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/X-domainset.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/DouYin-domainset.conf
     interval: 86400
   YouTube_nonip:
     type: http
@@ -114,17 +117,29 @@ rule-providers:
     format: text
     url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/YouTube-nonip.conf
     interval: 86400
+  X_domainset:
+    type: http
+    behavior: domain
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/X-domainset.conf
+    interval: 86400
   Instagram_domainset:
     type: http
     behavior: domain
     format: text
     url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Instagram-domainset.conf
     interval: 86400
-  Spotify_nonip:
+  Threads_domainset:
     type: http
-    behavior: classical
+    behavior: domain
     format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Spotify-nonip.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Threads-domainset.conf
+    interval: 86400
+  Telegram_domainset:
+    type: http
+    behavior: domain
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Telegram-domainset.conf
     interval: 86400
   Netflix_nonip:
     type: http
@@ -132,17 +147,65 @@ rule-providers:
     format: text
     url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Netflix-nonip.conf
     interval: 86400
-  Google_nonip:
-    type: http
-    behavior: classical
-    format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Google-nonip.conf
-    interval: 86400
   TikTok_nonip:
     type: http
     behavior: classical
     format: text
     url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/TikTok-nonip.conf
+    interval: 86400
+  Spotify_nonip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Spotify-nonip.conf
+    interval: 86400
+  Steam_domainset:
+    type: http
+    behavior: domain
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Steam-domainset.conf
+    interval: 86400
+  AI_nonip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/AI-nonip.conf
+    interval: 86400
+  OKX_domainset:
+    type: http
+    behavior: domain
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/OKX-domainset.conf
+    interval: 86400
+  PayPal_nonip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/PayPal-nonip.conf
+    interval: 86400
+  WhatsApp_domainset:
+    type: http
+    behavior: domain
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/WhatsApp-domainset.conf
+    interval: 86400
+  LINE_domainset:
+    type: http
+    behavior: domain
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/LINE-domainset.conf
+    interval: 86400
+  GitHub_domainset:
+    type: http
+    behavior: domain
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/GitHub-domainset.conf
+    interval: 86400
+  Google_nonip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Google-nonip.conf
     interval: 86400
   domestic:
     type: http
@@ -156,23 +219,17 @@ rule-providers:
     format: text
     url: https://ruleset.skk.moe/List/non_ip/cdn.conf
     interval: 86400
-  Telegram_ip:
-    type: http
-    behavior: classical
-    format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Telegram-ip.conf
-    interval: 86400
   X_ip:
     type: http
     behavior: classical
     format: text
     url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/X-ip.conf
     interval: 86400
-  Spotify_ip:
+  Telegram_ip:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Spotify-ip.conf
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Telegram-ip.conf
     interval: 86400
   Netflix_ip:
     type: http
@@ -180,23 +237,29 @@ rule-providers:
     format: text
     url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Netflix-ip.conf
     interval: 86400
+  Spotify_ip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Spotify-ip.conf
+    interval: 86400
   Google_ip:
     type: http
     behavior: classical
     format: text
     url: https://raw.githubusercontent.com/byyoshen/Blink/main/mihomo/Google-ip.conf
     interval: 86400
-  lan_ip:
-    type: http
-    behavior: classical
-    format: text
-    url: https://ruleset.skk.moe/List/ip/lan.conf
-    interval: 86400
   china_ip:
     type: http
     behavior: classical
     format: text
     url: https://ruleset.skk.moe/List/ip/domestic.conf
+    interval: 86400
+  lan_ip:
+    type: http
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/List/ip/lan.conf
     interval: 86400
   china_ip2:
     type: http
@@ -206,30 +269,45 @@ rule-providers:
     interval: 86400
 
 rules:
+  - DOMAIN,app-site-association.cdn-apple.com,REJECT
   - RULE-SET,reject,REJECT
   - RULE-SET,tracking,REJECT
   - DST-PORT,123,DIRECT
-  - RULE-SET,lan,DIRECT
+  - RULE-SET,apple_music,DIRECT
+  - RULE-SET,apple_cn,DIRECT
+  - DOMAIN-SUFFIX,ls.apple.com,DIRECT
+  - RULE-SET,apple,DIRECT
+  - RULE-SET,wechat,DIRECT
   # UNSUPPORTED: reject-drop（Surge pre-matching 专属）本文件省略
   # UNSUPPORTED: reject-domainset（Surge DOMAIN-SET 专属）本文件省略
-  - RULE-SET,AI_nonip,AI
+  # UNSUPPORTED: apple-cdn（Surge DOMAIN-SET 专属）本文件省略
+  - RULE-SET,DouYin_domainset,DIRECT
+  - RULE-SET,YouTube_nonip,Youtube
+  - RULE-SET,X_domainset,Daily
+  - RULE-SET,Instagram_domainset,Daily
+  - RULE-SET,Threads_domainset,Daily
+  # UNSUPPORTED: Telegram PROTOCOL,MTProto（Surge PROTOCOL 规则专属）本文件省略
   - RULE-SET,Telegram_domainset,Telegram
-  - RULE-SET,X_domainset,X
-  - RULE-SET,YouTube_nonip,YouTube
-  - RULE-SET,Instagram_domainset,Instagram
-  - RULE-SET,Spotify_nonip,Spotify
-  - RULE-SET,Netflix_nonip,Netflix
+  - RULE-SET,Netflix_nonip,JP
+  - RULE-SET,TikTok_nonip,JP
+  - RULE-SET,Spotify_nonip,HK
+  - RULE-SET,Steam_domainset,Proxy
+  - RULE-SET,AI_nonip,AI
+  - RULE-SET,OKX_domainset,Finance
+  - RULE-SET,PayPal_nonip,Finance
+  - RULE-SET,WhatsApp_domainset,Proxy
+  - RULE-SET,LINE_domainset,Proxy
+  - RULE-SET,GitHub_domainset,GitHub
   - RULE-SET,Google_nonip,Google
-  - RULE-SET,TikTok_nonip,TikTok
-  - RULE-SET,domestic,China
+  - RULE-SET,domestic,DIRECT
   - RULE-SET,cdn,Proxy
   # UNSUPPORTED: cdn-domainset（Surge DOMAIN-SET 专属）本文件省略
+  - RULE-SET,X_ip,Daily,no-resolve
   - RULE-SET,Telegram_ip,Telegram,no-resolve
-  - RULE-SET,X_ip,X,no-resolve
-  - RULE-SET,Spotify_ip,Spotify,no-resolve
-  - RULE-SET,Netflix_ip,Netflix,no-resolve
+  - RULE-SET,Netflix_ip,JP,no-resolve
+  - RULE-SET,Spotify_ip,HK,no-resolve
   - RULE-SET,Google_ip,Google,no-resolve
+  - RULE-SET,china_ip,DIRECT,no-resolve
   - RULE-SET,lan_ip,DIRECT,no-resolve
-  - RULE-SET,china_ip,China,no-resolve
-  - RULE-SET,china_ip2,China,no-resolve
+  - RULE-SET,china_ip2,DIRECT,no-resolve
   - MATCH,Final

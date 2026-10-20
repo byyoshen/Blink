@@ -160,11 +160,12 @@ https://raw.githubusercontent.com/byyoshen/Blink/main/QuantumultX/<App>.list, ta
 
 ## 配置文件
 
-八客户端**可直接导入的基线配置文件**位于 [`Profiles/`](Profiles/)（内置 9 个常用 App 的分流，其余 App 按需自行添加）：`Surge.conf`、`Shadowrocket.conf`、
+八客户端**可直接导入的基线配置文件**位于 [`Profiles/`](Profiles/)（内置常用 App 的分流，其余 App 按需自行添加）：`Surge.conf`、`Shadowrocket.conf`、
 `Loon.conf`、`Stash.yaml`、`mihomo.yaml`、`Egern.yaml`、`QuantumultX.conf`、`SingBox.json`。
 
-策略组结构一致：`Sub`（全部节点）→ 香港、台湾、日本、美国、新加坡 5 个地区组 → `Auto`（按顺序用第一个可用的地区组）→
-`Proxy`、`Final`（地区组 + Auto + Sub + DIRECT）→ App 组（地区组 + Final）与 `China`（国内流量，默认 DIRECT）。
+策略组结构一致：`Sub`（全部节点）→ `Proxy`（地区组 + Final）、`Final`（地区组 + Auto + Sub + DIRECT）→
+App 组 Telegram、Daily、Youtube、AI、Google、GitHub、Finance（地区组 + Final）→ 香港、台湾、日本、美国、新加坡
+5 个地区组 → `Auto`（自动选延迟最低的地区组）。Netflix、TikTok 直接走日本组，Spotify 走香港组；国内流量直连。
 
 1. 下载对应客户端的配置文件，或在[门户](https://blink.wendylala.com/)「配置文件」板块用
    **iOS 一键导入**（mihomo 是 Android 客户端，手动导入）。

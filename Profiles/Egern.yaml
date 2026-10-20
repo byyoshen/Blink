@@ -59,6 +59,88 @@ policy_groups:
     update_interval: 86400
     hidden: false
 - select:
+    name: Proxy
+    policies:
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
+    - Final
+- select:
+    name: Final
+    policies:
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
+    - Auto
+    - Sub
+    - DIRECT
+- select:
+    name: Telegram
+    policies:
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
+    - Final
+- select:
+    name: Daily
+    policies:
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
+    - Final
+- select:
+    name: Youtube
+    policies:
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
+    - Final
+- select:
+    name: AI
+    policies:
+    - HK
+    - TW
+    - JP
+    - US
+    - Final
+- select:
+    name: Google
+    policies:
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
+    - Final
+- select:
+    name: GitHub
+    policies:
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
+    - Final
+- select:
+    name: Finance
+    policies:
+    - HK
+    - TW
+    - JP
+    - US
+    - SG
+    - Final
+- select:
     name: HK
     policies:
     - Sub
@@ -88,7 +170,7 @@ policy_groups:
     - Sub
     flatten: true
     filter: '(?i)(新加坡|狮城|獅城|🇸🇬|Singapore|SGP|SGGS|(?:^|[^A-Za-z])SG(?:P)?(?:[^A-Za-z]|$))'
-- fallback:
+- auto_test:
     name: Auto
     policies:
     - HK
@@ -97,122 +179,13 @@ policy_groups:
     - US
     - SG
     interval: 600
+    tolerance: 80
     timeout: 5
-- select:
-    name: Proxy
-    policies:
-    - HK
-    - TW
-    - JP
-    - US
-    - SG
-    - Auto
-    - Sub
-    - DIRECT
-- select:
-    name: Final
-    policies:
-    - HK
-    - TW
-    - JP
-    - US
-    - SG
-    - Auto
-    - Sub
-    - DIRECT
-- select:
-    name: AI
-    policies:
-    - HK
-    - TW
-    - JP
-    - US
-    - SG
-    - Final
-- select:
-    name: Telegram
-    policies:
-    - HK
-    - TW
-    - JP
-    - US
-    - SG
-    - Final
-- select:
-    name: X
-    policies:
-    - HK
-    - TW
-    - JP
-    - US
-    - SG
-    - Final
-- select:
-    name: YouTube
-    policies:
-    - HK
-    - TW
-    - JP
-    - US
-    - SG
-    - Final
-- select:
-    name: Instagram
-    policies:
-    - HK
-    - TW
-    - JP
-    - US
-    - SG
-    - Final
-- select:
-    name: Spotify
-    policies:
-    - HK
-    - TW
-    - JP
-    - US
-    - SG
-    - Final
-- select:
-    name: Netflix
-    policies:
-    - HK
-    - TW
-    - JP
-    - US
-    - SG
-    - Final
-- select:
-    name: Google
-    policies:
-    - HK
-    - TW
-    - JP
-    - US
-    - SG
-    - Final
-- select:
-    name: TikTok
-    policies:
-    - HK
-    - TW
-    - JP
-    - US
-    - SG
-    - Final
-- select:
-    name: China
-    policies:
-    - DIRECT
-    - HK
-    - TW
-    - JP
-    - US
-    - SG
-    - Final
 
 rules:
+- domain:
+    match: app-site-association.cdn-apple.com
+    policy: REJECT
 - rule_set:
     match: https://ruleset.skk.moe/List/non_ip/reject.conf
     policy: REJECT
@@ -220,60 +193,101 @@ rules:
     match: https://raw.githubusercontent.com/ConnersHua/RuleGo/master/Surge/Ruleset/Extra/Reject/Tracking.list
     policy: REJECT
 - rule_set:
-    match: https://ruleset.skk.moe/List/non_ip/lan.conf
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/AppleMusic.yaml
+    policy: DIRECT
+- rule_set:
+    match: https://ruleset.skk.moe/List/non_ip/apple_cn.conf
+    policy: DIRECT
+- domain_suffix:
+    match: ls.apple.com
+    policy: DIRECT
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Apple.yaml
+    policy: DIRECT
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/WeChat.yaml
     policy: DIRECT
 # UNSUPPORTED: reject-drop（Surge pre-matching 专属）本文件省略
 # UNSUPPORTED: reject-domainset（Surge DOMAIN-SET 专属）本文件省略
 # UNSUPPORTED: ntp-123（当前客户端不支持）本文件省略
+# UNSUPPORTED: apple-cdn（Surge DOMAIN-SET 专属）本文件省略
 - rule_set:
-    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/AI-nonip.conf
-    policy: AI
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/DouYin-domainset.conf
+    policy: DIRECT
+- rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/YouTube-nonip.conf
+    policy: Youtube
+- rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/X-domainset.conf
+    policy: Daily
+- rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Instagram-domainset.conf
+    policy: Daily
+- rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Threads-domainset.conf
+    policy: Daily
+# UNSUPPORTED: Telegram PROTOCOL,MTProto（Surge PROTOCOL 规则专属）本文件省略
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Telegram-domainset.conf
     policy: Telegram
 - rule_set:
-    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/X-domainset.conf
-    policy: X
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Netflix-nonip.conf
+    policy: JP
 - rule_set:
-    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/YouTube-nonip.conf
-    policy: YouTube
-- rule_set:
-    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Instagram-domainset.conf
-    policy: Instagram
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/TikTok-nonip.conf
+    policy: JP
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Spotify-nonip.conf
-    policy: Spotify
+    policy: HK
 - rule_set:
-    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Netflix-nonip.conf
-    policy: Netflix
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Steam-domainset.conf
+    policy: Proxy
+- rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/AI-nonip.conf
+    policy: AI
+- rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/OKX-domainset.conf
+    policy: Finance
+- rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/PayPal-nonip.conf
+    policy: Finance
+- rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/WhatsApp-domainset.conf
+    policy: Proxy
+- rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/LINE-domainset.conf
+    policy: Proxy
+- rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/GitHub-domainset.conf
+    policy: GitHub
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Google-nonip.conf
     policy: Google
 - rule_set:
-    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/TikTok-nonip.conf
-    policy: TikTok
-- rule_set:
     match: https://ruleset.skk.moe/List/non_ip/domestic.conf
-    policy: China
+    policy: DIRECT
 - rule_set:
     match: https://ruleset.skk.moe/List/non_ip/cdn.conf
     policy: Proxy
 # UNSUPPORTED: cdn-domainset（Surge DOMAIN-SET 专属）本文件省略
 - rule_set:
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/X-ip.conf
+    policy: Daily
+- rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Telegram-ip.conf
     policy: Telegram
 - rule_set:
-    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/X-ip.conf
-    policy: X
+    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Netflix-ip.conf
+    policy: JP
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Spotify-ip.conf
-    policy: Spotify
-- rule_set:
-    match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Netflix-ip.conf
-    policy: Netflix
+    policy: HK
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/Google-ip.conf
     policy: Google
+- rule_set:
+    match: https://ruleset.skk.moe/List/ip/domestic.conf
+    policy: DIRECT
 - ip_cidr:
     match: '0.0.0.0/8'
     policy: DIRECT
@@ -318,12 +332,9 @@ rules:
     match: 'fe80::/10'
     policy: DIRECT
     no_resolve: true
-- rule_set:
-    match: https://ruleset.skk.moe/List/ip/domestic.conf
-    policy: China
 - geoip:
     match: 'CN'
-    policy: China
+    policy: DIRECT
     no_resolve: true
 - default:
     policy: Final
