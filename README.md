@@ -201,7 +201,7 @@ sing-box：`route` 段。格式为 source JSON，`version: 2`。带 IP 的 App �
 - `Auto`：在地区组中自动选延迟最低者。
 - `Proxy`：地区组 + `Final`。
 - `Final`：兜底，地区组 + `Auto` + `Sub` + `DIRECT`。
-- App 组：Telegram、X、Instagram（含 Threads）、Youtube、AI、Google、GitHub、Finance（OKX、PayPal）。每组可选地区组与 `Final`（AI 组不含 `SG`）。
+- App 组：Telegram、X、Instagram（含 Threads）、YouTube、AI、Google、GitHub、Finance（OKX、PayPal）。每组可选地区组与 `Final`（AI 组不含 `SG`）。
 - 固定指向：Netflix 与 TikTok 走 `JP`，Spotify 走 `HK`。国内流量直连。
 
 **使用步骤**

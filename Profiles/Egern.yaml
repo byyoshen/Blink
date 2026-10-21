@@ -92,7 +92,7 @@ policy_groups:
     - SG
     - Final
 - select:
-    name: Youtube
+    name: YouTube
     policies:
     - HK
     - TW
@@ -207,7 +207,7 @@ rules:
     policy: DIRECT
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/YouTube-nonip.conf
-    policy: Youtube
+    policy: YouTube
 - rule_set:
     match: https://raw.githubusercontent.com/byyoshen/Blink/main/Egern/X-domainset.conf
     policy: X

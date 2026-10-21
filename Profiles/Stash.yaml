@@ -39,7 +39,7 @@ proxy-groups:
   - {name: Telegram, type: select, proxies: [HK,TW,JP,US,SG,Final]}
   - {name: X, type: select, proxies: [HK,TW,JP,US,SG,Final]}
   - {name: Instagram, type: select, proxies: [HK,TW,JP,US,SG,Final]}
-  - {name: Youtube, type: select, proxies: [HK,TW,JP,US,SG,Final]}
+  - {name: YouTube, type: select, proxies: [HK,TW,JP,US,SG,Final]}
   - {name: AI, type: select, proxies: [HK,TW,JP,US,Final]}
   - {name: Google, type: select, proxies: [HK,TW,JP,US,SG,Final]}
   - {name: GitHub, type: select, proxies: [HK,TW,JP,US,SG,Final]}
@@ -262,7 +262,7 @@ rules:
   - RULE-SET,apple,DIRECT
   - RULE-SET,wechat,DIRECT
   - RULE-SET,DouYin_domainset,DIRECT
-  - RULE-SET,YouTube_nonip,Youtube
+  - RULE-SET,YouTube_nonip,YouTube
   - RULE-SET,X_domainset,X
   - RULE-SET,Instagram_domainset,Instagram
   - RULE-SET,Threads_domainset,Instagram
