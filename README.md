@@ -35,6 +35,7 @@ Blink 是面向八种代理客户端的分流规则与配置文件。它把按 A
 
 - **规则集**：按 App 划分的分流规则，一份 canonical 规则渲染为 Surge、Shadowrocket、Loon、Stash、mihomo、Egern、Quantumult X、sing-box 八种格式。
 - **配置文件**：八个客户端各一份完整配置（[`Profiles/`](Profiles/)），人工维护，策略组结构一致。
+- **支持分层**：完整支持 Surge、Shadowrocket、Loon、Stash、Egern、Quantumult X，网页入口的新功能和图解只做这六个。mihomo、sing-box 为基础支持，规则集与配置文件照常更新，链接不变。
 - **唯一规则来源**：其他作者的清单、厂商公开数据和 Surge 日志都是原料。每条规则是否收录，由 Blink 决定。
 - **网页入口**：[blink.wendylala.com](https://blink.wendylala.com/) 提供规则查询、接入片段生成和配置文件导入。
 
