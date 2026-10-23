@@ -1,5 +1,5 @@
 # 规则名称: DouYin
-# 规则统计: 84
+# 规则统计: 90
 
 DOMAIN-SUFFIX,activity-wbsj.com
 DOMAIN-SUFFIX,aihst8.com
@@ -14,10 +14,13 @@ DOMAIN-SUFFIX,betastar.cn
 DOMAIN-SUFFIX,boxdouyin.com
 DOMAIN-SUFFIX,bytecdn.com
 DOMAIN-SUFFIX,bytedance.com
+DOMAIN-SUFFIX,bytednsdoc.com
+DOMAIN-SUFFIX,byteeffecttos.com
 DOMAIN-SUFFIX,bytegecko.com
 DOMAIN-SUFFIX,bytehwm.com
 DOMAIN-SUFFIX,bytemaimg.com
 DOMAIN-SUFFIX,bytemastatic.com
+DOMAIN-SUFFIX,bytetos.com
 DOMAIN-SUFFIX,cookicut.com
 DOMAIN-SUFFIX,dailygn.com
 DOMAIN-SUFFIX,doupay.com
@@ -35,6 +38,7 @@ DOMAIN-SUFFIX,douyinstatic.com
 DOMAIN-SUFFIX,douyinvod.com
 DOMAIN-SUFFIX,duoshan.com
 DOMAIN-SUFFIX,ecombdapi.com
+DOMAIN-SUFFIX,ecombdimg.com
 DOMAIN-SUFFIX,ecombdpage.com
 DOMAIN-SUFFIX,huoshan.com
 DOMAIN-SUFFIX,huoshancdn.com
@@ -77,6 +81,7 @@ DOMAIN-SUFFIX,qishui.com
 DOMAIN-SUFFIX,qishui.com.cn
 DOMAIN-SUFFIX,qishuimusic.cn
 DOMAIN-SUFFIX,qishuimusic.com.cn
+DOMAIN-SUFFIX,snssdk.com
 DOMAIN-SUFFIX,supercachenet.com
 DOMAIN-SUFFIX,supercachenode.com
 DOMAIN-SUFFIX,toutiaoapi.com
@@ -85,3 +90,4 @@ DOMAIN-SUFFIX,ulpay.com
 DOMAIN-SUFFIX,ultracachenode.com
 DOMAIN-SUFFIX,woaihuoshan.com
 DOMAIN-SUFFIX,wohst8.com
+DOMAIN-SUFFIX,zijieapi.com

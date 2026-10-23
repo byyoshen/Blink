@@ -16,10 +16,13 @@
         "boxdouyin.com",
         "bytecdn.com",
         "bytedance.com",
+        "bytednsdoc.com",
+        "byteeffecttos.com",
         "bytegecko.com",
         "bytehwm.com",
         "bytemaimg.com",
         "bytemastatic.com",
+        "bytetos.com",
         "cookicut.com",
         "dailygn.com",
         "doupay.com",
@@ -37,6 +40,7 @@
         "douyinvod.com",
         "duoshan.com",
         "ecombdapi.com",
+        "ecombdimg.com",
         "ecombdpage.com",
         "huoshan.com",
         "huoshancdn.com",
@@ -79,6 +83,7 @@
         "qishui.com.cn",
         "qishuimusic.cn",
         "qishuimusic.com.cn",
+        "snssdk.com",
         "supercachenet.com",
         "supercachenode.com",
         "toutiaoapi.com",
@@ -86,7 +91,8 @@
         "ulpay.com",
         "ultracachenode.com",
         "woaihuoshan.com",
-        "wohst8.com"
+        "wohst8.com",
+        "zijieapi.com"
       ]
     }
   ]

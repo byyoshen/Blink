@@ -656,15 +656,15 @@
     "DouYin": {
       "canonical": {
         "denied_includes": [],
-        "input_rules": 84,
-        "rules": 84,
-        "sha256": "7fe8d0e4715a940cae7b5f21f143d2f16e97ae1072b469380baaa30b69e473d4",
+        "input_rules": 90,
+        "rules": 90,
+        "sha256": "06e8a89a82a86ea534c2c904932986b02e59074dbbcf4f133d67d563e7dfd27b",
         "skipped_attributes": 0,
         "skipped_excluded": [],
         "views": [
           {
             "name": "domainset",
-            "rules": 84
+            "rules": 90
           }
         ]
       },
@@ -672,50 +672,50 @@
         "egern": {
           "dropped": [],
           "path": "Egern/DouYin.yaml",
-          "rules": 84,
-          "sha256": "449743290b3e274a37ae139afc286a69105d29fc8589ebc670dc112f2c16bbee"
+          "rules": 90,
+          "sha256": "2d507beeed01dd9a5873a4001778c079e4a444ed9cbc9d440b57cac130f8a4e9"
         },
         "loon": {
           "dropped": [],
           "path": "Loon/DouYin.list",
-          "rules": 84,
-          "sha256": "a9a7a5111cce76864fdabcc2e3fdc0d79a7d8efd1d8c975f35dd86d8b72944da"
+          "rules": 90,
+          "sha256": "15f0836d99af203156685b144934bf5097489e4d08806c42a58f7721dabf5b2a"
         },
         "mihomo": {
           "dropped": [],
           "path": "mihomo/DouYin.list",
-          "rules": 84,
-          "sha256": "a9a7a5111cce76864fdabcc2e3fdc0d79a7d8efd1d8c975f35dd86d8b72944da"
+          "rules": 90,
+          "sha256": "15f0836d99af203156685b144934bf5097489e4d08806c42a58f7721dabf5b2a"
         },
         "quantumultx": {
           "dropped": [],
           "path": "QuantumultX/DouYin.list",
-          "rules": 84,
-          "sha256": "35607f9187ec739a14c8e344c84f6e5f23396f410c0d032ed02f97d80d4fb8b1"
+          "rules": 90,
+          "sha256": "a83dc830396ff40db6b81c328e0a77511bb9f857221d6e7dc83eccca6222610c"
         },
         "shadowrocket": {
           "dropped": [],
           "path": "Shadowrocket/DouYin.list",
-          "rules": 84,
-          "sha256": "a9a7a5111cce76864fdabcc2e3fdc0d79a7d8efd1d8c975f35dd86d8b72944da"
+          "rules": 90,
+          "sha256": "15f0836d99af203156685b144934bf5097489e4d08806c42a58f7721dabf5b2a"
         },
         "singbox": {
           "dropped": [],
           "path": "SingBox/DouYin.json",
-          "rules": 84,
-          "sha256": "bcc9a4c508e5d6e22759f92b98e29cb174e39c2da82740d0ddf32227e6daa82f"
+          "rules": 90,
+          "sha256": "0161d4c8330ba78c0ece17fd1c1344adf92b28862224c6650da51eb6ba93ae90"
         },
         "stash": {
           "dropped": [],
           "path": "Stash/DouYin.list",
-          "rules": 84,
-          "sha256": "a9a7a5111cce76864fdabcc2e3fdc0d79a7d8efd1d8c975f35dd86d8b72944da"
+          "rules": 90,
+          "sha256": "15f0836d99af203156685b144934bf5097489e4d08806c42a58f7721dabf5b2a"
         },
         "surge": {
           "dropped": [],
           "path": "Surge/DouYin.list",
-          "rules": 84,
-          "sha256": "a9a7a5111cce76864fdabcc2e3fdc0d79a7d8efd1d8c975f35dd86d8b72944da"
+          "rules": 90,
+          "sha256": "15f0836d99af203156685b144934bf5097489e4d08806c42a58f7721dabf5b2a"
         }
       },
       "sources": [
@@ -731,74 +731,74 @@
         }
       ],
       "supplement": {
-        "bytes": 2495,
-        "lines": 35,
+        "bytes": 3902,
+        "lines": 53,
         "path": "engine/sources/supplement/DouYin.list",
-        "sha256": "ea03bacf9964e67160f09d6b7adb64f014c1e6571e562f5dfeb6e84bfbf0e520"
+        "sha256": "083add935375ea335c41c584e4905403b6b189f1656e3b45c6e00572295571b0"
       },
       "views": {
         "egern": {
           "domainset": {
             "dropped": [],
             "path": "Egern/DouYin-domainset.conf",
-            "rules": 84,
-            "sha256": "a9a7a5111cce76864fdabcc2e3fdc0d79a7d8efd1d8c975f35dd86d8b72944da"
+            "rules": 90,
+            "sha256": "15f0836d99af203156685b144934bf5097489e4d08806c42a58f7721dabf5b2a"
           }
         },
         "loon": {
           "domainset": {
             "dropped": [],
             "path": "Loon/DouYin-domainset.conf",
-            "rules": 84,
-            "sha256": "a9a7a5111cce76864fdabcc2e3fdc0d79a7d8efd1d8c975f35dd86d8b72944da"
+            "rules": 90,
+            "sha256": "15f0836d99af203156685b144934bf5097489e4d08806c42a58f7721dabf5b2a"
           }
         },
         "mihomo": {
           "domainset": {
             "dropped": [],
             "path": "mihomo/DouYin-domainset.conf",
-            "rules": 84,
-            "sha256": "baa15260c54b1d14c11ad6e98e4ad97b6eae83ef24be504628326d73dee72150"
+            "rules": 90,
+            "sha256": "8836ff08c3c35c4e4f8a8fea41b05dd08e3dffba871a3ac8413d710d2a83b6e3"
           }
         },
         "quantumultx": {
           "domainset": {
             "dropped": [],
             "path": "QuantumultX/DouYin-domainset.conf",
-            "rules": 84,
-            "sha256": "35607f9187ec739a14c8e344c84f6e5f23396f410c0d032ed02f97d80d4fb8b1"
+            "rules": 90,
+            "sha256": "a83dc830396ff40db6b81c328e0a77511bb9f857221d6e7dc83eccca6222610c"
           }
         },
         "shadowrocket": {
           "domainset": {
             "dropped": [],
             "path": "Shadowrocket/DouYin-domainset.conf",
-            "rules": 84,
-            "sha256": "ebb16c1202bbb6bc8e1ac1bec9fd98e6b11eed1a8a9b3df68441a47246b492a6"
+            "rules": 90,
+            "sha256": "e1a0585374a391855fc4c98615363eebf9a2d8bd95ba746a97d14264dabc570d"
           }
         },
         "singbox": {
           "domainset": {
             "dropped": [],
             "path": "SingBox/DouYin-domainset.json",
-            "rules": 84,
-            "sha256": "bcc9a4c508e5d6e22759f92b98e29cb174e39c2da82740d0ddf32227e6daa82f"
+            "rules": 90,
+            "sha256": "0161d4c8330ba78c0ece17fd1c1344adf92b28862224c6650da51eb6ba93ae90"
           }
         },
         "stash": {
           "domainset": {
             "dropped": [],
             "path": "Stash/DouYin-domainset.conf",
-            "rules": 84,
-            "sha256": "baa15260c54b1d14c11ad6e98e4ad97b6eae83ef24be504628326d73dee72150"
+            "rules": 90,
+            "sha256": "8836ff08c3c35c4e4f8a8fea41b05dd08e3dffba871a3ac8413d710d2a83b6e3"
           }
         },
         "surge": {
           "domainset": {
             "dropped": [],
             "path": "Surge/DouYin-domainset.conf",
-            "rules": 84,
-            "sha256": "ebb16c1202bbb6bc8e1ac1bec9fd98e6b11eed1a8a9b3df68441a47246b492a6"
+            "rules": 90,
+            "sha256": "e1a0585374a391855fc4c98615363eebf9a2d8bd95ba746a97d14264dabc570d"
           }
         }
       }
@@ -5117,6 +5117,6 @@
   "schema_version": 1,
   "source_definition": {
     "path": "engine/sources/apps.yaml",
-    "sha256": "060e5c19fc417144d9e8821a935986b04092055bde4c41fe3b58d475ee112a20"
+    "sha256": "c2df23f45d6c352d187dd24b174a1a9f157281b0c06eba6b0ae445797220ad75"
   }
 }

@@ -1,5 +1,5 @@
 # 规则名称: DouYin
-# 规则统计: 84
+# 规则统计: 90
 
 domain_suffix_set:
 - activity-wbsj.com
@@ -15,10 +15,13 @@ domain_suffix_set:
 - boxdouyin.com
 - bytecdn.com
 - bytedance.com
+- bytednsdoc.com
+- byteeffecttos.com
 - bytegecko.com
 - bytehwm.com
 - bytemaimg.com
 - bytemastatic.com
+- bytetos.com
 - cookicut.com
 - dailygn.com
 - doupay.com
@@ -36,6 +39,7 @@ domain_suffix_set:
 - douyinvod.com
 - duoshan.com
 - ecombdapi.com
+- ecombdimg.com
 - ecombdpage.com
 - huoshan.com
 - huoshancdn.com
@@ -78,6 +82,7 @@ domain_suffix_set:
 - qishui.com.cn
 - qishuimusic.cn
 - qishuimusic.com.cn
+- snssdk.com
 - supercachenet.com
 - supercachenode.com
 - toutiaoapi.com
@@ -86,3 +91,4 @@ domain_suffix_set:
 - ultracachenode.com
 - woaihuoshan.com
 - wohst8.com
+- zijieapi.com
