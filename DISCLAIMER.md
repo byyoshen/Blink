@@ -3,13 +3,14 @@
 ## Purpose and scope
 
 Blink is a personal-use repository for building and distributing multi-client
-App Rule-Sets (Surge, Shadowrocket, Loon, Stash, mihomo, Egern, Quantumult X)
+App Rule-Sets (Surge, Shadowrocket, Loon, Stash, mihomo, Egern, Quantumult X,
+sing-box)
 from reviewed public sources. It is provided for learning, personal
 configuration maintenance, and rule-format automation.
 
 The repository is not an official product, service, endorsement, or
 representation of Surge, Shadowrocket, Loon, Stash, mihomo, Egern, Quantumult X,
-any application named by a Rule-Set, or any upstream rule author.
+sing-box, any application named by a Rule-Set, or any upstream rule author.
 
 ## No warranty
 
@@ -33,7 +34,7 @@ outputs is responsible for:
 - selecting and testing their own policies, DNS settings, and network
   configuration for each client they use;
 - checking proxy client logs (currently verified through Surge) and correcting
-  app-specific gaps through the documented `engine/sources/supplement/` process;
+  app-specific gaps, or reporting them through GitHub Issues;
 - complying with applicable laws, service terms, and all relevant upstream
   licenses, notices, and attribution requirements;
 - not redistributing, republishing, or mirroring repository content to
@@ -49,8 +50,9 @@ licenses, notices, and availability. Blink does not grant permission to
 use, copy, modify, or redistribute upstream material beyond what the relevant
 rightsholders allow.
 
-See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and
-[`engine/sources/apps.yaml`](engine/sources/apps.yaml) for the current source inventory.
+See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and the per-App source
+list on the website (「更多 › 规则从哪来」, https://blink.wendylala.com) for the
+current source inventory.
 
 ## Liability boundary
 
