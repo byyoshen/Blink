@@ -656,15 +656,15 @@
     "DouYin": {
       "canonical": {
         "denied_includes": [],
-        "input_rules": 90,
-        "rules": 90,
-        "sha256": "06e8a89a82a86ea534c2c904932986b02e59074dbbcf4f133d67d563e7dfd27b",
+        "input_rules": 91,
+        "rules": 91,
+        "sha256": "3a81a02bb22adbbb55bd698675573ce4529baf655c8c258b9d6272d699b4c7a6",
         "skipped_attributes": 0,
         "skipped_excluded": [],
         "views": [
           {
             "name": "domainset",
-            "rules": 90
+            "rules": 91
           }
         ]
       },
@@ -672,50 +672,50 @@
         "egern": {
           "dropped": [],
           "path": "Egern/DouYin.yaml",
-          "rules": 90,
-          "sha256": "2d507beeed01dd9a5873a4001778c079e4a444ed9cbc9d440b57cac130f8a4e9"
+          "rules": 91,
+          "sha256": "c62287bdf726296ff7f59e9acff8e6b63a52df95373ad9184bdb6f2ef71b13eb"
         },
         "loon": {
           "dropped": [],
           "path": "Loon/DouYin.list",
-          "rules": 90,
-          "sha256": "15f0836d99af203156685b144934bf5097489e4d08806c42a58f7721dabf5b2a"
+          "rules": 91,
+          "sha256": "124ff999303be6ff299343585400c671e6d0bc880991ad6e586daa6ff64f80b2"
         },
         "mihomo": {
           "dropped": [],
           "path": "mihomo/DouYin.list",
-          "rules": 90,
-          "sha256": "15f0836d99af203156685b144934bf5097489e4d08806c42a58f7721dabf5b2a"
+          "rules": 91,
+          "sha256": "124ff999303be6ff299343585400c671e6d0bc880991ad6e586daa6ff64f80b2"
         },
         "quantumultx": {
           "dropped": [],
           "path": "QuantumultX/DouYin.list",
-          "rules": 90,
-          "sha256": "a83dc830396ff40db6b81c328e0a77511bb9f857221d6e7dc83eccca6222610c"
+          "rules": 91,
+          "sha256": "37672edc69dd7a35879953e9cd0c25514e7d3f5805af2b653c3b261d81456715"
         },
         "shadowrocket": {
           "dropped": [],
           "path": "Shadowrocket/DouYin.list",
-          "rules": 90,
-          "sha256": "15f0836d99af203156685b144934bf5097489e4d08806c42a58f7721dabf5b2a"
+          "rules": 91,
+          "sha256": "124ff999303be6ff299343585400c671e6d0bc880991ad6e586daa6ff64f80b2"
         },
         "singbox": {
           "dropped": [],
           "path": "SingBox/DouYin.json",
-          "rules": 90,
-          "sha256": "0161d4c8330ba78c0ece17fd1c1344adf92b28862224c6650da51eb6ba93ae90"
+          "rules": 91,
+          "sha256": "001ee5c19c57542fb822070023fdc640f5d457730b7e8aa68bcba7c3a915c465"
         },
         "stash": {
           "dropped": [],
           "path": "Stash/DouYin.list",
-          "rules": 90,
-          "sha256": "15f0836d99af203156685b144934bf5097489e4d08806c42a58f7721dabf5b2a"
+          "rules": 91,
+          "sha256": "124ff999303be6ff299343585400c671e6d0bc880991ad6e586daa6ff64f80b2"
         },
         "surge": {
           "dropped": [],
           "path": "Surge/DouYin.list",
-          "rules": 90,
-          "sha256": "15f0836d99af203156685b144934bf5097489e4d08806c42a58f7721dabf5b2a"
+          "rules": 91,
+          "sha256": "124ff999303be6ff299343585400c671e6d0bc880991ad6e586daa6ff64f80b2"
         }
       },
       "sources": [
@@ -731,74 +731,74 @@
         }
       ],
       "supplement": {
-        "bytes": 3902,
-        "lines": 53,
+        "bytes": 4829,
+        "lines": 62,
         "path": "engine/sources/supplement/DouYin.list",
-        "sha256": "083add935375ea335c41c584e4905403b6b189f1656e3b45c6e00572295571b0"
+        "sha256": "7ad01a134e257ec8e78764f7fc4c319cf776efc889dc770827d05a070375bb94"
       },
       "views": {
         "egern": {
           "domainset": {
             "dropped": [],
             "path": "Egern/DouYin-domainset.conf",
-            "rules": 90,
-            "sha256": "15f0836d99af203156685b144934bf5097489e4d08806c42a58f7721dabf5b2a"
+            "rules": 91,
+            "sha256": "124ff999303be6ff299343585400c671e6d0bc880991ad6e586daa6ff64f80b2"
           }
         },
         "loon": {
           "domainset": {
             "dropped": [],
             "path": "Loon/DouYin-domainset.conf",
-            "rules": 90,
-            "sha256": "15f0836d99af203156685b144934bf5097489e4d08806c42a58f7721dabf5b2a"
+            "rules": 91,
+            "sha256": "124ff999303be6ff299343585400c671e6d0bc880991ad6e586daa6ff64f80b2"
           }
         },
         "mihomo": {
           "domainset": {
             "dropped": [],
             "path": "mihomo/DouYin-domainset.conf",
-            "rules": 90,
-            "sha256": "8836ff08c3c35c4e4f8a8fea41b05dd08e3dffba871a3ac8413d710d2a83b6e3"
+            "rules": 91,
+            "sha256": "b2cc39590fa056978ae26141474324ad60d0670081c088a65c89bfa3283b47b0"
           }
         },
         "quantumultx": {
           "domainset": {
             "dropped": [],
             "path": "QuantumultX/DouYin-domainset.conf",
-            "rules": 90,
-            "sha256": "a83dc830396ff40db6b81c328e0a77511bb9f857221d6e7dc83eccca6222610c"
+            "rules": 91,
+            "sha256": "37672edc69dd7a35879953e9cd0c25514e7d3f5805af2b653c3b261d81456715"
           }
         },
         "shadowrocket": {
           "domainset": {
             "dropped": [],
             "path": "Shadowrocket/DouYin-domainset.conf",
-            "rules": 90,
-            "sha256": "e1a0585374a391855fc4c98615363eebf9a2d8bd95ba746a97d14264dabc570d"
+            "rules": 91,
+            "sha256": "10703da38fdc298462bb4b4fd70c6f860a7211a4390287207d76ac4af6911736"
           }
         },
         "singbox": {
           "domainset": {
             "dropped": [],
             "path": "SingBox/DouYin-domainset.json",
-            "rules": 90,
-            "sha256": "0161d4c8330ba78c0ece17fd1c1344adf92b28862224c6650da51eb6ba93ae90"
+            "rules": 91,
+            "sha256": "001ee5c19c57542fb822070023fdc640f5d457730b7e8aa68bcba7c3a915c465"
           }
         },
         "stash": {
           "domainset": {
             "dropped": [],
             "path": "Stash/DouYin-domainset.conf",
-            "rules": 90,
-            "sha256": "8836ff08c3c35c4e4f8a8fea41b05dd08e3dffba871a3ac8413d710d2a83b6e3"
+            "rules": 91,
+            "sha256": "b2cc39590fa056978ae26141474324ad60d0670081c088a65c89bfa3283b47b0"
           }
         },
         "surge": {
           "domainset": {
             "dropped": [],
             "path": "Surge/DouYin-domainset.conf",
-            "rules": 90,
-            "sha256": "e1a0585374a391855fc4c98615363eebf9a2d8bd95ba746a97d14264dabc570d"
+            "rules": 91,
+            "sha256": "10703da38fdc298462bb4b4fd70c6f860a7211a4390287207d76ac4af6911736"
           }
         }
       }
@@ -4113,11 +4113,12 @@
       "canonical": {
         "denied_includes": [],
         "excluded_domains": {
-          "domain-suffix:bytedance.com": 1
+          "domain-suffix:bytedance.com": 1,
+          "domain-suffix:byteimg.com": 5
         },
         "input_rules": 87,
-        "rules": 86,
-        "sha256": "ab4bdbb3ef3e72ca7fe410b7f40575cee20af415ff1f9f2d78b228836fe08d48",
+        "rules": 81,
+        "sha256": "a73d66bd9fa5c2448e5017d59b3f70384788b70740158c2d848e55eb106a5d75",
         "skipped_attributes": 0,
         "skipped_excluded": [
           "IP-ASN,11983",
@@ -4126,7 +4127,7 @@
         "views": [
           {
             "name": "nonip",
-            "rules": 86
+            "rules": 81
           }
         ]
       },
@@ -4134,50 +4135,50 @@
         "egern": {
           "dropped": [],
           "path": "Egern/TikTok.yaml",
-          "rules": 86,
-          "sha256": "4324da7fec6c9654be799b917d7678c53b115eff4d1fbffab2ca47794c048264"
+          "rules": 81,
+          "sha256": "9600867e57d2ee8cb7604fa7f460bc099395453a285db63da5802028289769f7"
         },
         "loon": {
           "dropped": [],
           "path": "Loon/TikTok.list",
-          "rules": 86,
-          "sha256": "2a808d18bae3e137d78ab2a40eae5a0071d7ad2a034835ef0926558000cd923d"
+          "rules": 81,
+          "sha256": "61eedb659bf8856cd0782c7cec8d0c22bb12cf6784a15a2bfb7b9d5245803d2f"
         },
         "mihomo": {
           "dropped": [],
           "path": "mihomo/TikTok.list",
-          "rules": 86,
-          "sha256": "2a808d18bae3e137d78ab2a40eae5a0071d7ad2a034835ef0926558000cd923d"
+          "rules": 81,
+          "sha256": "61eedb659bf8856cd0782c7cec8d0c22bb12cf6784a15a2bfb7b9d5245803d2f"
         },
         "quantumultx": {
           "dropped": [],
           "path": "QuantumultX/TikTok.list",
-          "rules": 86,
-          "sha256": "7dd75d7a9c069dbfb9076a96b4b16d02852ea1c2830ba5a90eb0757f292b3c44"
+          "rules": 81,
+          "sha256": "d0e85e26cee0a27e47a74256930862cc73643fa61edcad7f963c89b0c5024f32"
         },
         "shadowrocket": {
           "dropped": [],
           "path": "Shadowrocket/TikTok.list",
-          "rules": 86,
-          "sha256": "2a808d18bae3e137d78ab2a40eae5a0071d7ad2a034835ef0926558000cd923d"
+          "rules": 81,
+          "sha256": "61eedb659bf8856cd0782c7cec8d0c22bb12cf6784a15a2bfb7b9d5245803d2f"
         },
         "singbox": {
           "dropped": [],
           "path": "SingBox/TikTok.json",
-          "rules": 86,
-          "sha256": "19bf33be5b7c28656add250d53fafbed592ac94c739550747526699749b89c6e"
+          "rules": 81,
+          "sha256": "afbbeb9e12122a8c6855f86262ad9645cc92e7f72a13db4639d3bce93a34767c"
         },
         "stash": {
           "dropped": [],
           "path": "Stash/TikTok.list",
-          "rules": 86,
-          "sha256": "2a808d18bae3e137d78ab2a40eae5a0071d7ad2a034835ef0926558000cd923d"
+          "rules": 81,
+          "sha256": "61eedb659bf8856cd0782c7cec8d0c22bb12cf6784a15a2bfb7b9d5245803d2f"
         },
         "surge": {
           "dropped": [],
           "path": "Surge/TikTok.list",
-          "rules": 86,
-          "sha256": "2a808d18bae3e137d78ab2a40eae5a0071d7ad2a034835ef0926558000cd923d"
+          "rules": 81,
+          "sha256": "61eedb659bf8856cd0782c7cec8d0c22bb12cf6784a15a2bfb7b9d5245803d2f"
         }
       },
       "sources": [
@@ -4203,64 +4204,64 @@
           "nonip": {
             "dropped": [],
             "path": "Egern/TikTok-nonip.conf",
-            "rules": 86,
-            "sha256": "2a808d18bae3e137d78ab2a40eae5a0071d7ad2a034835ef0926558000cd923d"
+            "rules": 81,
+            "sha256": "61eedb659bf8856cd0782c7cec8d0c22bb12cf6784a15a2bfb7b9d5245803d2f"
           }
         },
         "loon": {
           "nonip": {
             "dropped": [],
             "path": "Loon/TikTok-nonip.conf",
-            "rules": 86,
-            "sha256": "2a808d18bae3e137d78ab2a40eae5a0071d7ad2a034835ef0926558000cd923d"
+            "rules": 81,
+            "sha256": "61eedb659bf8856cd0782c7cec8d0c22bb12cf6784a15a2bfb7b9d5245803d2f"
           }
         },
         "mihomo": {
           "nonip": {
             "dropped": [],
             "path": "mihomo/TikTok-nonip.conf",
-            "rules": 86,
-            "sha256": "2a808d18bae3e137d78ab2a40eae5a0071d7ad2a034835ef0926558000cd923d"
+            "rules": 81,
+            "sha256": "61eedb659bf8856cd0782c7cec8d0c22bb12cf6784a15a2bfb7b9d5245803d2f"
           }
         },
         "quantumultx": {
           "nonip": {
             "dropped": [],
             "path": "QuantumultX/TikTok-nonip.conf",
-            "rules": 86,
-            "sha256": "7dd75d7a9c069dbfb9076a96b4b16d02852ea1c2830ba5a90eb0757f292b3c44"
+            "rules": 81,
+            "sha256": "d0e85e26cee0a27e47a74256930862cc73643fa61edcad7f963c89b0c5024f32"
           }
         },
         "shadowrocket": {
           "nonip": {
             "dropped": [],
             "path": "Shadowrocket/TikTok-nonip.conf",
-            "rules": 86,
-            "sha256": "2a808d18bae3e137d78ab2a40eae5a0071d7ad2a034835ef0926558000cd923d"
+            "rules": 81,
+            "sha256": "61eedb659bf8856cd0782c7cec8d0c22bb12cf6784a15a2bfb7b9d5245803d2f"
           }
         },
         "singbox": {
           "nonip": {
             "dropped": [],
             "path": "SingBox/TikTok-nonip.json",
-            "rules": 86,
-            "sha256": "19bf33be5b7c28656add250d53fafbed592ac94c739550747526699749b89c6e"
+            "rules": 81,
+            "sha256": "afbbeb9e12122a8c6855f86262ad9645cc92e7f72a13db4639d3bce93a34767c"
           }
         },
         "stash": {
           "nonip": {
             "dropped": [],
             "path": "Stash/TikTok-nonip.conf",
-            "rules": 86,
-            "sha256": "2a808d18bae3e137d78ab2a40eae5a0071d7ad2a034835ef0926558000cd923d"
+            "rules": 81,
+            "sha256": "61eedb659bf8856cd0782c7cec8d0c22bb12cf6784a15a2bfb7b9d5245803d2f"
           }
         },
         "surge": {
           "nonip": {
             "dropped": [],
             "path": "Surge/TikTok-nonip.conf",
-            "rules": 86,
-            "sha256": "2a808d18bae3e137d78ab2a40eae5a0071d7ad2a034835ef0926558000cd923d"
+            "rules": 81,
+            "sha256": "61eedb659bf8856cd0782c7cec8d0c22bb12cf6784a15a2bfb7b9d5245803d2f"
           }
         }
       }
@@ -5117,6 +5118,6 @@
   "schema_version": 1,
   "source_definition": {
     "path": "engine/sources/apps.yaml",
-    "sha256": "c2df23f45d6c352d187dd24b174a1a9f157281b0c06eba6b0ae445797220ad75"
+    "sha256": "388b704960d00a094829c4d5c46fe413d885494808e69c927bd3011f2ada138c"
   }
 }

@@ -1,5 +1,5 @@
 # 规则名称: DouYin
-# 规则统计: 90
+# 规则统计: 91
 
 domain_suffix_set:
 - activity-wbsj.com
@@ -19,6 +19,7 @@ domain_suffix_set:
 - byteeffecttos.com
 - bytegecko.com
 - bytehwm.com
+- byteimg.com
 - bytemaimg.com
 - bytemastatic.com
 - bytetos.com
